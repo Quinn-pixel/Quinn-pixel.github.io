@@ -107,6 +107,9 @@
             font-weight: bold;
             transition: 0.2s ease;
             display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
         }
 
         .btn-primary {
@@ -189,6 +192,13 @@
 
         .project-item p {
             color: #4b5563;
+            margin-bottom: 12px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .footer {
@@ -196,6 +206,13 @@
             padding: 30px 0 10px;
             color: #6b7280;
             font-size: 0.95rem;
+        }
+
+        #copyMessage {
+            margin-top: 12px;
+            color: #315efb;
+            font-size: 0.95rem;
+            font-weight: bold;
         }
 
         @media (max-width: 700px) {
@@ -270,6 +287,9 @@
                     <p>
                         A futuristic personal command center built with HTML and CSS, published live using GitHub Pages.
                     </p>
+                    <div class="project-links">
+                        <a class="btn btn-secondary" href="index.html">Open Project</a>
+                    </div>
                 </div>
 
                 <div class="project-item">
@@ -277,6 +297,9 @@
                     <p>
                         A cleaner and more structured page designed to present my work in a polished way.
                     </p>
+                    <div class="project-links">
+                        <a class="btn btn-secondary" href="professional.html">Open Project</a>
+                    </div>
                 </div>
 
                 <div class="project-item">
@@ -284,6 +307,10 @@
                     <p>
                         A planned section for interactive gaming-related utilities and personalized ideas.
                     </p>
+                    <div class="project-links">
+                        <a class="btn btn-secondary" href="https://github.com/Quinn-pixel" target="_blank">Project
+                            Base</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -299,12 +326,25 @@
                 <div class="button-group" style="justify-content: flex-start; margin-top: 16px;">
                     <a class="btn btn-primary" href="https://github.com/Quinn-pixel" target="_blank">GitHub</a>
                     <a class="btn btn-secondary" href="mailto:AnitBiswas19@gmail.com">Email Me</a>
+                    <button class="btn btn-secondary" onclick="copyEmail()">Copy Email</button>
                 </div>
+
+                <div id="copyMessage"></div>
             </div>
         </section>
 
-        <p class="footer">Quinn Pixel // Professional Mode // Version 1.0</p>
+        <p class="footer">Quinn Pixel // Professional Mode // Version 2.0</p>
     </div>
+
+    <script>
+        function copyEmail() {
+            navigator.clipboard.writeText("AnitBiswas19@gmail.com").then(function () {
+                document.getElementById("copyMessage").textContent = "Email copied: AnitBiswas19@gmail.com";
+            }).catch(function () {
+                document.getElementById("copyMessage").textContent = "Could not copy email.";
+            });
+        }
+    </script>
 </body>
 
 </html>
