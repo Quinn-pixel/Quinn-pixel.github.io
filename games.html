@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quinn Pixel | Gaming Zone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(0, 255, 170, 0.12), transparent 25%),
+                radial-gradient(circle at bottom right, rgba(0, 140, 255, 0.14), transparent 25%),
+                linear-gradient(135deg, #040816, #09111f 45%, #02060d);
+            color: #eaf6ff;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            margin-bottom: 22px;
+            border: 1px solid rgba(0, 255, 170, 0.16);
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 18px;
+            box-shadow: 0 0 24px rgba(0, 255, 170, 0.05);
+            backdrop-filter: blur(10px);
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .logo {
+            color: #7dffd5;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 170, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #d7ecff;
+            font-size: 0.95rem;
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #7dffd5;
+        }
+
+        .hero {
+            border: 1px solid rgba(0, 255, 170, 0.18);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
+            padding: 60px 28px 42px;
+            text-align: center;
+            margin-bottom: 26px;
+            box-shadow: 0 0 30px rgba(0, 255, 170, 0.08);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 255, 170, 0.35);
+            color: #89ffe0;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 3.1rem;
+            color: #7dffd5;
+            margin-bottom: 14px;
+            text-shadow: 0 0 14px rgba(0, 255, 170, 0.22);
+        }
+
+        .subtitle {
+            max-width: 760px;
+            margin: 0 auto 26px;
+            color: #c7d9e8;
+            line-height: 1.7;
+            font-size: 1.08rem;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 170, 0.25);
+            color: #eaf6ff;
+            background: rgba(0, 255, 170, 0.07);
+            transition: 0.25s ease;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.14);
+            background: rgba(0, 255, 170, 0.12);
+        }
+
+        .stats-grid,
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .stat-card,
+        .card,
+        .feature-box {
+            border: 1px solid rgba(0, 255, 170, 0.16);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 22px;
+            padding: 22px;
+            box-shadow: 0 0 24px rgba(0, 255, 170, 0.05);
+            transition: 0.25s ease;
+        }
+
+        .stat-card:hover,
+        .card:hover,
+        .feature-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 28px rgba(0, 255, 170, 0.12);
+            border-color: rgba(0, 255, 170, 0.28);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #89ffe0;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #c8d7e6;
+            font-size: 0.96rem;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            color: #89ffe0;
+            margin-bottom: 14px;
+        }
+
+        .card h2,
+        .feature-box h3 {
+            color: #89ffe0;
+            margin-bottom: 10px;
+        }
+
+        .card p,
+        .card li,
+        .feature-box p {
+            color: #c8d7e6;
+            line-height: 1.7;
+        }
+
+        ul {
+            padding-left: 18px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 28px;
+            color: #8ca3b8;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero {
+                padding: 42px 18px 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <nav class="navbar">
+            <div class="logo">Quinn Pixel // Gaming Zone</div>
+            <div class="nav-links">
+                <a href="index.html">Quin Mode</a>
+                <a href="professional.html">Professional Mode</a>
+                <a href="#focus">Focus</a>
+                <a href="#tools">Tools</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="tag">● GAMING SYSTEM ACTIVE</div>
+            <h1>Gaming Zone 🎮</h1>
+            <p class="subtitle">
+                This is my gaming command section — a place for notes, ideas, setup planning,
+                mission tracking, and future gaming tools.
+            </p>
+
+            <div class="button-group">
+                <a class="btn" href="index.html">Back to Quin Mode</a>
+                <a class="btn" href="professional.html">Professional Mode</a>
+                <a class="btn" href="https://github.com/Quinn-pixel" target="_blank">GitHub Base</a>
+            </div>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Gaming Mindset</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">FPS</div>
+                <div class="stat-label">Focus Zone</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Build Ideas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">PRO</div>
+                <div class="stat-label">Improvement Mode</div>
+            </div>
+        </section>
+
+        <section id="focus" class="section">
+            <h2 class="section-title">Current Gaming Focus</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h2>Aim & Control</h2>
+                    <p>
+                        A space to track aim feel, settings notes, sensitivity changes, and improvements over time.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Loadout Ideas</h2>
+                    <p>
+                        Build and organize loadout ideas, role-based setups, and game-specific preferences.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Performance Mindset</h2>
+                    <p>
+                        Use this section to refine focus, routine, and consistency during gameplay sessions.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tools" class="section">
+            <h2 class="section-title">Future Gamer Tools</h2>
+            <div class="card-grid">
+                <div class="feature-box">
+                    <h3>Sensitivity Notes</h3>
+                    <p>Track settings experiments, changes, and what feels best in different situations.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>FOV & HUD Notes</h3>
+                    <p>Keep visual setup ideas, HUD layout notes, and field-of-view preferences in one place.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>Session Tracker</h3>
+                    <p>Later we can build a mini tracker for practice goals, progress, and daily gaming targets.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>Game Utility Tools</h3>
+                    <p>Future space for interactive mini tools inspired by your own gaming workflow and ideas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Mission Notes</h2>
+            <div class="card">
+                <ul>
+                    <li>Build a real gamer tools section later</li>
+                    <li>Add game-specific pages and notes</li>
+                    <li>Track settings and useful observations</li>
+                    <li>Make this zone both stylish and practical</li>
+                </ul>
+            </div>
+        </section>
+
+        <p class="footer">Quinn Pixel // Gaming Zone // Version 1.0</p>
+    </div>
+</body>
+
+</html>
