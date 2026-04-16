@@ -16,16 +16,72 @@
 
     body {
       background:
-        radial-gradient(circle at top, rgba(0, 180, 255, 0.15), transparent 30%),
-        linear-gradient(135deg, #050816, #0b1026 45%, #02040a);
+        radial-gradient(circle at top, rgba(0, 180, 255, 0.18), transparent 30%),
+        linear-gradient(135deg, #040816, #0a1024 45%, #01030a);
       color: #eaf6ff;
       min-height: 100vh;
       padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.22;
+      animation: floatOrb 12s infinite ease-in-out alternate;
+    }
+
+    .orb1 {
+      width: 260px;
+      height: 260px;
+      background: #00c8ff;
+      top: 8%;
+      left: 6%;
+    }
+
+    .orb2 {
+      width: 320px;
+      height: 320px;
+      background: #0066ff;
+      top: 55%;
+      right: 8%;
+      animation-duration: 15s;
+    }
+
+    .orb3 {
+      width: 220px;
+      height: 220px;
+      background: #00ffd0;
+      bottom: 8%;
+      left: 28%;
+      animation-duration: 18s;
+    }
+
+    @keyframes floatOrb {
+      from {
+        transform: translateY(0px) translateX(0px) scale(1);
+      }
+
+      to {
+        transform: translateY(-25px) translateX(20px) scale(1.08);
+      }
     }
 
     .container {
       max-width: 1100px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .navbar {
@@ -61,11 +117,12 @@
       text-decoration: none;
       color: #d7ecff;
       font-size: 0.95rem;
-      transition: 0.2s ease;
+      transition: 0.25s ease;
     }
 
     .nav-links a:hover {
       color: #7ddcff;
+      text-shadow: 0 0 10px rgba(0, 200, 255, 0.4);
     }
 
     .hero,
@@ -81,6 +138,7 @@
       text-align: center;
       padding: 60px 20px 40px;
       margin-bottom: 28px;
+      animation: fadeUp 1s ease;
     }
 
     .status {
@@ -92,6 +150,7 @@
       margin-bottom: 20px;
       font-size: 0.9rem;
       letter-spacing: 1px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.15);
     }
 
     h1 {
@@ -99,6 +158,36 @@
       color: #7ddcff;
       text-shadow: 0 0 12px rgba(0, 200, 255, 0.45);
       margin-bottom: 14px;
+    }
+
+    .typing-text {
+      min-height: 28px;
+      max-width: 700px;
+      margin: 0 auto 22px;
+      font-size: 1.05rem;
+      color: #89f7e1;
+      letter-spacing: 1px;
+      border-right: 2px solid #89f7e1;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(42, end) forwards, blink 0.7s infinite;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 42ch;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
     }
 
     .subtitle {
@@ -125,10 +214,11 @@
       background: rgba(0, 180, 255, 0.08);
       transition: 0.25s ease;
       font-weight: bold;
+      box-shadow: 0 0 0 rgba(0, 200, 255, 0);
     }
 
     .btn:hover {
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.03);
       box-shadow: 0 0 18px rgba(0, 200, 255, 0.25);
       background: rgba(0, 180, 255, 0.16);
     }
@@ -142,6 +232,14 @@
 
     .section-card {
       padding: 24px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      animation: fadeUp 1s ease;
+    }
+
+    .section-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 32px rgba(0, 200, 255, 0.16);
+      border-color: rgba(0, 220, 255, 0.32);
     }
 
     .section-card h2 {
@@ -172,6 +270,13 @@
       border-radius: 16px;
       border: 1px solid rgba(0, 200, 255, 0.18);
       background: rgba(0, 180, 255, 0.04);
+      transition: 0.25s ease;
+    }
+
+    .project-box:hover {
+      transform: scale(1.015);
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.14);
+      border-color: rgba(0, 220, 255, 0.32);
     }
 
     .project-box h3 {
@@ -193,6 +298,38 @@
       font-size: 0.95rem;
     }
 
+    .top-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      text-decoration: none;
+      padding: 12px 15px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 200, 255, 0.35);
+      color: #eaf6ff;
+      background: rgba(0, 180, 255, 0.12);
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.12);
+      z-index: 200;
+      transition: 0.25s ease;
+    }
+
+    .top-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.25);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 700px) {
       .navbar {
         flex-direction: column;
@@ -210,11 +347,24 @@
       .hero {
         padding: 40px 16px 30px;
       }
+
+      .typing-text {
+        white-space: normal;
+        width: 100%;
+        border-right: none;
+        animation: none;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="background-glow">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
   <div class="container">
 
     <nav class="navbar">
@@ -226,9 +376,10 @@
       </div>
     </nav>
 
-    <section class="hero">
+    <section class="hero" id="top">
       <div class="status">● SYSTEMS ONLINE</div>
       <h1>Quinn Pixel // Quin Mode 🚀</h1>
+      <div class="typing-text">Initializing futuristic creator protocol...</div>
       <p class="subtitle">
         Welcome to my futuristic personal command center. This is where I build,
         learn, experiment, and turn ideas into real projects.
@@ -302,8 +453,10 @@
       </div>
     </section>
 
-    <p class="footer">Quinn Pixel // Quin Command Center // Version 2.0</p>
+    <p class="footer">Quinn Pixel // Quin Command Center // Version 3.0</p>
   </div>
+
+  <a class="top-btn" href="#top">↑</a>
 </body>
 
 </html>
