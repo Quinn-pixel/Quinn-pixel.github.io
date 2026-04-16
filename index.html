@@ -4,8 +4,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quinn Pixel | Quin Mode</title>
+  <title>Quin AI Command Center</title>
   <style>
+    :root {
+      --bg-1: #060816;
+      --bg-2: #0a1020;
+      --bg-3: #02040b;
+      --panel: rgba(255, 255, 255, 0.06);
+      --panel-strong: rgba(255, 255, 255, 0.08);
+      --border: rgba(120, 200, 255, 0.18);
+      --text: #eef7ff;
+      --muted: #b8c7d9;
+      --blue: #86dcff;
+      --blue-2: #54bfff;
+      --green: #90ffd9;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -16,16 +34,17 @@
 
     body {
       background:
-        radial-gradient(circle at top, rgba(0, 180, 255, 0.18), transparent 30%),
-        linear-gradient(135deg, #040816, #0a1024 45%, #01030a);
-      color: #eaf6ff;
+        radial-gradient(circle at top left, rgba(90, 170, 255, 0.16), transparent 24%),
+        radial-gradient(circle at top right, rgba(0, 255, 210, 0.10), transparent 20%),
+        radial-gradient(circle at bottom center, rgba(0, 130, 255, 0.12), transparent 24%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
+      color: var(--text);
       min-height: 100vh;
       padding: 20px;
       overflow-x: hidden;
-      position: relative;
     }
 
-    .background-glow {
+    .background-orbs {
       position: fixed;
       inset: 0;
       pointer-events: none;
@@ -36,49 +55,49 @@
     .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(50px);
-      opacity: 0.22;
-      animation: floatOrb 12s infinite ease-in-out alternate;
+      filter: blur(55px);
+      opacity: 0.18;
+      animation: floatOrb 16s ease-in-out infinite alternate;
     }
 
-    .orb1 {
-      width: 260px;
-      height: 260px;
+    .orb.one {
+      width: 280px;
+      height: 280px;
       background: #00c8ff;
-      top: 8%;
-      left: 6%;
+      top: 5%;
+      left: 4%;
     }
 
-    .orb2 {
-      width: 320px;
-      height: 320px;
-      background: #0066ff;
+    .orb.two {
+      width: 340px;
+      height: 340px;
+      background: #0088ff;
       top: 55%;
-      right: 8%;
-      animation-duration: 15s;
+      right: 6%;
+      animation-duration: 19s;
     }
 
-    .orb3 {
-      width: 220px;
-      height: 220px;
+    .orb.three {
+      width: 240px;
+      height: 240px;
       background: #00ffd0;
       bottom: 8%;
-      left: 28%;
-      animation-duration: 18s;
+      left: 30%;
+      animation-duration: 21s;
     }
 
     @keyframes floatOrb {
       from {
-        transform: translateY(0px) translateX(0px) scale(1);
+        transform: translate(0, 0) scale(1);
       }
 
       to {
-        transform: translateY(-25px) translateX(20px) scale(1.08);
+        transform: translate(20px, -24px) scale(1.08);
       }
     }
 
-    .container {
-      max-width: 1150px;
+    .shell {
+      max-width: 1280px;
       margin: 0 auto;
       position: relative;
       z-index: 1;
@@ -88,94 +107,124 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 24px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(0, 200, 255, 0.18);
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 18px;
-      box-shadow: 0 0 20px rgba(0, 150, 255, 0.08);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
       position: sticky;
-      top: 10px;
-      z-index: 100;
+      top: 12px;
+      z-index: 20;
     }
 
-    .logo {
-      color: #7ddcff;
-      font-size: 1.2rem;
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
       font-weight: bold;
-      text-shadow: 0 0 10px rgba(0, 200, 255, 0.35);
+      color: var(--blue);
+      letter-spacing: 0.4px;
+      text-shadow: 0 0 12px rgba(134, 220, 255, 0.25);
+    }
+
+    .brand-subtitle {
+      font-size: 0.84rem;
+      color: var(--muted);
     }
 
     .nav-links {
       display: flex;
-      gap: 18px;
+      gap: 16px;
       flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: #d7ecff;
-      font-size: 0.95rem;
-      transition: 0.25s ease;
+      color: var(--text);
+      font-size: 0.94rem;
+      opacity: 0.9;
+      transition: 0.22s ease;
     }
 
     .nav-links a:hover {
-      color: #7ddcff;
-      text-shadow: 0 0 10px rgba(0, 200, 255, 0.4);
-    }
-
-    .hero,
-    .section-card,
-    .stat-card,
-    .skill-box,
-    .project-box,
-    .status-panel {
-      border: 1px solid rgba(0, 200, 255, 0.2);
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 24px;
-      box-shadow: 0 0 30px rgba(0, 180, 255, 0.10);
-      backdrop-filter: blur(8px);
+      color: var(--blue);
+      opacity: 1;
     }
 
     .hero {
-      text-align: center;
-      padding: 60px 20px 40px;
-      margin-bottom: 24px;
-      animation: fadeUp 1s ease;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      margin-bottom: 22px;
     }
 
-    .status {
+    .hero-main,
+    .hero-side,
+    .panel,
+    .tool-card,
+    .project-card,
+    .contact-card,
+    .mini-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-main {
+      padding: 34px 30px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .status-chip {
       display: inline-block;
-      padding: 8px 16px;
-      border: 1px solid rgba(0, 255, 200, 0.4);
+      width: fit-content;
+      padding: 9px 16px;
       border-radius: 999px;
-      color: #7fffd4;
-      margin-bottom: 20px;
-      font-size: 0.9rem;
+      border: 1px solid rgba(144, 255, 217, 0.35);
+      color: var(--green);
+      font-size: 0.88rem;
+      margin-bottom: 18px;
       letter-spacing: 1px;
-      box-shadow: 0 0 15px rgba(0, 255, 200, 0.15);
+      box-shadow: 0 0 16px rgba(144, 255, 217, 0.08);
     }
 
     h1 {
-      font-size: 3.2rem;
-      color: #7ddcff;
-      text-shadow: 0 0 12px rgba(0, 200, 255, 0.45);
-      margin-bottom: 14px;
+      font-size: 3.45rem;
+      line-height: 1.02;
+      margin-bottom: 16px;
+      color: var(--text);
     }
 
-    .typing-text {
+    .hero-highlight {
+      color: var(--blue);
+      text-shadow: 0 0 14px rgba(134, 220, 255, 0.22);
+    }
+
+    .typing-line {
       min-height: 28px;
-      max-width: 700px;
-      margin: 0 auto 22px;
-      font-size: 1.05rem;
-      color: #89f7e1;
-      letter-spacing: 1px;
-      border-right: 2px solid #89f7e1;
-      white-space: nowrap;
-      overflow: hidden;
       width: 0;
-      animation: typing 4s steps(42, end) forwards, blink 0.7s infinite;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--green);
+      color: var(--green);
+      font-size: 1rem;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+      animation: typing 4s steps(40, end) forwards, blink 0.7s infinite;
     }
 
     @keyframes typing {
@@ -184,7 +233,7 @@
       }
 
       to {
-        width: 42ch;
+        width: 40ch;
       }
     }
 
@@ -194,255 +243,282 @@
       }
     }
 
-    .subtitle {
+    .hero-text {
       max-width: 760px;
-      margin: 0 auto 28px;
-      font-size: 1.1rem;
-      color: #c7d9e8;
-      line-height: 1.7;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.05rem;
+      margin-bottom: 24px;
     }
 
-    .button-group {
+    .hero-actions {
       display: flex;
-      justify-content: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .btn {
       text-decoration: none;
-      padding: 12px 22px;
-      border-radius: 12px;
-      border: 1px solid rgba(0, 200, 255, 0.35);
-      color: #eaf6ff;
-      background: rgba(0, 180, 255, 0.08);
-      transition: 0.25s ease;
+      border: 1px solid rgba(134, 220, 255, 0.22);
+      background: rgba(134, 220, 255, 0.08);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 14px;
       font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.22s ease;
     }
 
     .btn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 0 18px rgba(0, 200, 255, 0.25);
-      background: rgba(0, 180, 255, 0.16);
+      transform: translateY(-2px);
+      background: rgba(134, 220, 255, 0.14);
+      box-shadow: 0 0 20px rgba(134, 220, 255, 0.12);
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-bottom: 28px;
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.04);
     }
 
-    .stat-card {
+    .hero-side {
       padding: 22px;
-      text-align: center;
-      transition: 0.25s ease;
+      display: grid;
+      gap: 16px;
+      align-content: start;
     }
 
-    .stat-card:hover,
-    .skill-box:hover,
-    .project-box:hover,
-    .section-card:hover,
-    .status-panel:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 32px rgba(0, 200, 255, 0.16);
-      border-color: rgba(0, 220, 255, 0.32);
+    .mini-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: var(--panel-strong);
     }
 
-    .stat-number {
+    .mini-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    .clock {
       font-size: 2rem;
       font-weight: bold;
-      color: #8be9ff;
-      margin-bottom: 8px;
+      color: var(--blue);
+      text-shadow: 0 0 14px rgba(134, 220, 255, 0.18);
     }
 
-    .stat-label {
-      color: #bfd4e5;
-      font-size: 0.95rem;
+    .date-line {
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.5;
     }
 
-    .two-col {
+    .live-state {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      gap: 8px;
+    }
+
+    .live-state p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
       gap: 20px;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
     }
 
-    .section-card,
-    .status-panel {
+    .panel {
       padding: 24px;
-      transition: 0.25s ease;
-      animation: fadeUp 1s ease;
     }
 
-    .section-card h2,
-    .status-panel h2,
-    .skills-section h2,
-    .projects-section h2,
-    .contact-section h2 {
-      color: #8be9ff;
+    .panel h2 {
+      color: var(--blue);
+      font-size: 1.35rem;
       margin-bottom: 12px;
-      font-size: 1.5rem;
     }
 
-    .section-card p,
-    .section-card li,
-    .status-panel p,
-    .projects-section p,
-    .contact-section p {
-      color: #c8d7e6;
-      line-height: 1.7;
-      font-size: 1rem;
+    .panel p,
+    .panel li {
+      color: var(--muted);
+      line-height: 1.75;
     }
 
-    ul {
+    .panel ul {
       padding-left: 18px;
     }
 
-    .skills-section,
-    .projects-section,
-    .contact-section {
-      margin-bottom: 28px;
+    .span-7 {
+      grid-column: span 7;
     }
 
-    .skills-grid {
+    .span-5 {
+      grid-column: span 5;
+    }
+
+    .span-4 {
+      grid-column: span 4;
+    }
+
+    .span-6 {
+      grid-column: span 6;
+    }
+
+    .span-8 {
+      grid-column: span 8;
+    }
+
+    .span-12 {
+      grid-column: span 12;
+    }
+
+    .quick-actions {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-top: 14px;
-    }
-
-    .skill-box {
-      padding: 18px;
-      transition: 0.25s ease;
-    }
-
-    .skill-box h3 {
-      color: #a8eeff;
-      margin-bottom: 8px;
-      font-size: 1.05rem;
-    }
-
-    .skill-box p {
-      color: #c8d7e6;
-      line-height: 1.6;
-      font-size: 0.95rem;
-    }
-
-    .projects-list {
-      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 16px;
       margin-top: 12px;
     }
 
-    .project-box {
-      padding: 18px;
+    .tool-card,
+    .project-card,
+    .contact-card {
+      padding: 20px;
       transition: 0.25s ease;
     }
 
-    .project-box h3 {
-      color: #a8eeff;
-      margin-bottom: 8px;
+    .tool-card:hover,
+    .project-card:hover,
+    .contact-card:hover,
+    .panel:hover,
+    .mini-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(134, 220, 255, 0.3);
+      box-shadow: 0 0 28px rgba(134, 220, 255, 0.12);
     }
 
-    .contact-links {
-      display: flex;
+    .tool-card h3,
+    .project-card h3,
+    .contact-card h3 {
+      color: var(--blue);
+      margin-bottom: 10px;
+      font-size: 1.08rem;
+    }
+
+    .tool-card p,
+    .project-card p,
+    .contact-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .projects-grid,
+    .tools-grid,
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .contact-console {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .contact-form {
+      display: grid;
       gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 16px;
+      margin-top: 12px;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      border: 1px solid rgba(134, 220, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      padding: 14px 14px;
+      border-radius: 14px;
+      outline: none;
+      font-size: 0.96rem;
+    }
+
+    .contact-form textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: #9fb1c6;
+    }
+
+    .response-box {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(134, 220, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      line-height: 1.7;
+      white-space: pre-wrap;
     }
 
     .footer {
+      margin-top: 24px;
       text-align: center;
-      margin-top: 28px;
-      color: #8ca3b8;
-      font-size: 0.95rem;
+      color: #8ea3ba;
+      font-size: 0.92rem;
+      padding: 12px 0 24px;
     }
 
-    .top-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      text-decoration: none;
-      padding: 12px 15px;
-      border-radius: 50%;
-      border: 1px solid rgba(0, 200, 255, 0.35);
-      color: #eaf6ff;
-      background: rgba(0, 180, 255, 0.12);
-      box-shadow: 0 0 20px rgba(0, 200, 255, 0.12);
-      z-index: 200;
-      transition: 0.25s ease;
-    }
-
-    .top-btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 0 20px rgba(0, 200, 255, 0.25);
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .widget-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 28px;
-    }
-
-    .live-panel {
-      padding: 24px;
-      transition: 0.25s ease;
-    }
-
-    .clock {
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: #8be9ff;
-      margin: 14px 0 8px;
-      text-shadow: 0 0 12px rgba(0, 200, 255, 0.25);
-    }
-
-    .clock-date {
-      color: #c8d7e6;
-      font-size: 1rem;
-    }
-
-    @media (max-width: 900px) {
-      .two-col {
+    @media (max-width: 1050px) {
+      .hero {
         grid-template-columns: 1fr;
       }
+
+      .contact-console {
+        grid-template-columns: 1fr;
+      }
+
+      .span-7,
+      .span-5,
+      .span-4,
+      .span-6,
+      .span-8 {
+        grid-column: span 12;
+      }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 760px) {
       .navbar {
         flex-direction: column;
-        gap: 12px;
+        align-items: flex-start;
       }
 
       h1 {
-        font-size: 2.3rem;
+        font-size: 2.45rem;
       }
 
-      .subtitle {
-        font-size: 1rem;
+      .hero-main {
+        padding: 26px 20px;
       }
 
-      .hero {
-        padding: 40px 16px 30px;
-      }
-
-      .typing-text {
-        white-space: normal;
+      .typing-line {
         width: 100%;
+        white-space: normal;
         border-right: none;
         animation: none;
       }
@@ -451,162 +527,238 @@
 </head>
 
 <body>
-  <div class="background-glow">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
+  <div class="background-orbs">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
   </div>
 
-  <div class="container">
+  <div class="shell">
     <nav class="navbar">
-      <div class="logo">Quinn Pixel // Quin Command Center</div>
+      <div class="brand">
+        <div class="brand-title">Quin AI Command Center</div>
+        <div class="brand-subtitle">Premium personal system // version 1</div>
+      </div>
+
       <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
+        <a href="#overview">Overview</a>
         <a href="#projects">Projects</a>
+        <a href="#tools">Tools</a>
         <a href="#contact">Contact</a>
-        <a href="projects.html">Projects Hub</a>
-        <a href="games.html">Gaming Zone</a>
-        <a href="workspace.html">Workspace Zone</a>
-        <a href="professional.html">Professional Mode</a>
+        <a href="professional.html">Professional</a>
+        <a href="games.html">Gaming</a>
+        <a href="workspace.html">Workspace</a>
+        <a href="projects.html">Hub</a>
       </div>
     </nav>
 
-    <section class="hero" id="top">
-      <div class="status">● SYSTEMS ONLINE</div>
-      <h1>Quinn Pixel // Quin Mode 🚀</h1>
-      <div class="typing-text">Initializing futuristic creator protocol...</div>
-      <p class="subtitle">
-        I’m building my digital world step by step — learning GitHub, exploring AI tools,
-        designing futuristic interfaces, and turning my ideas into real online projects.
-      </p>
+    <section class="hero" id="overview">
+      <div class="hero-main">
+        <div class="status-chip">● QUIN AI ONLINE</div>
+        <h1>
+          Build your <span class="hero-highlight">digital universe</span><br />
+          like a real command center.
+        </h1>
+        <div class="typing-line">Initializing premium creator protocol...</div>
+        <p class="hero-text">
+          This is the main operating layer of my website — a premium command center for
+          projects, tools, communication, gaming systems, and future AI workflows.
+          It is built to feel elegant, functional, and expandable.
+        </p>
 
-      <div class="button-group">
-        <a class="btn" href="https://github.com/Quinn-pixel" target="_blank">GitHub Core</a>
-        <a class="btn" href="#projects">Project Console</a>
-        <a class="btn" href="#contact">Contact Link</a>
+        <div class="hero-actions">
+          <a class="btn" href="#projects">Open Projects</a>
+          <a class="btn secondary" href="#tools">Explore Tools</a>
+          <a class="btn secondary" href="#contact">Contact Console</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="mini-card">
+          <div class="mini-label">Live System Time</div>
+          <div class="clock" id="liveClock">00:00:00</div>
+          <div class="date-line" id="liveDate">Loading date...</div>
+        </div>
+
+        <div class="mini-card live-state">
+          <div class="mini-label">System Status</div>
+          <p><strong>Mode:</strong> Premium Command Center</p>
+          <p><strong>State:</strong> Building, designing, expanding</p>
+          <p><strong>Focus:</strong> Function + elegance + utility</p>
+          <p><strong>Next:</strong> Quin AI workflows and real tools</p>
+        </div>
       </div>
     </section>
 
-    <section class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">3+</div>
-        <div class="stat-label">Live Upgrades</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">100%</div>
-        <div class="stat-label">Learning Mode</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">AI</div>
-        <div class="stat-label">Tools Explorer</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">∞</div>
-        <div class="stat-label">Ideas Loading</div>
-      </div>
-    </section>
-    <section class="widget-grid">
-      <div class="status-panel live-panel">
-        <h2>Live System Time</h2>
-        <div class="clock" id="liveClock">00:00:00</div>
-        <p class="clock-date" id="liveDate">Loading date...</p>
-      </div>
-
-      <div class="status-panel live-panel">
-        <h2>System Status</h2>
-        <p><strong>Mode:</strong> Quin Mode Active</p>
-        <p><strong>Status:</strong> Building and learning</p>
-        <p><strong>Focus:</strong> Web creation + productivity</p>
-        <p><strong>Output:</strong> Live site updates enabled</p>
-      </div>
-    </section>
-    <section class="two-col" id="about">
-      <div class="section-card">
-        <h2>About Me</h2>
+    <section class="dashboard-grid">
+      <div class="panel span-7">
+        <h2>Main Mission</h2>
         <p>
-          I’m exploring coding, AI tools, GitHub workflow, and futuristic web design.
-          This website is my command center — the place where I learn, build, improve,
-          and shape my own online identity one project at a time.
+          I am building more than a website. I am building a usable digital system:
+          something that looks premium, feels smooth, and grows into a place where real
+          tools, professional workflows, gaming ideas, and AI-powered features can live
+          together in one experience.
         </p>
       </div>
 
-      <div class="status-panel">
-        <h2>Current Status</h2>
-        <p>System focus: learning, building, and leveling up.</p>
+      <div class="panel span-5">
+        <h2>Core Focus</h2>
         <ul>
-          <li>GitHub Pages live</li>
-          <li>Antigravity workflow active</li>
-          <li>Quin Mode design evolving</li>
-          <li>New project ideas incoming</li>
+          <li>Premium design language</li>
+          <li>Useful tools and workflows</li>
+          <li>AI-assisted communication</li>
+          <li>Gaming and workspace systems</li>
+          <li>Future-ready expansion</li>
         </ul>
       </div>
     </section>
 
-    <section class="skills-section" id="skills">
-      <h2>Tools & Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-box">
-          <h3>GitHub</h3>
-          <p>Using repositories, commits, pushes, and live deployment through GitHub Pages.</p>
-        </div>
-        <div class="skill-box">
-          <h3>Antigravity</h3>
-          <p>Editing and shaping code with an AI-assisted workflow on desktop.</p>
-        </div>
-        <div class="skill-box">
-          <h3>HTML & CSS</h3>
-          <p>Building responsive pages, layouts, buttons, cards, and futuristic styling.</p>
-        </div>
-        <div class="skill-box">
-          <h3>Creative Direction</h3>
-          <p>Turning ideas into a visual identity with themes, structure, and vibe.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="projects-section section-card" id="projects">
-      <h2>Projects</h2>
-      <p>These are the missions I’m building step by step.</p>
-
-      <div class="projects-list">
-        <div class="project-box">
-          <h3>Project 01 — Quin Homepage</h3>
-          <p>My first futuristic homepage built with HTML and CSS, hosted live on GitHub Pages.</p>
+    <section class="panel span-12" style="margin-bottom: 22px;">
+      <h2>Quick Actions</h2>
+      <div class="quick-actions">
+        <div class="tool-card">
+          <h3>Professional Mode</h3>
+          <p>Open the clean portfolio-style presentation layer.</p>
+          <a class="btn secondary" href="professional.html">Launch</a>
         </div>
 
-        <div class="project-box">
-          <h3>Project 02 — Gamer Tools</h3>
-          <p>Planned future section for game-related utilities, smart layouts, and custom ideas.</p>
+        <div class="tool-card">
+          <h3>Gaming Zone</h3>
+          <p>Access gaming notes, future tools, and setup ideas.</p>
+          <a class="btn secondary" href="games.html">Launch</a>
         </div>
 
-        <div class="project-box">
-          <h3>Project 03 — AI Experiments</h3>
-          <p>Future space for AI-based mini tools, interface concepts, and interactive features.</p>
+        <div class="tool-card">
+          <h3>Workspace Zone</h3>
+          <p>Move into productivity, study, and project-growth space.</p>
+          <a class="btn secondary" href="workspace.html">Launch</a>
+        </div>
+
+        <div class="tool-card">
+          <h3>Projects Hub</h3>
+          <p>View all major website zones from one central page.</p>
+          <a class="btn secondary" href="projects.html">Launch</a>
         </div>
       </div>
     </section>
 
-    <section class="contact-section section-card" id="contact">
-      <h2>Contact</h2>
-      <p>
-        For now, my GitHub and email are the main ways to reach my work and follow my progress.
-      </p>
+    <section id="projects" style="margin-bottom: 22px;">
+      <h2 class="section-title">Active Project Systems</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>Quin Command Layer</h3>
+          <p>
+            The premium front-facing operating shell of the whole website.
+          </p>
+        </div>
 
-      <div class="contact-links">
-        <a class="btn" href="https://github.com/Quinn-pixel" target="_blank">Open GitHub</a>
-        <a class="btn" href="mailto:AnitBiswas19@gmail.com">Email Me</a>
+        <div class="project-card">
+          <h3>Professional Layer</h3>
+          <p>
+            A cleaner mode for structured presentation and polished identity.
+          </p>
+        </div>
+
+        <div class="project-card">
+          <h3>Gaming Utility Zone</h3>
+          <p>
+            A future base for gaming notes, settings logic, and mini tools.
+          </p>
+        </div>
+
+        <div class="project-card">
+          <h3>Workspace System</h3>
+          <p>
+            The focused layer for study, research, and productive growth.
+          </p>
+        </div>
       </div>
     </section>
 
-    <p class="footer">Quinn Pixel // Quin Command Center // Version 4.0</p>
+    <section id="tools" style="margin-bottom: 22px;">
+      <h2 class="section-title">Tool Concepts</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <h3>Quin AI Contact Drafting</h3>
+          <p>
+            A future assistant that helps turn user messages into polished, professional replies.
+          </p>
+        </div>
+
+        <div class="tool-card">
+          <h3>Case / Data Workflow Tool</h3>
+          <p>
+            A future structured tool for entering and organizing de-identified case-style data.
+          </p>
+        </div>
+
+        <div class="tool-card">
+          <h3>Gaming Notes Console</h3>
+          <p>
+            A useful module for tracking settings, observations, and gameplay ideas.
+          </p>
+        </div>
+
+        <div class="tool-card">
+          <h3>Multi-System Dashboard</h3>
+          <p>
+            A future control room for managing several workflows from one place.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-bottom: 22px;">
+      <h2 class="section-title">Contact Console</h2>
+      <div class="contact-console">
+        <div class="contact-card">
+          <h3>Direct Contact</h3>
+          <p>
+            Reach my work, my projects, or my professional communication layer from here.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="mailto:AnitBiswas19@gmail.com">Email Me</a>
+            <a class="btn secondary" href="https://github.com/Quinn-pixel" target="_blank">GitHub</a>
+            <button class="btn secondary" onclick="copyEmail()">Copy Email</button>
+          </div>
+          <div class="response-box" id="copyMessage">Ready.</div>
+        </div>
+
+        <div class="contact-card">
+          <h3>Quin AI Reply Draft</h3>
+          <p>
+            This is the first smart contact experience. Enter a message type and Quin will draft
+            a polished response style preview.
+          </p>
+
+          <div class="contact-form">
+            <select id="messageType">
+              <option value="collaboration">Collaboration inquiry</option>
+              <option value="project">Project discussion</option>
+              <option value="professional">Professional introduction</option>
+              <option value="general">General contact</option>
+            </select>
+
+            <input id="senderName" type="text" placeholder="Sender name" />
+            <textarea id="senderMessage" placeholder="Write the incoming message idea here..."></textarea>
+            <button class="btn" onclick="generateReply()">Generate Quin Reply</button>
+          </div>
+
+          <div class="response-box" id="replyOutput">
+            Quin AI draft will appear here.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Quinn AI Command Center // Premium Single Page V1
+    </div>
   </div>
 
-  <a class="top-btn" href="#top">↑</a>
   <script>
     function updateClock() {
       const now = new Date();
-
       const time = now.toLocaleTimeString();
       const date = now.toLocaleDateString(undefined, {
         weekday: "long",
@@ -617,6 +769,58 @@
 
       document.getElementById("liveClock").textContent = time;
       document.getElementById("liveDate").textContent = date;
+    }
+
+    function copyEmail() {
+      navigator.clipboard.writeText("AnitBiswas19@gmail.com").then(function () {
+        document.getElementById("copyMessage").textContent = "Email copied: AnitBiswas19@gmail.com";
+      }).catch(function () {
+        document.getElementById("copyMessage").textContent = "Could not copy email.";
+      });
+    }
+
+    function generateReply() {
+      const type = document.getElementById("messageType").value;
+      const name = document.getElementById("senderName").value.trim() || "there";
+      const message = document.getElementById("senderMessage").value.trim();
+
+      let intro = "";
+      let body = "";
+      let closing = "";
+
+      if (type === "collaboration") {
+        intro = `Dear ${name},`;
+        body = "Thank you for reaching out regarding a possible collaboration. I appreciate your interest and would be glad to understand the scope, goals, and expected direction of the work more clearly.";
+        closing = "Please feel free to share the relevant details, and I will review them carefully.";
+      } else if (type === "project") {
+        intro = `Hello ${name},`;
+        body = "Thank you for your message regarding the project. I appreciate you taking the time to connect and outline your idea.";
+        closing = "I would be happy to continue the discussion once I have a clearer view of the project requirements and expectations.";
+      } else if (type === "professional") {
+        intro = `Hello ${name},`;
+        body = "Thank you for your professional introduction and for connecting with me. I appreciate the opportunity to engage in a thoughtful and constructive conversation.";
+        closing = "Please share any relevant context or objectives, and I will respond as clearly and professionally as possible.";
+      } else {
+        intro = `Hello ${name},`;
+        body = "Thank you for reaching out. I appreciate your message and your interest in connecting.";
+        closing = "I will be glad to review your message and continue the conversation in a clear and professional manner.";
+      }
+
+      const detailLine = message
+        ? `\n\nMessage context received:\n"${message}"`
+        : "";
+
+      const finalReply =
+        `${intro}
+
+${body}${detailLine}
+
+${closing}
+
+Best regards,
+Quinn Pixel`;
+
+      document.getElementById("replyOutput").textContent = finalReply;
     }
 
     updateClock();
