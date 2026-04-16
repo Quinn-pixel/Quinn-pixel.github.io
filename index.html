@@ -391,6 +391,31 @@
       }
     }
 
+    .widget-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .live-panel {
+      padding: 24px;
+      transition: 0.25s ease;
+    }
+
+    .clock {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #8be9ff;
+      margin: 14px 0 8px;
+      text-shadow: 0 0 12px rgba(0, 200, 255, 0.25);
+    }
+
+    .clock-date {
+      color: #c8d7e6;
+      font-size: 1rem;
+    }
+
     @media (max-width: 900px) {
       .two-col {
         grid-template-columns: 1fr;
@@ -478,7 +503,21 @@
         <div class="stat-label">Ideas Loading</div>
       </div>
     </section>
+    <section class="widget-grid">
+      <div class="status-panel live-panel">
+        <h2>Live System Time</h2>
+        <div class="clock" id="liveClock">00:00:00</div>
+        <p class="clock-date" id="liveDate">Loading date...</p>
+      </div>
 
+      <div class="status-panel live-panel">
+        <h2>System Status</h2>
+        <p><strong>Mode:</strong> Quin Mode Active</p>
+        <p><strong>Status:</strong> Building and learning</p>
+        <p><strong>Focus:</strong> Web creation + productivity</p>
+        <p><strong>Output:</strong> Live site updates enabled</p>
+      </div>
+    </section>
     <section class="two-col" id="about">
       <div class="section-card">
         <h2>About Me</h2>
@@ -561,6 +600,25 @@
   </div>
 
   <a class="top-btn" href="#top">↑</a>
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      const time = now.toLocaleTimeString();
+      const date = now.toLocaleDateString(undefined, {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+
+      document.getElementById("liveClock").textContent = time;
+      document.getElementById("liveDate").textContent = date;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
 </body>
 
 </html>
