@@ -7,30 +7,32 @@
     <title>Quin AI Dashboard</title>
     <style>
         :root {
-            --bg: #0d0f14;
-            --bg-2: #131722;
-            --panel: rgba(23, 27, 36, 0.78);
-            --panel-strong: rgba(28, 33, 44, 0.9);
-            --panel-soft: rgba(255, 255, 255, 0.04);
-            --border: rgba(255, 255, 255, 0.08);
-            --text: #f4f6f8;
-            --muted: #aab3bf;
-            --accent: #ff5a36;
-            --accent-soft: #ff8b73;
-            --blue: #8ec5ff;
-            --green: #6ee7c8;
-            --shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
-            --radius-xl: 30px;
-            --radius-lg: 24px;
+            --bg: #f6f1ea;
+            --bg-2: #efe7dd;
+            --bg-3: #fbf8f4;
+            --panel: rgba(255, 255, 255, 0.72);
+            --panel-strong: rgba(255, 255, 255, 0.86);
+            --panel-soft: rgba(255, 255, 255, 0.58);
+            --border: rgba(48, 38, 28, 0.08);
+            --text: #171717;
+            --muted: #6b6b6b;
+            --accent: #d84f2a;
+            --accent-soft: #ec7d5b;
+            --blue: #5f8fff;
+            --green: #2ca67d;
+            --shadow-lg: 0 20px 45px rgba(55, 39, 22, 0.08);
+            --shadow-md: 0 10px 24px rgba(55, 39, 22, 0.06);
+            --radius-xl: 32px;
+            --radius-lg: 26px;
             --radius-md: 18px;
-            --sidebar-width: 220px;
+            --sidebar-width: 230px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
         }
 
         html {
@@ -39,9 +41,9 @@
 
         body {
             background:
-                radial-gradient(circle at top left, rgba(255, 90, 54, 0.12), transparent 18%),
-                radial-gradient(circle at bottom right, rgba(142, 197, 255, 0.12), transparent 20%),
-                linear-gradient(180deg, #0c0f15 0%, #10141c 60%, #0b0e13 100%);
+                radial-gradient(circle at top left, rgba(216, 79, 42, 0.10), transparent 18%),
+                radial-gradient(circle at top right, rgba(95, 143, 255, 0.10), transparent 20%),
+                linear-gradient(180deg, var(--bg-3) 0%, var(--bg) 52%, var(--bg-2) 100%);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
@@ -60,26 +62,26 @@
             content: "";
             position: absolute;
             border-radius: 50%;
-            filter: blur(70px);
+            filter: blur(80px);
             opacity: 0.18;
-            animation: floatGlow 18s ease-in-out infinite alternate;
+            animation: floatGlow 20s ease-in-out infinite alternate;
         }
 
         .ambient::before {
             width: 320px;
             height: 320px;
-            background: rgba(255, 90, 54, 0.35);
+            background: rgba(216, 79, 42, 0.22);
             top: 10%;
-            left: 4%;
+            left: 5%;
         }
 
         .ambient::after {
             width: 340px;
             height: 340px;
-            background: rgba(142, 197, 255, 0.25);
+            background: rgba(95, 143, 255, 0.18);
             bottom: 8%;
-            right: 6%;
-            animation-duration: 23s;
+            right: 8%;
+            animation-duration: 24s;
         }
 
         @keyframes floatGlow {
@@ -88,7 +90,7 @@
             }
 
             to {
-                transform: translate(24px, -18px) scale(1.06);
+                transform: translate(20px, -16px) scale(1.05);
             }
         }
 
@@ -105,7 +107,7 @@
             top: 0;
             height: 100vh;
             padding: 18px 14px;
-            background: rgba(15, 18, 25, 0.86);
+            background: rgba(255, 255, 255, 0.54);
             border-right: 1px solid var(--border);
             backdrop-filter: blur(18px);
         }
@@ -119,33 +121,33 @@
         }
 
         .brand-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, rgba(255, 90, 54, 0.22), rgba(142, 197, 255, 0.18));
+            width: 42px;
+            height: 42px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(216, 79, 42, 0.14), rgba(95, 143, 255, 0.12));
             border: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-md);
         }
 
         .brand h1 {
-            font-size: 1rem;
+            font-size: 1.02rem;
             margin-bottom: 2px;
         }
 
         .brand p {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             color: var(--muted);
         }
 
         .search-mini {
             margin: 8px 8px 16px;
-            padding: 11px 12px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.04);
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.55);
             border: 1px solid var(--border);
             color: var(--muted);
             font-size: 0.92rem;
@@ -155,7 +157,7 @@
             font-size: 0.72rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: #7f8896;
+            color: #8d7c6d;
             padding: 12px 12px 8px;
         }
 
@@ -164,22 +166,23 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            color: var(--muted);
+            color: #4a433d;
             padding: 12px 12px;
             margin: 4px 6px;
-            border-radius: 14px;
+            border-radius: 16px;
             transition: 0.22s ease;
             position: relative;
         }
 
         .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text);
+            background: rgba(0, 0, 0, 0.04);
+            color: #111;
         }
 
         .nav-link.active {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
+            background: rgba(255, 255, 255, 0.68);
+            color: #111;
+            box-shadow: var(--shadow-md);
         }
 
         .nav-link.active::before {
@@ -203,10 +206,10 @@
             justify-content: space-between;
             gap: 16px;
             padding: 14px 18px;
-            border-radius: 22px;
-            background: rgba(19, 23, 34, 0.78);
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.62);
             border: 1px solid var(--border);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-md);
             backdrop-filter: blur(18px);
             margin-bottom: 18px;
         }
@@ -223,35 +226,36 @@
         }
 
         .red {
-            background: #ff5f57;
+            background: #ff6b5f;
         }
 
         .yellow {
-            background: #febc2e;
+            background: #f2b74d;
         }
 
         .green {
-            background: #28c840;
+            background: #34b27b;
         }
 
         .top-search {
             flex: 1;
             max-width: 520px;
-            padding: 12px 14px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.04);
+            padding: 13px 15px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.58);
             border: 1px solid var(--border);
             color: var(--text);
             outline: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
         }
 
         .live-badge {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 12px;
+            padding: 10px 13px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.56);
             border: 1px solid var(--border);
             color: var(--muted);
             font-size: 0.92rem;
@@ -262,21 +266,21 @@
             height: 9px;
             border-radius: 50%;
             background: var(--green);
-            box-shadow: 0 0 0 rgba(110, 231, 200, 0.45);
+            box-shadow: 0 0 0 rgba(44, 166, 125, 0.45);
             animation: pulseDot 1.8s infinite;
         }
 
         @keyframes pulseDot {
             0% {
-                box-shadow: 0 0 0 0 rgba(110, 231, 200, 0.45);
+                box-shadow: 0 0 0 0 rgba(44, 166, 125, 0.45);
             }
 
             70% {
-                box-shadow: 0 0 0 12px rgba(110, 231, 200, 0);
+                box-shadow: 0 0 0 12px rgba(44, 166, 125, 0);
             }
 
             100% {
-                box-shadow: 0 0 0 0 rgba(110, 231, 200, 0);
+                box-shadow: 0 0 0 0 rgba(44, 166, 125, 0);
             }
         }
 
@@ -291,7 +295,7 @@
             background: var(--panel);
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
             backdrop-filter: blur(16px);
             transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
             overflow: hidden;
@@ -299,18 +303,18 @@
 
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 24px 54px rgba(0, 0, 0, 0.32);
-            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 24px 52px rgba(55, 39, 22, 0.10);
+            border-color: rgba(48, 38, 28, 0.10);
         }
 
         .hero-feature {
-            min-height: 430px;
+            min-height: 440px;
             position: relative;
             display: flex;
             align-items: flex-end;
-            padding: 28px;
+            padding: 30px;
             background:
-                linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.55)),
+                linear-gradient(180deg, rgba(24, 17, 12, 0.08), rgba(24, 17, 12, 0.58)),
                 url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
         }
 
@@ -318,8 +322,8 @@
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(90deg, rgba(255, 90, 54, 0.08), transparent 35%),
-                linear-gradient(180deg, transparent 20%, rgba(0, 0, 0, 0.55) 100%);
+                linear-gradient(90deg, rgba(216, 79, 42, 0.12), transparent 35%),
+                linear-gradient(180deg, transparent 20%, rgba(0, 0, 0, 0.48) 100%);
             pointer-events: none;
         }
 
@@ -331,43 +335,40 @@
 
         .system-label {
             display: inline-block;
-            padding: 8px 14px;
+            padding: 9px 15px;
             border-radius: 999px;
-            border: 1px solid rgba(255, 90, 54, 0.22);
-            background: rgba(255, 90, 54, 0.08);
-            color: #ffb6a7;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(216, 79, 42, 0.14);
+            color: #ffd1c5;
             margin-bottom: 16px;
             font-size: 0.85rem;
             letter-spacing: 1px;
         }
 
+        .hero-meta {
+            color: #ffd2c7;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
         .hero-title {
-            font-size: 4.4rem;
+            font-size: 4.5rem;
             line-height: 0.94;
             font-weight: 900;
             letter-spacing: -2px;
             text-transform: uppercase;
             margin-bottom: 14px;
-        }
-
-        .hero-title .accent {
-            color: #ffffff;
+            color: #fff;
         }
 
         .hero-subtitle {
-            color: #d2d8df;
-            line-height: 1.75;
+            color: #ebe5df;
+            line-height: 1.78;
             max-width: 720px;
             margin-bottom: 18px;
             font-size: 1rem;
-        }
-
-        .hero-meta {
-            color: #ff8b73;
-            font-size: 0.92rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
         }
 
         .hero-actions {
@@ -378,25 +379,27 @@
 
         .btn {
             appearance: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(48, 38, 28, 0.08);
+            background: rgba(255, 255, 255, 0.72);
             color: var(--text);
-            border-radius: 16px;
-            padding: 12px 16px;
-            font-weight: bold;
+            border-radius: 18px;
+            padding: 12px 18px;
+            font-weight: 700;
             text-decoration: none;
             cursor: pointer;
             transition: 0.22s ease;
+            box-shadow: var(--shadow-md);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .btn.primary {
-            background: rgba(255, 90, 54, 0.15);
-            border-color: rgba(255, 90, 54, 0.16);
+            background: linear-gradient(135deg, rgba(216, 79, 42, 0.88), rgba(236, 125, 91, 0.88));
+            color: white;
+            border-color: transparent;
         }
 
         .side-stack {
@@ -405,12 +408,13 @@
         }
 
         .side-card {
-            padding: 22px;
-            min-height: 206px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+            padding: 24px;
+            min-height: 211px;
+            background: var(--panel-strong);
             display: flex;
             flex-direction: column;
             justify-content: center;
+            border-radius: var(--radius-xl);
         }
 
         .side-title {
@@ -420,8 +424,8 @@
         }
 
         .clock {
-            font-size: 2.25rem;
-            font-weight: bold;
+            font-size: 2.35rem;
+            font-weight: 800;
             color: var(--blue);
             margin-bottom: 6px;
         }
@@ -435,13 +439,13 @@
             display: grid;
             gap: 10px;
             color: var(--muted);
-            line-height: 1.65;
+            line-height: 1.7;
         }
 
         .progress {
             width: 100%;
             height: 8px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 999px;
             overflow: hidden;
             margin-top: 10px;
@@ -465,11 +469,11 @@
         }
 
         .section {
-            margin-bottom: 18px;
+            margin-bottom: 22px;
         }
 
         .section-title {
-            font-size: 1.55rem;
+            font-size: 1.6rem;
             margin-bottom: 14px;
             color: var(--text);
         }
@@ -493,26 +497,36 @@
         }
 
         .panel-card {
-            padding: 22px;
-            border-radius: 26px;
+            padding: 24px;
+            border-radius: 28px;
             background: var(--panel-strong);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .panel-top {
+            display: block;
         }
 
         .panel-card .icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 14px;
+            width: 42px;
+            height: 42px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.04);
             margin-bottom: 14px;
             font-size: 16px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
         .panel-card h3 {
-            font-size: 1.08rem;
+            font-size: 1.12rem;
             margin-bottom: 10px;
+            color: #171717;
         }
 
         .panel-card p,
@@ -523,6 +537,10 @@
 
         .panel-card ul {
             padding-left: 18px;
+        }
+
+        .launch-wrap {
+            margin-top: 18px;
         }
 
         .contact-grid {
@@ -541,12 +559,13 @@
         .textarea,
         .select {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(48, 38, 28, 0.08);
             color: var(--text);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 13px 14px;
             outline: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
         }
 
         .textarea {
@@ -556,23 +575,71 @@
 
         .input::placeholder,
         .textarea::placeholder {
-            color: #8c96a3;
+            color: #8c8c8c;
         }
 
         .output {
             margin-top: 14px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            border: 1px solid rgba(48, 38, 28, 0.08);
+            background: rgba(255, 255, 255, 0.62);
             padding: 16px;
             color: var(--muted);
             line-height: 1.7;
             white-space: pre-wrap;
+            min-height: 76px;
+        }
+
+        .notes-area {
+            width: 100%;
+            min-height: 180px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(48, 38, 28, 0.08);
+            color: var(--text);
+            border-radius: 20px;
+            padding: 16px;
+            outline: none;
+            resize: vertical;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        }
+
+        .task-input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .task-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.66);
+            border: 1px solid rgba(48, 38, 28, 0.08);
+            border-radius: 16px;
+            padding: 12px 14px;
+            color: #333;
+        }
+
+        .task-item button {
+            border: none;
+            background: rgba(216, 79, 42, 0.10);
+            color: var(--accent);
+            border-radius: 12px;
+            padding: 8px 10px;
+            cursor: pointer;
+            font-weight: 700;
         }
 
         .footer {
             margin-top: 14px;
-            color: #8c96a3;
+            color: #877c72;
             text-align: center;
             padding: 10px 0 20px;
             font-size: 0.92rem;
@@ -620,6 +687,10 @@
             .grid-3 {
                 grid-template-columns: 1fr;
             }
+
+            .task-input-row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -633,7 +704,7 @@
                 <div class="brand-logo">◈</div>
                 <div>
                     <h1>Quin AI</h1>
-                    <p>Dashboard // cinematic beta</p>
+                    <p>Dashboard // cream cinematic</p>
                 </div>
             </div>
 
@@ -661,7 +732,7 @@
                     <span class="dot green"></span>
                 </div>
 
-                <input class="top-search" type="text" placeholder="Search Quin AI dashboard" />
+                <input class="top-search" id="dashboardSearch" type="text" placeholder="Search Quin AI dashboard" />
 
                 <div class="live-badge">
                     <span class="pulse"></span>
@@ -677,12 +748,11 @@
                         <div class="hero-meta">Season 01 // Quin AI</div>
                         <div class="hero-title">
                             Command<br />
-                            <span class="accent">Center</span>
+                            Center
                         </div>
                         <p class="hero-subtitle">
-                            A cinematic premium dashboard built with bold visual identity, smooth Apple-like rounded
-                            modules,
-                            live system behavior, and future-ready tools for work, gaming, and smart communication.
+                            A brighter cinematic dashboard with smooth rounded-square modules, premium spacing,
+                            cleaner controls, and real tools for work, gaming, notes, and smart communication.
                         </p>
                         <div class="hero-actions">
                             <a class="btn primary" href="#projects">Open Projects</a>
@@ -702,7 +772,7 @@
                     <div class="card side-card">
                         <div class="side-title">System Status</div>
                         <div class="status-list">
-                            <p><strong>Mode:</strong> Cinematic premium dashboard</p>
+                            <p><strong>Mode:</strong> Cream cinematic dashboard</p>
                             <p><strong>Status:</strong> Live and expanding</p>
                             <p><strong>Focus:</strong> Utility + elegance + strong identity</p>
                         </div>
@@ -716,32 +786,48 @@
             <section class="section">
                 <h2 class="section-title">Quick Actions</h2>
                 <div class="grid-4">
-                    <div class="card panel-card">
-                        <div class="icon">▣</div>
-                        <h3>Professional</h3>
-                        <p>Open the structured and calmer portfolio presentation layer.</p>
-                        <a class="btn" href="professional.html">Launch</a>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <div class="icon">▣</div>
+                            <h3>Professional</h3>
+                            <p>Open the structured and calmer portfolio presentation layer.</p>
+                        </div>
+                        <div class="launch-wrap">
+                            <a class="btn" href="professional.html">Launch</a>
+                        </div>
                     </div>
 
-                    <div class="card panel-card">
-                        <div class="icon">▤</div>
-                        <h3>Gaming Zone</h3>
-                        <p>Access game notes, future tools, settings ideas, and trackers.</p>
-                        <a class="btn" href="games.html">Launch</a>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <div class="icon">▤</div>
+                            <h3>Gaming Zone</h3>
+                            <p>Access game notes, future tools, settings ideas, and trackers.</p>
+                        </div>
+                        <div class="launch-wrap">
+                            <a class="btn" href="games.html">Launch</a>
+                        </div>
                     </div>
 
-                    <div class="card panel-card">
-                        <div class="icon">▥</div>
-                        <h3>Workspace</h3>
-                        <p>Move into productivity, study, planning, and research spaces.</p>
-                        <a class="btn" href="workspace.html">Launch</a>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <div class="icon">▥</div>
+                            <h3>Workspace</h3>
+                            <p>Move into productivity, study, planning, and research spaces.</p>
+                        </div>
+                        <div class="launch-wrap">
+                            <a class="btn" href="workspace.html">Launch</a>
+                        </div>
                     </div>
 
-                    <div class="card panel-card">
-                        <div class="icon">◧</div>
-                        <h3>Projects Hub</h3>
-                        <p>See the bigger structure of the full Quin website ecosystem.</p>
-                        <a class="btn" href="projects.html">Launch</a>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <div class="icon">◧</div>
+                            <h3>Projects Hub</h3>
+                            <p>See the bigger structure of the full Quin website ecosystem.</p>
+                        </div>
+                        <div class="launch-wrap">
+                            <a class="btn" href="projects.html">Launch</a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -749,32 +835,40 @@
             <section class="section" id="projects">
                 <h2 class="section-title">Featured Systems</h2>
                 <div class="grid-3">
-                    <div class="card panel-card">
-                        <div class="icon">✦</div>
-                        <h3>Quin Command Layer</h3>
-                        <p>The premium identity shell and main front-facing system of your website.</p>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <div class="icon">✦</div>
+                            <h3>Quin Command Layer</h3>
+                            <p>The premium identity shell and main front-facing system of your website.</p>
+                        </div>
                     </div>
 
-                    <div class="card panel-card">
-                        <div class="icon">◫</div>
-                        <h3>Project Ecosystem</h3>
-                        <p>Connected pages and modules that now behave like one digital product system.</p>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <div class="icon">◫</div>
+                            <h3>Project Ecosystem</h3>
+                            <p>Connected pages and modules that now behave like one digital product system.</p>
+                        </div>
                     </div>
 
-                    <div class="card panel-card">
-                        <div class="icon">⚙</div>
-                        <h3>Future Smart Modules</h3>
-                        <p>Where your real interactive tools, workflows, and AI-based features will live.</p>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <div class="icon">⚙</div>
+                            <h3>Future Smart Modules</h3>
+                            <p>Where your real interactive tools, workflows, and AI-based features will live.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section class="section" id="tools">
-                <h2 class="section-title">Live Tool Concepts</h2>
+                <h2 class="section-title">Working Tools</h2>
                 <div class="grid-2">
-                    <div class="card panel-card">
-                        <h3>Quin AI Reply Drafting</h3>
-                        <p>Generate polished response language for professional communication and quick replies.</p>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Quin AI Reply Drafting</h3>
+                            <p>Generate polished response language for professional communication and quick replies.</p>
+                        </div>
                         <ul>
                             <li>Collaboration responses</li>
                             <li>Project inquiry replies</li>
@@ -782,10 +876,35 @@
                         </ul>
                     </div>
 
-                    <div class="card panel-card">
-                        <h3>Data / Case Workflow Vision</h3>
-                        <p>Future structured module for organizing de-identified case-style entries and clean output
-                            systems.</p>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Quick Notes Pad</h3>
+                            <p>Write and keep quick notes locally in your browser.</p>
+                            <textarea class="notes-area" id="notesPad"
+                                placeholder="Write your notes here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top:18px;">
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Task Launcher</h3>
+                            <p>Add simple tasks and remove them when done.</p>
+                            <div class="task-input-row">
+                                <input class="input" id="taskInput" type="text" placeholder="Enter a task..." />
+                                <button class="btn primary" onclick="addTask()">Add Task</button>
+                            </div>
+                            <div class="task-list" id="taskList"></div>
+                        </div>
+                    </div>
+
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Case / Data Workflow Vision</h3>
+                            <p>Future structured module for organizing de-identified case-style entries and clean output
+                                systems.</p>
+                        </div>
                         <ul>
                             <li>Structured form flow</li>
                             <li>Merge and organize data</li>
@@ -798,42 +917,46 @@
             <section class="section" id="contact">
                 <h2 class="section-title">Contact Console</h2>
                 <div class="contact-grid">
-                    <div class="card panel-card">
-                        <h3>Direct Contact</h3>
-                        <p>Reach your email, projects, and GitHub from one clean console.</p>
-                        <div class="hero-actions">
-                            <a class="btn primary" href="mailto:AnitBiswas19@gmail.com">Email Me</a>
-                            <a class="btn" href="https://github.com/Quinn-pixel" target="_blank">GitHub</a>
-                            <button class="btn" onclick="copyEmail()">Copy Email</button>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Direct Contact</h3>
+                            <p>Reach your email, projects, and GitHub from one clean console.</p>
+                            <div class="hero-actions">
+                                <a class="btn primary" href="mailto:AnitBiswas19@gmail.com">Email Me</a>
+                                <a class="btn" href="https://github.com/Quinn-pixel" target="_blank">GitHub</a>
+                                <button class="btn" onclick="copyEmail()">Copy Email</button>
+                            </div>
+                            <div class="output" id="copyMessage">Ready.</div>
                         </div>
-                        <div class="output" id="copyMessage">Ready.</div>
                     </div>
 
-                    <div class="card panel-card">
-                        <h3>Quin Smart Reply</h3>
-                        <p>Preview a polished draft based on the type of incoming message.</p>
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Quin Smart Reply</h3>
+                            <p>Preview a polished draft based on the type of incoming message.</p>
 
-                        <div class="form-grid">
-                            <select id="messageType" class="select">
-                                <option value="collaboration">Collaboration inquiry</option>
-                                <option value="project">Project discussion</option>
-                                <option value="professional">Professional introduction</option>
-                                <option value="general">General contact</option>
-                            </select>
+                            <div class="form-grid">
+                                <select id="messageType" class="select">
+                                    <option value="collaboration">Collaboration inquiry</option>
+                                    <option value="project">Project discussion</option>
+                                    <option value="professional">Professional introduction</option>
+                                    <option value="general">General contact</option>
+                                </select>
 
-                            <input id="senderName" class="input" type="text" placeholder="Sender name" />
-                            <textarea id="senderMessage" class="textarea"
-                                placeholder="Write the incoming message idea here..."></textarea>
-                            <button class="btn primary" onclick="generateReply()">Generate Quin Reply</button>
+                                <input id="senderName" class="input" type="text" placeholder="Sender name" />
+                                <textarea id="senderMessage" class="textarea"
+                                    placeholder="Write the incoming message idea here..."></textarea>
+                                <button class="btn primary" onclick="generateReply()">Generate Quin Reply</button>
+                            </div>
+
+                            <div class="output" id="replyOutput">Quin AI draft will appear here.</div>
                         </div>
-
-                        <div class="output" id="replyOutput">Quin AI draft will appear here.</div>
                     </div>
                 </div>
             </section>
 
             <div class="footer">
-                Quin AI Dashboard // Cinematic premium concept v2
+                Quin AI Dashboard // Cream cinematic premium concept v3
             </div>
         </main>
     </div>
@@ -905,8 +1028,81 @@ Quinn Pixel`;
             document.getElementById("replyOutput").textContent = finalReply;
         }
 
+        function addTask() {
+            const input = document.getElementById("taskInput");
+            const list = document.getElementById("taskList");
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            const item = document.createElement("div");
+            item.className = "task-item";
+            item.innerHTML = `<span>${text}</span><button type="button">Done</button>`;
+
+            item.querySelector("button").addEventListener("click", function () {
+                item.remove();
+                saveTasks();
+            });
+
+            list.appendChild(item);
+            input.value = "";
+            saveTasks();
+        }
+
+        function saveTasks() {
+            const tasks = [...document.querySelectorAll("#taskList .task-item span")].map(el => el.textContent);
+            localStorage.setItem("quinTasks", JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem("quinTasks") || "[]");
+            const list = document.getElementById("taskList");
+            list.innerHTML = "";
+
+            tasks.forEach(task => {
+                const item = document.createElement("div");
+                item.className = "task-item";
+                item.innerHTML = `<span>${task}</span><button type="button">Done</button>`;
+                item.querySelector("button").addEventListener("click", function () {
+                    item.remove();
+                    saveTasks();
+                });
+                list.appendChild(item);
+            });
+        }
+
+        function loadNotes() {
+            const saved = localStorage.getItem("quinNotes");
+            const notes = document.getElementById("notesPad");
+            if (saved && notes) notes.value = saved;
+            if (notes) {
+                notes.addEventListener("input", function () {
+                    localStorage.setItem("quinNotes", notes.value);
+                });
+            }
+        }
+
+        function setupSearch() {
+            const search = document.getElementById("dashboardSearch");
+            const cards = document.querySelectorAll(".searchable");
+
+            if (!search) return;
+
+            search.addEventListener("input", function () {
+                const query = search.value.toLowerCase().trim();
+
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    card.style.display = text.includes(query) ? "" : "none";
+                });
+            });
+        }
+
         updateClock();
         setInterval(updateClock, 1000);
+        loadTasks();
+        loadNotes();
+        setupSearch();
     </script>
 </body>
 
