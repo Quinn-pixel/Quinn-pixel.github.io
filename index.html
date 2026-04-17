@@ -6,36 +6,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quinterra — The Architecture of the Earth</title>
   <meta name="description"
-    content="Quinterra — The Architecture of the Earth. A cinematic premium Earth systems platform with research, media, tools, and intelligent workflows." />
+    content="Quinterra — The Architecture of the Earth. A cinematic premium Earth systems platform blending deep science, immersive storytelling, and elegant tool design." />
   <style>
     :root {
-      --bg-1: #081018;
-      --bg-2: #0e1722;
-      --bg-3: #111827;
-      --panel: rgba(10, 16, 24, 0.58);
-      --panel-2: rgba(15, 23, 35, 0.76);
-      --panel-3: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.10);
-      --text: #f5f7fa;
-      --muted: #c7d0d8;
-      --soft: #9aa7b5;
-      --sand: #e8d8bf;
-      --gold: #d7b47b;
-      --ember: #e26b3f;
-      --blue: #87b9ff;
-      --green: #6ee7c8;
-      --shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
-      --radius-xl: 34px;
-      --radius-lg: 26px;
-      --radius-md: 18px;
-      --max: 1320px;
+      --bg-1: #f8f1e8;
+      --bg-2: #efe4d7;
+      --bg-3: #e8dccd;
+
+      --ink-1: #181512;
+      --ink-2: #3b322b;
+      --ink-3: #6e6157;
+
+      --panel-1: rgba(255, 250, 245, 0.72);
+      --panel-2: rgba(255, 248, 240, 0.84);
+      --panel-3: rgba(255, 255, 255, 0.58);
+
+      --line: rgba(61, 45, 32, 0.08);
+      --line-strong: rgba(61, 45, 32, 0.14);
+
+      --sand: #d7b690;
+      --gold: #b98a42;
+      --terra: #b85d3f;
+      --clay: #9f4d34;
+      --indigo: #3d5877;
+      --jade: #3a8a73;
+      --mist: #8f9aaa;
+
+      --hero-dark: rgba(17, 15, 13, 0.18);
+      --hero-deep: rgba(17, 15, 13, 0.62);
+
+      --shadow-soft: 0 12px 34px rgba(63, 42, 24, 0.08);
+      --shadow-lg: 0 24px 60px rgba(63, 42, 24, 0.12);
+      --shadow-xl: 0 34px 80px rgba(63, 42, 24, 0.18);
+
+      --radius-sm: 16px;
+      --radius-md: 22px;
+      --radius-lg: 30px;
+      --radius-xl: 38px;
+
+      --max-w: 1380px;
+      --nav-h: 78px;
+      --sidebar-w: 92px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
     }
 
     html {
@@ -43,13 +60,15 @@
     }
 
     body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
+      color: var(--ink-1);
       background:
-        radial-gradient(circle at 12% 8%, rgba(226, 107, 63, 0.14), transparent 18%),
-        radial-gradient(circle at 86% 12%, rgba(135, 185, 255, 0.16), transparent 20%),
-        radial-gradient(circle at 62% 82%, rgba(110, 231, 200, 0.10), transparent 20%),
+        radial-gradient(circle at 10% 15%, rgba(184, 93, 63, 0.10), transparent 22%),
+        radial-gradient(circle at 88% 8%, rgba(61, 88, 119, 0.10), transparent 22%),
+        radial-gradient(circle at 78% 82%, rgba(58, 138, 115, 0.07), transparent 18%),
         linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 52%, var(--bg-3) 100%);
-      color: var(--text);
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
     a {
@@ -57,77 +76,99 @@
       text-decoration: none;
     }
 
-    .page-transition {
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .page-loader {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(22, 34, 50, 0.92), rgba(8, 12, 18, 0.98));
       z-index: 9999;
-      opacity: 1;
-      pointer-events: none;
-      transition: opacity 0.7s ease;
+      background:
+        radial-gradient(circle at center, rgba(255, 245, 236, 0.96), rgba(236, 223, 210, 0.98));
+      display: grid;
+      place-items: center;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
     }
 
-    body.loaded .page-transition {
+    .page-loader.hidden {
       opacity: 0;
+      visibility: hidden;
     }
 
-    .ambient {
+    .loader-core {
+      text-align: center;
+    }
+
+    .loader-mark {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 18px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(184, 93, 63, 0.15), rgba(61, 88, 119, 0.14));
+      border: 1px solid rgba(61, 45, 32, 0.10);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-lg);
+      animation: loaderPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes loaderPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    .loader-text {
+      font-size: 0.95rem;
+      color: var(--ink-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .ambient-layer,
+    .grain-layer,
+    #particleCanvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
     }
 
-    .ambient::before,
-    .ambient::after {
+    .ambient-layer::before,
+    .ambient-layer::after {
       content: "";
       position: absolute;
       border-radius: 50%;
       filter: blur(90px);
       opacity: 0.18;
-      animation: floatGlow 18s ease-in-out infinite alternate;
+      animation: floatGlow 20s ease-in-out infinite alternate;
     }
 
-    .ambient::before {
-      width: 360px;
-      height: 360px;
-      background: rgba(226, 107, 63, 0.35);
-      top: 10%;
-      left: 3%;
+    .ambient-layer::before {
+      width: 420px;
+      height: 420px;
+      background: rgba(184, 93, 63, 0.25);
+      top: 6%;
+      left: 4%;
     }
 
-    .ambient::after {
-      width: 400px;
-      height: 400px;
-      background: rgba(135, 185, 255, 0.28);
-      right: 4%;
-      bottom: 8%;
-      animation-duration: 22s;
-    }
-
-    .dust {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background-image:
-        radial-gradient(rgba(255, 255, 255, 0.20) 1px, transparent 1px),
-        radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-      background-size: 130px 130px, 180px 180px;
-      background-position: 0 0, 40px 60px;
-      opacity: 0.08;
-      animation: driftDust 24s linear infinite;
-    }
-
-    @keyframes driftDust {
-      from {
-        transform: translateY(0px);
-      }
-
-      to {
-        transform: translateY(-80px);
-      }
+    .ambient-layer::after {
+      width: 460px;
+      height: 460px;
+      background: rgba(61, 88, 119, 0.18);
+      bottom: 10%;
+      right: 6%;
+      animation-duration: 26s;
     }
 
     @keyframes floatGlow {
@@ -136,52 +177,73 @@
       }
 
       to {
-        transform: translate(24px, -20px) scale(1.08);
+        transform: translate(28px, -22px) scale(1.08);
+      }
+    }
+
+    .grain-layer {
+      opacity: 0.08;
+      background-image:
+        radial-gradient(rgba(32, 24, 18, 0.45) 0.65px, transparent 0.65px),
+        radial-gradient(rgba(255, 255, 255, 0.60) 0.55px, transparent 0.55px);
+      background-size: 22px 22px, 28px 28px;
+      background-position: 0 0, 10px 14px;
+      animation: grainDrift 18s linear infinite;
+    }
+
+    @keyframes grainDrift {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-30px);
       }
     }
 
     .shell {
       position: relative;
       z-index: 1;
-      max-width: var(--max);
+      max-width: var(--max-w);
       margin: 0 auto;
-      padding: 22px 20px 40px;
+      padding: 18px 18px 42px;
     }
 
-    .nav {
+    .top-nav {
       position: sticky;
       top: 14px;
-      z-index: 50;
+      z-index: 80;
+      min-height: var(--nav-h);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      padding: 16px 18px;
-      border-radius: 24px;
-      background: rgba(8, 14, 22, 0.58);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(18px);
-      box-shadow: var(--shadow);
+      gap: 18px;
+      padding: 14px 18px;
       margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: rgba(255, 250, 245, 0.60);
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow-soft);
     }
 
-    .brand {
+    .brand-wrap {
       display: flex;
       align-items: center;
       gap: 14px;
       min-width: 0;
     }
 
-    .brand-mark {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      box-shadow: var(--shadow);
+    .brand-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(184, 93, 63, 0.14), rgba(61, 88, 119, 0.12));
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-soft);
       flex-shrink: 0;
     }
 
@@ -190,103 +252,129 @@
     }
 
     .brand-title {
-      font-size: 1.2rem;
+      font-size: 1.16rem;
       font-weight: 800;
-      letter-spacing: 0.2px;
+      color: var(--ink-1);
+      letter-spacing: 0.01em;
     }
 
     .brand-subtitle {
-      font-size: 0.82rem;
-      color: var(--muted);
-      letter-spacing: 0.5px;
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      margin-top: 3px;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
 
-    .nav-links a {
-      color: var(--muted);
-      font-size: 0.92rem;
-      transition: 0.22s ease;
+    .nav-link {
       position: relative;
+      color: var(--ink-2);
+      font-size: 0.93rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: color 0.22s ease, transform 0.22s ease;
     }
 
-    .nav-links a:hover {
-      color: #fff;
+    .nav-link:hover {
+      color: var(--terra);
+      transform: translateY(-1px);
     }
 
-    .nav-links a::after {
+    .nav-link::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: -4px;
+      bottom: -5px;
       width: 0;
-      height: 1px;
-      background: linear-gradient(90deg, var(--sand), var(--gold));
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--gold), var(--terra));
       transition: width 0.22s ease;
     }
 
-    .nav-links a:hover::after {
+    .nav-link:hover::after,
+    .nav-link.active::after {
       width: 100%;
     }
 
-    .hero {
-      min-height: calc(100vh - 110px);
+    .hero-section {
       display: grid;
-      grid-template-columns: 1.18fr 0.82fr;
+      grid-template-columns: 1.16fr 0.84fr;
       gap: 20px;
+      min-height: calc(100vh - 110px);
       margin-bottom: 28px;
     }
 
-    .hero-left,
-    .hero-right .status-card,
+    .hero-panel,
+    .status-card,
+    .story-card,
     .feature-card,
-    .research-card,
-    .tool-card,
+    .gateway-card,
     .media-card,
+    .tool-card,
     .contact-card {
       border-radius: var(--radius-xl);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
       overflow: hidden;
+      background: var(--panel-1);
+      backdrop-filter: blur(18px);
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
     }
 
-    .hero-left {
+    .hero-panel:hover,
+    .status-card:hover,
+    .story-card:hover,
+    .feature-card:hover,
+    .gateway-card:hover,
+    .media-card:hover,
+    .tool-card:hover,
+    .contact-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .hero-panel {
       position: relative;
-      min-height: 720px;
+      min-height: 760px;
       display: flex;
       align-items: flex-end;
       background:
-        linear-gradient(180deg, rgba(6, 8, 12, 0.10), rgba(6, 8, 12, 0.64)),
-        url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+        linear-gradient(180deg, var(--hero-dark), var(--hero-deep)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat;
+      transform-origin: center center;
+      will-change: transform;
     }
 
-    .hero-left::before {
+    .hero-panel::before {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(226, 107, 63, 0.18), transparent 35%),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.56));
+        linear-gradient(90deg, rgba(184, 93, 63, 0.16), transparent 35%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.18));
       pointer-events: none;
     }
 
-    .hero-left::after {
+    .hero-panel::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg,
+      background:
+        linear-gradient(120deg,
           transparent 0%,
-          rgba(255, 255, 255, 0.06) 44%,
-          transparent 60%);
+          rgba(255, 255, 255, 0.08) 42%,
+          transparent 58%);
       transform: translateX(-120%);
-      animation: heroSweep 8s linear infinite;
+      animation: heroSweep 9s linear infinite;
       pointer-events: none;
     }
 
@@ -301,48 +389,48 @@
       z-index: 1;
       padding: 36px;
       max-width: 820px;
-      animation: fadeUp 0.9s ease;
     }
 
-    .micro-label {
+    .micro-chip {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 10px 16px;
       border-radius: 999px;
-      background: rgba(226, 107, 63, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #ffd4c8;
-      font-size: 0.84rem;
-      letter-spacing: 1px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(184, 93, 63, 0.14);
+      color: #ffe0d6;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       margin-bottom: 18px;
     }
 
     .hero-kicker {
-      color: #ffd2c7;
+      color: #f2d8ca;
       font-size: 0.92rem;
-      letter-spacing: 1.2px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .hero-title {
-      font-size: clamp(3.2rem, 7vw, 6.2rem);
+      font-size: clamp(3.4rem, 7vw, 6.8rem);
       line-height: 0.92;
-      letter-spacing: -2px;
-      text-transform: uppercase;
       font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.05em;
+      color: #fff;
       margin-bottom: 16px;
     }
 
-    .hero-title span {
-      color: var(--sand);
+    .hero-title .accent {
+      color: #f2dcc3;
     }
 
     .hero-text {
       max-width: 720px;
-      color: #ece4dd;
+      color: #f0e7e1;
       line-height: 1.82;
       font-size: 1rem;
       margin-bottom: 22px;
@@ -356,116 +444,49 @@
 
     .btn {
       appearance: none;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.10);
       color: #fff;
       border-radius: 18px;
       padding: 13px 18px;
       font-weight: 700;
       cursor: pointer;
-      transition: 0.22s ease;
-      box-shadow: var(--shadow);
+      transition: transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+      box-shadow: var(--shadow-soft);
     }
 
     .btn:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px) scale(1.01);
+      background: rgba(255, 255, 255, 0.16);
     }
 
     .btn.primary {
-      background: linear-gradient(135deg, rgba(226, 107, 63, 0.95), rgba(236, 125, 91, 0.90));
+      background: linear-gradient(135deg, rgba(184, 93, 63, 0.96), rgba(159, 77, 52, 0.92));
       border-color: transparent;
     }
 
     .btn.light {
-      background: rgba(255, 255, 255, 0.9);
-      color: #111;
-      border-color: rgba(255, 255, 255, 0.8);
-    }
-
-    .hero-right {
-      display: grid;
-      gap: 20px;
-      grid-template-rows: 1fr 1fr;
-    }
-
-    .status-card {
-      background: rgba(8, 14, 22, 0.62);
-      backdrop-filter: blur(18px);
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      animation: fadeUp 1s ease;
-    }
-
-    .status-label {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 10px;
-    }
-
-    .clock {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      color: var(--blue);
-      margin-bottom: 8px;
-    }
-
-    .date {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .status-lines {
-      display: grid;
-      gap: 10px;
-      color: var(--muted);
-      line-height: 1.72;
-    }
-
-    .progress {
-      width: 100%;
-      height: 8px;
-      margin-top: 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 74%;
-      background: linear-gradient(90deg, var(--blue), var(--green), var(--sand));
-      animation: progressPulse 2.6s ease-in-out infinite alternate;
-    }
-
-    @keyframes progressPulse {
-      from {
-        width: 62%;
-      }
-
-      to {
-        width: 88%;
-      }
+      background: rgba(255, 249, 242, 0.92);
+      color: var(--ink-1);
+      border-color: rgba(255, 255, 255, 0.7);
     }
 
     .scroll-cue {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      letter-spacing: 0.6px;
+      margin-top: 20px;
+      color: #f0ddd0;
+      font-size: 0.86rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .scroll-cue .line {
-      width: 46px;
+      width: 50px;
       height: 1px;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), var(--sand));
-      animation: pulseLine 2s ease-in-out infinite;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), var(--sand));
+      animation: pulseLine 2.1s ease-in-out infinite;
     }
 
     @keyframes pulseLine {
@@ -480,31 +501,110 @@
       }
     }
 
+    .hero-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .status-card {
+      background: rgba(255, 250, 245, 0.72);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .status-label {
+      color: var(--ink-3);
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    .clock {
+      font-size: clamp(2.2rem, 4vw, 3.3rem);
+      font-weight: 800;
+      color: var(--indigo);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .date {
+      color: var(--ink-3);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .status-lines {
+      display: grid;
+      gap: 10px;
+      color: var(--ink-3);
+      line-height: 1.74;
+    }
+
+    .status-lines strong {
+      color: var(--ink-2);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(61, 45, 32, 0.08);
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 74%;
+      background: linear-gradient(90deg, var(--indigo), var(--jade), var(--gold));
+      animation: progressPulse 2.7s ease-in-out infinite alternate;
+    }
+
+    @keyframes progressPulse {
+      from {
+        width: 62%;
+      }
+
+      to {
+        width: 88%;
+      }
+    }
+
     .section {
-      margin-bottom: 28px;
+      margin-bottom: 30px;
     }
 
     .section-header {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       justify-content: space-between;
       gap: 16px;
       margin-bottom: 16px;
     }
 
     .section-title {
-      font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+      font-size: clamp(1.9rem, 2.8vw, 2.7rem);
       line-height: 1;
-      letter-spacing: -0.8px;
       text-transform: uppercase;
       font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink-1);
     }
 
     .section-subtitle {
-      color: var(--muted);
-      max-width: 680px;
-      line-height: 1.7;
-      font-size: 0.96rem;
+      max-width: 740px;
+      color: var(--ink-3);
+      line-height: 1.78;
+      font-size: 0.97rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
 
     .grid-3 {
@@ -519,60 +619,106 @@
       gap: 20px;
     }
 
-    .grid-2 {
+    .story-card {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 18px;
+      align-items: stretch;
+      min-height: 320px;
+      padding: 20px;
+    }
+
+    .story-media {
+      position: relative;
+      border-radius: 26px;
+      overflow: hidden;
+      min-height: 260px;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.40)),
+        var(--story-img) center/cover no-repeat;
+    }
+
+    .story-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(184, 93, 63, 0.12), transparent 45%);
+    }
+
+    .story-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px 6px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+
+    .story-title {
+      font-size: 2rem;
+      line-height: 1.02;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .story-text {
+      color: var(--ink-3);
+      line-height: 1.8;
+      font-size: 0.98rem;
+      margin-bottom: 18px;
+    }
+
+    .story-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .feature-card,
-    .research-card,
-    .tool-card,
+    .gateway-card,
     .media-card,
+    .tool-card,
     .contact-card {
-      background: var(--panel);
-      backdrop-filter: blur(18px);
       padding: 24px;
-      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-    }
-
-    .feature-card:hover,
-    .research-card:hover,
-    .tool-card:hover,
-    .media-card:hover,
-    .contact-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.14);
-      box-shadow: 0 28px 58px rgba(0, 0, 0, 0.22);
     }
 
     .card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
       margin-bottom: 14px;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--sand);
       font-size: 1rem;
+      color: var(--terra);
+      background: linear-gradient(135deg, rgba(184, 93, 63, 0.10), rgba(185, 138, 66, 0.10));
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
     }
 
     .card-title {
-      font-size: 1.22rem;
-      line-height: 1.2;
-      margin-bottom: 10px;
+      font-size: 1.2rem;
+      line-height: 1.18;
       font-weight: 800;
+      margin-bottom: 10px;
+      color: var(--ink-1);
     }
 
     .card-text,
     .feature-card li,
     .tool-card li,
     .contact-card li {
-      color: var(--muted);
-      line-height: 1.75;
-      font-size: 0.98rem;
+      color: var(--ink-3);
+      line-height: 1.78;
+      font-size: 0.97rem;
     }
 
     .feature-card ul,
@@ -581,139 +727,123 @@
       margin-top: 12px;
     }
 
-    .research-card {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 18px;
-      align-items: stretch;
-      min-height: 290px;
-    }
-
-    .research-media {
-      border-radius: 24px;
-      overflow: hidden;
-      min-height: 240px;
-      background:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.40)),
-        var(--img) center/cover no-repeat;
-      position: relative;
-    }
-
-    .research-media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(216, 79, 42, 0.12), transparent 40%);
-    }
-
-    .research-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .eyebrow {
-      color: var(--gold);
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .research-copy h3 {
-      font-size: 1.8rem;
-      line-height: 1.05;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: -0.8px;
-    }
-
-    .research-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
     .gateway-card {
-      min-height: 260px;
+      min-height: 270px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      background: var(--panel-2);
     }
 
-    .gateway-card .launch {
-      margin-top: 20px;
+    .gateway-launch {
+      margin-top: 18px;
       width: fit-content;
     }
 
-    .media-grid {
+    .media-layout {
       display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
+      grid-template-columns: 1.04fr 0.96fr;
       gap: 20px;
     }
 
     .media-frame {
       width: 100%;
-      min-height: 310px;
-      border-radius: 24px;
+      min-height: 320px;
+      border-radius: 26px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.04);
-      box-shadow: var(--shadow);
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      background: rgba(255, 255, 255, 0.45);
+      box-shadow: var(--shadow-soft);
       position: relative;
     }
 
-    .media-frame img {
+    .media-frame img,
+    .media-frame video {
       width: 100%;
       height: 100%;
-      min-height: 310px;
+      min-height: 320px;
       object-fit: cover;
       display: block;
     }
 
     .media-note {
       margin-top: 14px;
-      color: var(--muted);
-      line-height: 1.7;
+      color: var(--ink-3);
+      line-height: 1.76;
       font-size: 0.96rem;
     }
 
     .tool-card {
-      min-height: 280px;
+      min-height: 300px;
+      background: var(--panel-2);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
     .tool-card.tall {
-      min-height: 340px;
+      min-height: 360px;
     }
 
     .input,
     .select,
     .textarea,
-    .notes-area {
+    .notes-area,
+    .search-input {
       width: 100%;
       border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      background: rgba(255, 255, 255, 0.70);
+      color: var(--ink-1);
       padding: 14px 14px;
       outline: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus,
+    .notes-area:focus,
+    .search-input:focus {
+      border-color: rgba(61, 88, 119, 0.22);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 0 0 3px rgba(61, 88, 119, 0.08);
+    }
+
+    .textarea,
+    .notes-area {
+      min-height: 150px;
+      resize: vertical;
       margin-top: 12px;
     }
 
     .input::placeholder,
     .textarea::placeholder,
-    .notes-area::placeholder {
-      color: #c8c2bb;
+    .notes-area::placeholder,
+    .search-input::placeholder {
+      color: #8a7c70;
     }
 
-    .textarea,
-    .notes-area {
-      min-height: 140px;
-      resize: vertical;
+    .tool-actions,
+    .contact-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .output {
+      margin-top: 14px;
+      min-height: 86px;
+      border-radius: 22px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      color: var(--ink-3);
+      line-height: 1.78;
+      white-space: pre-wrap;
     }
 
     .task-row {
@@ -733,131 +863,225 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      border-radius: 16px;
       padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.60);
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      color: var(--ink-2);
     }
 
     .task-item button {
       border: none;
-      background: rgba(226, 107, 63, 0.16);
-      color: #ffd5c9;
+      background: rgba(184, 93, 63, 0.12);
+      color: var(--terra);
       border-radius: 12px;
       padding: 8px 10px;
       cursor: pointer;
       font-weight: 700;
     }
 
-    .output {
-      margin-top: 14px;
-      min-height: 80px;
-      border-radius: 20px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
-      line-height: 1.7;
-      white-space: pre-wrap;
-    }
-
     .timer {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
       font-weight: 800;
-      color: var(--sand);
-      margin-top: 10px;
+      color: var(--indigo);
+      margin-top: 12px;
       margin-bottom: 8px;
-    }
-
-    .tool-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
     }
 
     .quote-box {
       margin-top: 14px;
+      min-height: 96px;
       padding: 18px;
       border-radius: 22px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--sand);
-      line-height: 1.8;
-      min-height: 92px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      color: var(--terra);
+      line-height: 1.78;
     }
 
-    .contact-grid {
+    .contact-layout {
       display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
+      grid-template-columns: 0.92fr 1.08fr;
       gap: 20px;
     }
 
-    .contact-actions {
-      display: flex;
+    .search-filter-row {
+      display: grid;
       gap: 12px;
-      flex-wrap: wrap;
       margin-top: 14px;
     }
 
+    .tool-grid-search {
+      margin-bottom: 18px;
+    }
+
     .footer {
-      margin-top: 24px;
-      padding: 18px 0 30px;
-      color: var(--soft);
+      margin-top: 28px;
+      padding: 18px 0 32px;
       text-align: center;
+      color: var(--mist);
       font-size: 0.92rem;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.04em;
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(34px) scale(0.985);
+      transition:
+        opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
+    .stagger-1 {
+      transition-delay: 0.03s;
+    }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .stagger-2 {
+      transition-delay: 0.09s;
+    }
+
+    .stagger-3 {
+      transition-delay: 0.15s;
+    }
+
+    .stagger-4 {
+      transition-delay: 0.21s;
+    }
+
+    .tool-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(18, 16, 14, 0.42);
+      backdrop-filter: blur(12px);
+    }
+
+    .tool-modal.open {
+      display: flex;
+    }
+
+    .tool-modal-card {
+      width: min(940px, 96vw);
+      max-height: 88vh;
+      overflow: auto;
+      border-radius: 34px;
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      background: rgba(255, 248, 241, 0.94);
+      box-shadow: var(--shadow-xl);
+      padding: 28px;
+      transform: translateY(18px) scale(0.98);
+      opacity: 0;
+      transition: transform 0.36s ease, opacity 0.36s ease;
+    }
+
+    .tool-modal.open .tool-modal-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .tool-modal-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .tool-modal-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      color: var(--ink-1);
+    }
+
+    .tool-modal-copy {
+      color: var(--ink-3);
+      line-height: 1.8;
+      margin-top: 10px;
+    }
+
+    .tool-close {
+      border: none;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.06);
+      color: var(--ink-2);
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .modal-block {
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(61, 45, 32, 0.08);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .modal-block h4 {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      color: var(--ink-1);
+    }
+
+    .modal-block p,
+    .modal-block li {
+      color: var(--ink-3);
+      line-height: 1.76;
+    }
+
+    .modal-block ul {
+      padding-left: 18px;
     }
 
     @media (max-width: 1180px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-      .grid-4,
       .grid-3 {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .media-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .research-card {
+      .media-layout,
+      .contact-layout,
+      .story-card,
+      .modal-grid {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 980px) {
 
-      .hero,
-      .contact-grid,
+      .hero-section,
       .grid-2 {
         grid-template-columns: 1fr;
       }
 
-      .nav {
+      .hero-side {
+        grid-template-rows: unset;
+      }
+
+      .top-nav {
         flex-direction: column;
         align-items: flex-start;
       }
@@ -872,7 +1096,7 @@
         gap: 12px;
       }
 
-      .hero-left {
+      .hero-panel {
         min-height: 620px;
       }
 
@@ -888,24 +1112,47 @@
       .task-row {
         flex-direction: column;
       }
+
+      .brand-title {
+        font-size: 1.04rem;
+      }
+
+      .brand-subtitle {
+        font-size: 0.72rem;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="page-transition"></div>
-  <div class="ambient"></div>
-  <div class="dust"></div>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-core">
+      <div class="loader-mark">
+        <svg width="38" height="38" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <circle cx="30" cy="24" r="18" stroke="#2F261F" stroke-width="4" />
+          <path d="M42 36L56 50" stroke="#2F261F" stroke-width="5" stroke-linecap="round" />
+          <path d="M28 42V56M28 56L18 62M28 56L38 62M20 49L14 57M36 49L44 57" stroke="#2F261F" stroke-width="3"
+            stroke-linecap="round" />
+        </svg>
+      </div>
+      <div class="loader-text">Quinterra initializing</div>
+    </div>
+  </div>
+
+  <div class="ambient-layer"></div>
+  <div class="grain-layer"></div>
+  <canvas id="particleCanvas"></canvas>
 
   <div class="shell">
-    <nav class="nav">
-      <div class="brand">
-        <div class="brand-mark">
-          <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+    <nav class="top-nav">
+      <div class="brand-wrap">
+        <div class="brand-badge">
+          <svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true">
-            <circle cx="30" cy="24" r="18" stroke="white" stroke-width="4" />
-            <path d="M42 36L56 50" stroke="white" stroke-width="5" stroke-linecap="round" />
-            <path d="M28 42V56M28 56L18 62M28 56L38 62M20 49L14 57M36 49L44 57" stroke="white" stroke-width="3"
+            <circle cx="30" cy="24" r="18" stroke="#2F261F" stroke-width="4" />
+            <path d="M42 36L56 50" stroke="#2F261F" stroke-width="5" stroke-linecap="round" />
+            <path d="M28 42V56M28 56L18 62M28 56L38 62M20 49L14 57M36 49L44 57" stroke="#2F261F" stroke-width="3"
               stroke-linecap="round" />
           </svg>
         </div>
@@ -916,32 +1163,32 @@
       </div>
 
       <div class="nav-links">
-        <a href="#overview">Home</a>
-        <a href="#research">Research</a>
-        <a href="#features">Features</a>
-        <a href="#gateway">Systems</a>
-        <a href="#media">Media</a>
-        <a href="#tools">Tools</a>
-        <a href="#contact">Contact</a>
+        <a class="nav-link active" href="#overview">Home</a>
+        <a class="nav-link" href="#research">Research</a>
+        <a class="nav-link" href="#features">Features</a>
+        <a class="nav-link" href="#gateway">Systems</a>
+        <a class="nav-link" href="#media">Media</a>
+        <a class="nav-link" href="#tools">Tools</a>
+        <a class="nav-link" href="#contact">Contact</a>
       </div>
     </nav>
 
-    <section class="hero reveal visible" id="overview">
-      <div class="hero-left">
+    <section class="hero-section" id="overview">
+      <div class="hero-panel reveal visible" id="heroPanel">
         <div class="hero-content">
-          <div class="micro-label">● Active Earth Interface</div>
+          <div class="micro-chip">● Active Earth Interface</div>
           <div class="hero-kicker">Quinterra // Deep Earth Systems</div>
           <h1 class="hero-title">
             Deep Earth.<br />
-            <span>Decoded.</span>
+            <span class="accent">Decoded.</span>
           </h1>
           <p class="hero-text">
-            Quinterra is a cinematic Earth systems platform built around structure, geology, deep science,
-            ecosystems, research, and intelligent tool layers. It is designed to feel immersive, premium,
-            and unmistakably alive.
+            Quinterra is a cinematic Earth systems experience built around geology, deep structure,
+            ecosystems, research, and elegant tool layers. It is designed to feel immersive,
+            alive, and unmistakably premium.
           </p>
           <div class="hero-actions">
-            <a class="btn primary launch-link" href="dashboard.html">Launch Console</a>
+            <button class="btn primary open-tool-modal">Launch Research Console</button>
             <a class="btn light" href="#research">Explore the Strata</a>
             <a class="btn" href="#tools">Scientific Journey</a>
           </div>
@@ -952,21 +1199,21 @@
         </div>
       </div>
 
-      <div class="hero-right">
-        <div class="status-card">
+      <div class="hero-side">
+        <div class="status-card reveal stagger-1">
           <div class="status-label">Live System Time</div>
           <div class="clock" id="liveClock">00:00:00</div>
           <div class="date" id="liveDate">Loading date...</div>
         </div>
 
-        <div class="status-card">
+        <div class="status-card reveal stagger-2">
           <div class="status-label">System Status</div>
           <div class="status-lines">
             <p><strong>Mode:</strong> Quinterra Core</p>
             <p><strong>Status:</strong> Scroll-active, ambient, expanding</p>
             <p><strong>Focus:</strong> Earth structure, deep science, premium tools</p>
           </div>
-          <div class="progress">
+          <div class="progress-track">
             <div class="progress-fill"></div>
           </div>
         </div>
@@ -978,25 +1225,25 @@
         <div>
           <h2 class="section-title">Research</h2>
           <p class="section-subtitle">
-            Structured Earth narratives, field observations, and layered inquiry translated into a premium scientific
-            experience.
+            Structured Earth narratives, layered scientific storytelling, and curated inquiry translated into a
+            cinematic premium system.
           </p>
         </div>
       </div>
 
-      <div class="research-card">
-        <div class="research-media"
-          style="--img:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80');">
+      <div class="story-card">
+        <div class="story-media"
+          style="--story-img:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=80');">
         </div>
-        <div class="research-copy">
+        <div class="story-copy">
           <div class="eyebrow">Research Article</div>
-          <h3>Deep Strata, Ancient Memory</h3>
-          <p class="card-text">
-            Explore how foundations are written into the Earth itself — in layers, fractures, mineral signatures,
-            and the slow architecture of deep time.
+          <h3 class="story-title">Deep Strata, Ancient Memory</h3>
+          <p class="story-text">
+            Explore how structure is written into the Earth itself — in folded rock, mineral signatures,
+            fracture systems, and the slow architecture of deep time.
           </p>
-          <div class="research-actions">
-            <a class="btn primary launch-link" href="dashboard.html">Open Research Console</a>
+          <div class="story-actions">
+            <button class="btn primary open-tool-modal">Open Research Console</button>
             <a class="btn" href="#features">View Feature Set</a>
           </div>
         </div>
@@ -1008,36 +1255,34 @@
         <div>
           <h2 class="section-title">Features</h2>
           <p class="section-subtitle">
-            A premium science-first interface with visual storytelling, live atmosphere, elegant tools, and structured
-            exploration.
+            A premium science-first interface with visual storytelling, live atmosphere, elegant tool layers, and
+            structured exploration.
           </p>
         </div>
       </div>
 
       <div class="grid-3">
-        <div class="feature-card">
+        <div class="feature-card reveal stagger-1">
           <div class="card-icon">◈</div>
           <h3 class="card-title">Tectonic Plate Dynamics</h3>
           <p class="card-text">
-            Read movement as architecture — systems of pressure, uplift, fracture, and collision beneath the surface.
+            Read movement as architecture — systems of uplift, pressure, collision, and fracture beneath the surface.
           </p>
         </div>
 
-        <div class="feature-card">
+        <div class="feature-card reveal stagger-2">
           <div class="card-icon">▥</div>
           <h3 class="card-title">Ancient Rock Formations</h3>
           <p class="card-text">
-            Treat stone not as static material, but as a record — compressed, folded, and preserved across immense spans
-            of time.
+            Treat stone as preserved memory — compressed, folded, weathered, and held across immense spans of time.
           </p>
         </div>
 
-        <div class="feature-card">
+        <div class="feature-card reveal stagger-3">
           <div class="card-icon">✧</div>
           <h3 class="card-title">Mineralogy</h3>
           <p class="card-text">
-            Surface chemistry, crystalline form, and Earth composition become structured narratives inside a clean
-            visual system.
+            Surface chemistry, crystalline order, and Earth composition become clean, visual scientific narratives.
           </p>
         </div>
       </div>
@@ -1048,48 +1293,47 @@
         <div>
           <h2 class="section-title">System Gateways</h2>
           <p class="section-subtitle">
-            Enter the operational layers. Each module opens as a dedicated system within the wider Quinterra world.
+            Enter the operational layers. Each module opens like a premium workstation inside the wider Quinterra world.
           </p>
         </div>
       </div>
 
       <div class="grid-4">
-        <div class="tool-card gateway-card">
+        <div class="gateway-card reveal stagger-1">
           <div>
             <div class="card-icon">◎</div>
             <h3 class="card-title">Research Console</h3>
-            <p class="card-text">Open the working dashboard with notes, tasks, media, timer, and scientific tool
-              concepts.</p>
+            <p class="card-text">Open the working console with notes, tasks, timer, media, and draft-generation tools.
+            </p>
           </div>
-          <a class="btn primary launch launch-link" href="dashboard.html">Launch</a>
+          <button class="btn primary gateway-launch open-tool-modal">Launch</button>
         </div>
 
-        <div class="tool-card gateway-card">
+        <div class="gateway-card reveal stagger-2">
           <div>
             <div class="card-icon">▣</div>
             <h3 class="card-title">Professional Layer</h3>
-            <p class="card-text">A calmer, cleaner presentation mode for profile, structure, and formal viewing.</p>
+            <p class="card-text">A calmer presentation layer for structure, profile, and polished viewing.</p>
           </div>
-          <a class="btn launch-link" href="professional.html">Launch</a>
+          <a class="btn gateway-launch" href="professional.html">Launch</a>
         </div>
 
-        <div class="tool-card gateway-card">
+        <div class="gateway-card reveal stagger-3">
           <div>
             <div class="card-icon">▤</div>
             <h3 class="card-title">Gaming Zone</h3>
-            <p class="card-text">Parallel system for gaming notes, settings logic, trackers, and performance thinking.
-            </p>
+            <p class="card-text">A parallel system for performance notes, settings logic, and future tracking tools.</p>
           </div>
-          <a class="btn launch-link" href="games.html">Launch</a>
+          <a class="btn gateway-launch" href="games.html">Launch</a>
         </div>
 
-        <div class="tool-card gateway-card">
+        <div class="gateway-card reveal stagger-4">
           <div>
             <div class="card-icon">◧</div>
             <h3 class="card-title">Projects Hub</h3>
-            <p class="card-text">Browse the connected ecosystem and enter different zones of the Quinterra system.</p>
+            <p class="card-text">View the wider connected ecosystem and browse multiple Quinterra zones.</p>
           </div>
-          <a class="btn launch-link" href="projects.html">Launch</a>
+          <a class="btn gateway-launch" href="projects.html">Launch</a>
         </div>
       </div>
     </section>
@@ -1099,32 +1343,36 @@
         <div>
           <h2 class="section-title">Immersive Media</h2>
           <p class="section-subtitle">
-            Visual atmosphere matters. These panels carry the aura, memory, and narrative force of Quinterra.
+            Visual atmosphere carries memory and aura. These panels are ready for your own Indian-art, Earth, and
+            cinematic references.
           </p>
         </div>
       </div>
 
-      <div class="media-grid">
-        <div class="media-card">
+      <div class="media-layout">
+        <div class="media-card reveal stagger-1">
           <h3 class="card-title">Feature Atmosphere</h3>
           <div class="media-frame">
             <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80"
-              alt="Mountain atmosphere">
+              alt="Earth atmosphere">
           </div>
           <p class="media-note">
-            Use this block later for your own cinematic Earth visuals, heritage-inspired compositions, or field imagery.
+            Use this space later for your heritage-inspired visuals, Earth-science posters, or cinematic environment
+            art.
           </p>
         </div>
 
-        <div class="media-card">
+        <div class="media-card reveal stagger-2">
           <h3 class="card-title">Motion Slot</h3>
           <div class="media-frame">
-            <img
-              src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWQ2a2lqZG52aXFiMnA0dXZjd3B4cGVoMjBybXQ5YjJjMzQwZWZpNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o7TKtnuHOHHUjR38Y/giphy.gif"
-              alt="Animated ambient motion">
+            <video autoplay muted loop playsinline>
+              <source src="" type="video/mp4">
+            </video>
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
+              alt="Motion placeholder">
           </div>
           <p class="media-note">
-            Replace this with your own uploaded mp4 or gif later for a royal animated opening or Earth-motion vignette.
+            Replace this later with your own mp4, gif, or animated poster so Quinterra carries your exact aura.
           </p>
         </div>
       </div>
@@ -1135,13 +1383,18 @@
         <div>
           <h2 class="section-title">Working Tools</h2>
           <p class="section-subtitle">
-            This layer is functional now, and it grows from here.
+            Functional now, expandable later. This is the first living tool layer of Quinterra.
           </p>
         </div>
       </div>
 
+      <div class="tool-grid-search">
+        <input id="dashboardSearch" class="search-input" type="text"
+          placeholder="Search tools, cards, and systems..." />
+      </div>
+
       <div class="grid-2">
-        <div class="tool-card tall">
+        <div class="tool-card searchable reveal stagger-1">
           <div>
             <h3 class="card-title">Quinterra Smart Reply</h3>
             <p class="card-text">Draft a polished contact reply based on the type of inquiry.</p>
@@ -1161,10 +1414,10 @@
           </div>
         </div>
 
-        <div class="tool-card tall">
+        <div class="tool-card searchable reveal stagger-2">
           <div>
             <h3 class="card-title">Field Notes Pad</h3>
-            <p class="card-text">Persistent notes stored in your browser for quick capture and idea holding.</p>
+            <p class="card-text">Persistent notes stored in your browser for quick capture and working memory.</p>
             <textarea id="notesPad" class="notes-area" placeholder="Write your notes here..."></textarea>
             <div class="quote-box" id="quoteOutput">Press below for a Quinterra line.</div>
             <div class="tool-actions">
@@ -1175,7 +1428,7 @@
       </div>
 
       <div class="grid-2" style="margin-top:20px;">
-        <div class="tool-card">
+        <div class="tool-card searchable reveal stagger-3">
           <div>
             <h3 class="card-title">Task Launcher</h3>
             <p class="card-text">Track small missions and clear them when complete.</p>
@@ -1187,7 +1440,7 @@
           </div>
         </div>
 
-        <div class="tool-card">
+        <div class="tool-card searchable reveal stagger-4">
           <div>
             <h3 class="card-title">Focus Timer</h3>
             <p class="card-text">A clean sprint timer for study, reading, or system work.</p>
@@ -1207,13 +1460,13 @@
         <div>
           <h2 class="section-title">Contact</h2>
           <p class="section-subtitle">
-            Clean, direct, and structured — the right tool and the right channel.
+            Clean, direct, and structured — the right place for the right inquiry.
           </p>
         </div>
       </div>
 
-      <div class="contact-grid">
-        <div class="contact-card">
+      <div class="contact-layout">
+        <div class="contact-card reveal stagger-1">
           <h3 class="card-title">Direct Contact</h3>
           <p class="card-text">Access your email and GitHub from one premium contact layer.</p>
           <div class="contact-actions">
@@ -1224,16 +1477,16 @@
           <div class="output" id="copyMessage">Ready.</div>
         </div>
 
-        <div class="contact-card">
+        <div class="contact-card reveal stagger-2">
           <h3 class="card-title">Research Access</h3>
           <p class="card-text">
-            Quinterra is being built as an immersive Earth systems experience with cinematic guidance and intelligent
-            tools.
+            Quinterra is being built as an immersive Earth systems experience with cinematic guidance,
+            scientific storytelling, and intelligent tools.
           </p>
           <ul style="padding-left: 18px; margin-top: 12px;">
-            <li>Premium narrative design</li>
             <li>Scroll-based chapter feeling</li>
-            <li>Dedicated system gateways</li>
+            <li>Dedicated gateway transitions</li>
+            <li>Research and atmosphere together</li>
             <li>Future tool and data modules</li>
           </ul>
         </div>
@@ -1245,41 +1498,85 @@
     </div>
   </div>
 
-  <script>
-    const transition = document.querySelector(".page-transition");
+  <div class="tool-modal" id="toolModal" aria-hidden="true">
+    <div class="tool-modal-card">
+      <div class="tool-modal-head">
+        <div>
+          <div class="eyebrow">Premium Tool Access</div>
+          <div class="tool-modal-title">Research Console</div>
+          <div class="tool-modal-copy">
+            This is the royal tool-opening layer — designed to feel like entering a premium workstation rather than
+            opening an ordinary page.
+          </div>
+        </div>
+        <button class="tool-close" id="toolClose">Close</button>
+      </div>
 
+      <div class="modal-grid">
+        <div class="modal-block">
+          <h4>Console Identity</h4>
+          <p>
+            The Quinterra console is where tools, notes, research logic, and workflow systems can live together in one
+            refined environment.
+          </p>
+        </div>
+
+        <div class="modal-block">
+          <h4>Future Additions</h4>
+          <ul>
+            <li>Research article browser</li>
+            <li>Structured geology modules</li>
+            <li>Media and video showcase</li>
+            <li>Future data workflows</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tool-actions" style="margin-top:18px;">
+        <a class="btn primary" href="dashboard.html">Open Full Dashboard</a>
+        <button class="btn" id="toolCloseBottom">Stay Here</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const pageLoader = document.getElementById("pageLoader");
     window.addEventListener("load", () => {
-      document.body.classList.add("loaded");
-      setTimeout(() => {
-        if (transition) transition.style.pointerEvents = "none";
-      }, 800);
+      setTimeout(() => pageLoader.classList.add("hidden"), 500);
     });
 
-    document.querySelectorAll(".launch-link").forEach(link => {
-      link.addEventListener("click", function (e) {
-        const href = this.getAttribute("href");
-        if (!href || href.startsWith("#")) return;
-        e.preventDefault();
-        if (transition) {
-          transition.style.opacity = "1";
-          setTimeout(() => {
-            window.location.href = href;
-          }, 420);
-        } else {
-          window.location.href = href;
+    const heroPanel = document.getElementById("heroPanel");
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+      if (heroPanel) {
+        heroPanel.style.transform = `translateY(${y * 0.16}px) scale(${1 + y * 0.00005})`;
+      }
+    });
+
+    const reveals = document.querySelectorAll(".reveal");
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
         }
       });
-    });
+    }, { threshold: 0.14 });
+
+    reveals.forEach(el => revealObserver.observe(el));
 
     function updateClock() {
       const now = new Date();
-      document.getElementById("liveClock").textContent = now.toLocaleTimeString();
-      document.getElementById("liveDate").textContent = now.toLocaleDateString(undefined, {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+      const clock = document.getElementById("liveClock");
+      const date = document.getElementById("liveDate");
+      if (clock) clock.textContent = now.toLocaleTimeString();
+      if (date) {
+        date.textContent = now.toLocaleDateString(undefined, {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+      }
     }
 
     function copyEmail() {
@@ -1375,7 +1672,7 @@ Quinterra`;
     function loadNotes() {
       const saved = localStorage.getItem("quinterraNotes");
       const notes = document.getElementById("notesPad");
-      if (saved && notes) notes.value = saved;
+      if (notes && saved) notes.value = saved;
 
       if (notes) {
         notes.addEventListener("input", () => {
@@ -1430,20 +1727,113 @@ Quinterra`;
       renderTimer();
     }
 
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add("visible");
-      });
-    }, { threshold: 0.14 });
+    const toolModal = document.getElementById("toolModal");
+    const toolClose = document.getElementById("toolClose");
+    const toolCloseBottom = document.getElementById("toolCloseBottom");
+    const openToolButtons = document.querySelectorAll(".open-tool-modal");
 
-    reveals.forEach(el => observer.observe(el));
+    function openToolModal() {
+      toolModal.classList.add("open");
+      toolModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeToolModal() {
+      toolModal.classList.remove("open");
+      toolModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    openToolButtons.forEach(btn => btn.addEventListener("click", openToolModal));
+    toolClose.addEventListener("click", closeToolModal);
+    toolCloseBottom.addEventListener("click", closeToolModal);
+    toolModal.addEventListener("click", (e) => {
+      if (e.target === toolModal) closeToolModal();
+    });
+
+    function setupSearch() {
+      const search = document.getElementById("dashboardSearch");
+      const cards = document.querySelectorAll(".searchable");
+      if (!search) return;
+
+      search.addEventListener("input", function () {
+        const query = search.value.toLowerCase().trim();
+        cards.forEach(card => {
+          const text = card.innerText.toLowerCase();
+          card.style.display = text.includes(query) ? "" : "none";
+        });
+      });
+    }
+
+    function setupNavActive() {
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+            navLinks.forEach(link => {
+              link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+            });
+          }
+        });
+      }, { threshold: 0.55 });
+
+      sections.forEach(section => navObserver.observe(section));
+    }
+
+    function setupParticles() {
+      const canvas = document.getElementById("particleCanvas");
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      const particles = Array.from({ length: 56 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2.2 + 0.4,
+        speed: Math.random() * 0.45 + 0.08,
+        drift: (Math.random() - 0.5) * 0.2
+      }));
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+          p.y -= p.speed;
+          p.x += p.drift;
+
+          if (p.y < -10) p.y = canvas.height + 10;
+          if (p.x < -10) p.x = canvas.width + 10;
+          if (p.x > canvas.width + 10) p.x = -10;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255,255,255,0.28)";
+          ctx.fill();
+        });
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      animateParticles();
+    }
 
     updateClock();
     setInterval(updateClock, 1000);
     loadTasks();
     loadNotes();
     renderTimer();
+    setupSearch();
+    setupNavActive();
+    setupParticles();
   </script>
 </body>
 
