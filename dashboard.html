@@ -12,7 +12,6 @@
             --bg-3: #fbf8f4;
             --panel: rgba(255, 255, 255, 0.72);
             --panel-strong: rgba(255, 255, 255, 0.86);
-            --panel-soft: rgba(255, 255, 255, 0.58);
             --border: rgba(48, 38, 28, 0.08);
             --text: #171717;
             --muted: #6b6b6b;
@@ -177,6 +176,7 @@
         .nav-link:hover {
             background: rgba(0, 0, 0, 0.04);
             color: #111;
+            transform: translateX(2px);
         }
 
         .nav-link.active {
@@ -308,7 +308,7 @@
         }
 
         .hero-feature {
-            min-height: 440px;
+            min-height: 460px;
             position: relative;
             display: flex;
             align-items: flex-end;
@@ -327,10 +327,41 @@
             pointer-events: none;
         }
 
+        .hero-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.08) 45%,
+                    transparent 60%);
+            transform: translateX(-120%);
+            animation: shimmer 7s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to {
+                transform: translateX(120%);
+            }
+        }
+
         .hero-content {
             position: relative;
             z-index: 1;
             max-width: 760px;
+            animation: fadeUp 0.8s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .system-label {
@@ -409,7 +440,7 @@
 
         .side-card {
             padding: 24px;
-            min-height: 211px;
+            min-height: 220px;
             background: var(--panel-strong);
             display: flex;
             flex-direction: column;
@@ -470,6 +501,7 @@
 
         .section {
             margin-bottom: 22px;
+            animation: fadeUp 0.8s ease;
         }
 
         .section-title {
@@ -541,6 +573,48 @@
 
         .launch-wrap {
             margin-top: 18px;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .media-card {
+            padding: 20px;
+            background: var(--panel-strong);
+            border-radius: 28px;
+        }
+
+        .media-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .media-card p {
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .art-frame,
+        .gif-frame {
+            width: 100%;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(48, 38, 28, 0.08);
+            box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .art-frame img,
+        .gif-frame img {
+            display: block;
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
         }
 
         .contact-grid {
@@ -653,6 +727,10 @@
             .grid-3 {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 980px) {
@@ -713,6 +791,7 @@
             <div class="nav-title">Main</div>
             <a class="nav-link active" href="#overview">⌂ Overview</a>
             <a class="nav-link" href="#projects">◫ Projects</a>
+            <a class="nav-link" href="#media">◩ Media</a>
             <a class="nav-link" href="#tools">✦ Tools</a>
             <a class="nav-link" href="#contact">✉ Contact</a>
 
@@ -746,17 +825,15 @@
                     <div class="hero-content">
                         <div class="system-label">CONCEPT SYSTEM // ACTIVE</div>
                         <div class="hero-meta">Season 01 // Quin AI</div>
-                        <div class="hero-title">
-                            Command<br />
-                            Center
-                        </div>
+                        <div class="hero-title">Command<br />Center</div>
                         <p class="hero-subtitle">
                             A brighter cinematic dashboard with smooth rounded-square modules, premium spacing,
-                            cleaner controls, and real tools for work, gaming, notes, and smart communication.
+                            cleaner controls, immersive media, and real tools for work, gaming, notes, and smart
+                            communication.
                         </p>
                         <div class="hero-actions">
                             <a class="btn primary" href="#projects">Open Projects</a>
-                            <a class="btn" href="#tools">Explore Tools</a>
+                            <a class="btn" href="#media">Media Art</a>
                             <a class="btn" href="#contact">Contact Console</a>
                         </div>
                     </div>
@@ -792,9 +869,7 @@
                             <h3>Professional</h3>
                             <p>Open the structured and calmer portfolio presentation layer.</p>
                         </div>
-                        <div class="launch-wrap">
-                            <a class="btn" href="professional.html">Launch</a>
-                        </div>
+                        <div class="launch-wrap"><a class="btn" href="professional.html">Launch</a></div>
                     </div>
 
                     <div class="card panel-card searchable">
@@ -803,9 +878,7 @@
                             <h3>Gaming Zone</h3>
                             <p>Access game notes, future tools, settings ideas, and trackers.</p>
                         </div>
-                        <div class="launch-wrap">
-                            <a class="btn" href="games.html">Launch</a>
-                        </div>
+                        <div class="launch-wrap"><a class="btn" href="games.html">Launch</a></div>
                     </div>
 
                     <div class="card panel-card searchable">
@@ -814,9 +887,7 @@
                             <h3>Workspace</h3>
                             <p>Move into productivity, study, planning, and research spaces.</p>
                         </div>
-                        <div class="launch-wrap">
-                            <a class="btn" href="workspace.html">Launch</a>
-                        </div>
+                        <div class="launch-wrap"><a class="btn" href="workspace.html">Launch</a></div>
                     </div>
 
                     <div class="card panel-card searchable">
@@ -825,9 +896,7 @@
                             <h3>Projects Hub</h3>
                             <p>See the bigger structure of the full Quin website ecosystem.</p>
                         </div>
-                        <div class="launch-wrap">
-                            <a class="btn" href="projects.html">Launch</a>
-                        </div>
+                        <div class="launch-wrap"><a class="btn" href="projects.html">Launch</a></div>
                     </div>
                 </div>
             </section>
@@ -856,6 +925,29 @@
                             <div class="icon">⚙</div>
                             <h3>Future Smart Modules</h3>
                             <p>Where your real interactive tools, workflows, and AI-based features will live.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="media">
+                <h2 class="section-title">Immersive Media Art</h2>
+                <div class="media-grid">
+                    <div class="card media-card searchable">
+                        <h3>Feature Art Panel</h3>
+                        <p>A cinematic visual block for your concept-art identity. Replace this image with your own
+                            poster art anytime.</p>
+                        <div class="art-frame">
+                            <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=1400&q=80"
+                                alt="Feature art">
+                        </div>
+                    </div>
+
+                    <div class="card media-card searchable">
+                        <h3>Animated Media Slot</h3>
+                        <p>Use this area later for a GIF, animated poster, teaser art, or a branded motion visual.</p>
+                        <div class="gif-frame">
+                            <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" alt="Animated media">
                         </div>
                     </div>
                 </div>
@@ -896,6 +988,32 @@
                                 <button class="btn primary" onclick="addTask()">Add Task</button>
                             </div>
                             <div class="task-list" id="taskList"></div>
+                        </div>
+                    </div>
+
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Focus Timer</h3>
+                            <p>A simple live work sprint timer.</p>
+                            <div class="clock" id="focusTimerDisplay">25:00</div>
+                            <div class="hero-actions">
+                                <button class="btn primary" onclick="startTimer()">Start</button>
+                                <button class="btn" onclick="pauseTimer()">Pause</button>
+                                <button class="btn" onclick="resetTimer()">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top:18px;">
+                    <div class="card panel-card searchable">
+                        <div class="panel-top">
+                            <h3>Quote Generator</h3>
+                            <p>Tap once for a clean motivation line while you build.</p>
+                            <div class="output" id="quoteOutput">Press the button to generate a quote.</div>
+                            <div class="launch-wrap">
+                                <button class="btn primary" onclick="generateQuote()">New Quote</button>
+                            </div>
                         </div>
                     </div>
 
@@ -956,7 +1074,7 @@
             </section>
 
             <div class="footer">
-                Quin AI Dashboard // Cream cinematic premium concept v3
+                Quin AI Dashboard // Cream cinematic premium concept v4
             </div>
         </main>
     </div>
@@ -964,16 +1082,13 @@
     <script>
         function updateClock() {
             const now = new Date();
-            const time = now.toLocaleTimeString();
-            const date = now.toLocaleDateString(undefined, {
+            document.getElementById("liveClock").textContent = now.toLocaleTimeString();
+            document.getElementById("liveDate").textContent = now.toLocaleDateString(undefined, {
                 weekday: "long",
                 year: "numeric",
                 month: "long",
                 day: "numeric"
             });
-
-            document.getElementById("liveClock").textContent = time;
-            document.getElementById("liveDate").textContent = date;
         }
 
         function copyEmail() {
@@ -1011,11 +1126,9 @@
                 closing = "I will be glad to review your message and continue the conversation in a clear and professional manner.";
             }
 
-            const detailLine = message
-                ? `\n\nMessage context received:\n"${message}"`
-                : "";
+            const detailLine = message ? `\n\nMessage context received:\n"${message}"` : "";
 
-            const finalReply =
+            document.getElementById("replyOutput").textContent =
                 `${intro}
 
 ${body}${detailLine}
@@ -1024,21 +1137,17 @@ ${closing}
 
 Best regards,
 Quinn Pixel`;
-
-            document.getElementById("replyOutput").textContent = finalReply;
         }
 
         function addTask() {
             const input = document.getElementById("taskInput");
             const list = document.getElementById("taskList");
             const text = input.value.trim();
-
             if (!text) return;
 
             const item = document.createElement("div");
             item.className = "task-item";
             item.innerHTML = `<span>${text}</span><button type="button">Done</button>`;
-
             item.querySelector("button").addEventListener("click", function () {
                 item.remove();
                 saveTasks();
@@ -1058,7 +1167,6 @@ Quinn Pixel`;
             const tasks = JSON.parse(localStorage.getItem("quinTasks") || "[]");
             const list = document.getElementById("taskList");
             list.innerHTML = "";
-
             tasks.forEach(task => {
                 const item = document.createElement("div");
                 item.className = "task-item";
@@ -1085,12 +1193,10 @@ Quinn Pixel`;
         function setupSearch() {
             const search = document.getElementById("dashboardSearch");
             const cards = document.querySelectorAll(".searchable");
-
             if (!search) return;
 
             search.addEventListener("input", function () {
                 const query = search.value.toLowerCase().trim();
-
                 cards.forEach(card => {
                     const text = card.innerText.toLowerCase();
                     card.style.display = text.includes(query) ? "" : "none";
@@ -1098,11 +1204,57 @@ Quinn Pixel`;
             });
         }
 
+        let timerInterval = null;
+        let timerSeconds = 25 * 60;
+
+        function renderTimer() {
+            const mins = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+            const secs = String(timerSeconds % 60).padStart(2, "0");
+            document.getElementById("focusTimerDisplay").textContent = `${mins}:${secs}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    renderTimer();
+                } else {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 25 * 60;
+            renderTimer();
+        }
+
+        function generateQuote() {
+            const quotes = [
+                "Build with patience. Great systems grow layer by layer.",
+                "Premium work is quiet, clear, and intentional.",
+                "A beautiful tool is one that works and feels right.",
+                "Design the experience, not just the screen.",
+                "Consistency turns ideas into products."
+            ];
+            const pick = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById("quoteOutput").textContent = pick;
+        }
+
         updateClock();
         setInterval(updateClock, 1000);
         loadTasks();
         loadNotes();
         setupSearch();
+        renderTimer();
     </script>
 </body>
 
