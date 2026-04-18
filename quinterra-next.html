@@ -5,26 +5,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Quinterra Next — Motion Pass 2</title>
+    <title>Quinterra Next — Motion Pass 3</title>
 
     <style>
         :root {
             --ivory: #f8efe2;
-            --ivory-2: #fff9ef;
+            --ivory-2: #fffaf1;
             --sand: #ead7c0;
             --ink: #15100d;
             --muted: #75665b;
-            --soft: rgba(255, 250, 242, 0.72);
             --line: rgba(21, 16, 13, 0.12);
 
             --red: #e2472b;
             --orange: #f08a2d;
-            --vermilion: #bd351f;
+            --vermilion: #b9341f;
             --indigo: #223d63;
             --jade: #287263;
             --gold: #b98538;
 
             --max: 1460px;
+            --scroll: 0;
         }
 
         * {
@@ -67,6 +67,7 @@
         .grain,
         .orb-field,
         .line-field,
+        .scene-wash,
         #cursorTrail {
             position: fixed;
             inset: 0;
@@ -89,11 +90,21 @@
             box-shadow: 0 0 24px rgba(226, 71, 43, 0.85);
         }
 
+        .scene-wash {
+            z-index: 0;
+            opacity: calc(0.18 + (var(--scroll) * 0.18));
+            background:
+                radial-gradient(circle at calc(18% + var(--scroll) * 60%) calc(14% + var(--scroll) * 40%), rgba(226, 71, 43, 0.18), transparent 24%),
+                radial-gradient(circle at calc(90% - var(--scroll) * 50%) calc(28% + var(--scroll) * 35%), rgba(34, 61, 99, 0.16), transparent 24%),
+                radial-gradient(circle at calc(60% + var(--scroll) * 20%) calc(88% - var(--scroll) * 60%), rgba(40, 114, 99, 0.12), transparent 24%);
+            transition: opacity 0.2s ease;
+        }
+
         .grain {
             z-index: 3;
             opacity: 0.08;
             background-image:
-                radial-gradient(rgba(0, 0, 0, 0.35) 0.55px, transparent 0.55px),
+                radial-gradient(rgba(0, 0, 0, 0.34) 0.55px, transparent 0.55px),
                 radial-gradient(rgba(255, 255, 255, 0.8) 0.45px, transparent 0.45px);
             background-size: 24px 24px, 31px 31px;
             animation: grainMove 18s linear infinite;
@@ -148,7 +159,7 @@
 
         .line-field {
             z-index: 2;
-            opacity: 0.45;
+            opacity: 0.46;
         }
 
         .line-field svg {
@@ -158,7 +169,7 @@
 
         .draw-path {
             fill: none;
-            stroke: rgba(226, 71, 43, 0.33);
+            stroke: rgba(226, 71, 43, 0.34);
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-dasharray: 8 14;
@@ -166,9 +177,15 @@
         }
 
         .draw-path.soft {
-            stroke: rgba(240, 138, 45, 0.20);
+            stroke: rgba(240, 138, 45, 0.22);
             stroke-width: 1.5;
             animation-duration: 24s;
+        }
+
+        .draw-path.deep {
+            stroke: rgba(185, 52, 31, 0.16);
+            stroke-width: 1.2;
+            animation-duration: 30s;
         }
 
         @keyframes dashMove {
@@ -226,6 +243,7 @@
             background:
                 radial-gradient(circle at 34% 22%, rgba(226, 71, 43, 0.25), transparent 44%),
                 rgba(255, 255, 255, 0.58);
+            box-shadow: 0 12px 30px rgba(45, 26, 10, 0.08);
         }
 
         .brand small {
@@ -266,6 +284,12 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            transition: transform 0.24s ease, box-shadow 0.24s ease;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 45px rgba(21, 16, 13, 0.18);
         }
 
         .menu-lines {
@@ -284,7 +308,6 @@
             height: 2px;
             border-radius: 999px;
             background: currentColor;
-            transition: transform 0.25s ease;
         }
 
         .menu-lines::before {
@@ -301,6 +324,7 @@
             display: grid;
             place-items: center;
             position: relative;
+            overflow: hidden;
         }
 
         .inner {
@@ -435,12 +459,12 @@
             width: 100%;
             height: 100%;
             z-index: 2;
-            opacity: 0.85;
+            opacity: 0.86;
         }
 
         .poster-svg path {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.55);
+            stroke: rgba(255, 255, 255, 0.56);
             stroke-width: 2;
             stroke-linecap: round;
             stroke-dasharray: 980;
@@ -616,6 +640,7 @@
                 rgba(255, 255, 255, 0.30);
             overflow: hidden;
             box-shadow: 0 34px 90px rgba(50, 24, 9, 0.10);
+            transform-origin: center;
         }
 
         .sigil::before,
@@ -710,8 +735,42 @@
             max-width: 720px;
         }
 
+        .transition-band {
+            min-height: 92vh;
+            padding: 120px 24px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .transition-band::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 22%, rgba(226, 71, 43, 0.16), transparent 20%),
+                radial-gradient(circle at 82% 60%, rgba(34, 61, 99, 0.12), transparent 22%);
+            opacity: 0.9;
+        }
+
+        .transition-word {
+            position: relative;
+            z-index: 2;
+            font-size: clamp(4rem, 14vw, 14rem);
+            line-height: 0.76;
+            letter-spacing: -0.1em;
+            text-transform: uppercase;
+            font-weight: 950;
+            text-align: center;
+        }
+
+        .transition-word span {
+            color: var(--red);
+        }
+
         .scroll-story {
-            min-height: 420vh;
+            min-height: 440vh;
             position: relative;
             padding: 0 24px;
         }
@@ -884,23 +943,28 @@
             position: fixed;
             inset: 0;
             z-index: 9500;
-            display: none;
+            display: grid;
+            place-items: center;
             overflow: hidden;
             color: white;
             background:
                 radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 22%),
                 radial-gradient(circle at 80% 75%, rgba(70, 10, 0, 0.18), transparent 26%),
                 linear-gradient(135deg, #e2472b 0%, #f08a2d 58%, #b9341f 100%);
+            clip-path: circle(0% at 92% 6%);
+            pointer-events: none;
+            transition: clip-path 0.85s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .menu-overlay.open {
-            display: block;
+            clip-path: circle(150% at 92% 6%);
+            pointer-events: auto;
         }
 
         .menu-canvas {
             position: absolute;
             inset: 0;
-            opacity: 0.52;
+            opacity: 0.54;
         }
 
         .menu-close {
@@ -914,6 +978,15 @@
             color: white;
             background: rgba(255, 255, 255, 0.14);
             font-weight: 950;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .menu-overlay.open .menu-close {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.45s;
         }
 
         .menu-content {
@@ -935,6 +1008,35 @@
             letter-spacing: -0.098em;
             text-transform: uppercase;
             font-weight: 950;
+            opacity: 0;
+            transform: translateY(45px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+
+        .menu-note,
+        .menu-content .kicker {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .menu-overlay.open .menu-title,
+        .menu-overlay.open .menu-note,
+        .menu-overlay.open .menu-content .kicker {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-overlay.open .menu-content .kicker {
+            transition-delay: 0.22s;
+        }
+
+        .menu-overlay.open .menu-title {
+            transition-delay: 0.30s;
+        }
+
+        .menu-overlay.open .menu-note {
+            transition-delay: 0.40s;
         }
 
         .menu-note {
@@ -957,8 +1059,34 @@
             letter-spacing: -0.073em;
             text-transform: uppercase;
             font-weight: 950;
+            opacity: 0;
+            transform: translateX(42px);
+            transition: transform 0.42s ease, opacity 0.42s ease;
+        }
+
+        .menu-overlay.open .menu-list a {
             opacity: 0.76;
-            transition: transform 0.25s ease, opacity 0.25s ease;
+            transform: translateX(0);
+        }
+
+        .menu-overlay.open .menu-list a:nth-child(1) {
+            transition-delay: 0.32s;
+        }
+
+        .menu-overlay.open .menu-list a:nth-child(2) {
+            transition-delay: 0.40s;
+        }
+
+        .menu-overlay.open .menu-list a:nth-child(3) {
+            transition-delay: 0.48s;
+        }
+
+        .menu-overlay.open .menu-list a:nth-child(4) {
+            transition-delay: 0.56s;
+        }
+
+        .menu-overlay.open .menu-list a:nth-child(5) {
+            transition-delay: 0.64s;
         }
 
         .menu-list a::before {
@@ -1037,7 +1165,8 @@
 
             .mega-title,
             .chapter-title,
-            .story-heading {
+            .story-heading,
+            .transition-word {
                 letter-spacing: -0.078em;
             }
 
@@ -1068,6 +1197,8 @@
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="progress" id="progress"></div>
 
+    <div class="scene-wash"></div>
+
     <div class="orb-field">
         <div class="orb one"></div>
         <div class="orb two"></div>
@@ -1080,6 +1211,8 @@
                 d="M-80,210 C220,90 330,360 560,250 C810,130 930,520 1180,360 C1370,240 1500,300 1680,180" />
             <path class="draw-path soft"
                 d="M-100,620 C260,760 380,430 620,560 C880,700 1010,320 1260,500 C1450,640 1540,560 1690,650" />
+            <path class="draw-path deep"
+                d="M100,110 C340,230 430,60 650,150 C880,240 960,90 1210,180 C1420,260 1500,170 1700,260" />
             <path class="draw-path soft" d="M120,940 C320,660 520,770 760,620 C1040,450 1190,740 1500,520" />
         </svg>
     </div>
@@ -1091,7 +1224,7 @@
             <div class="brand-mark">Q</div>
             <div>
                 Quinterra
-                <small>Motion Pass 2</small>
+                <small>Motion Pass 3</small>
             </div>
         </a>
 
@@ -1153,6 +1286,7 @@
                     <svg class="poster-svg" viewBox="0 0 700 700" preserveAspectRatio="none">
                         <path
                             d="M72 154 C180 44 286 214 394 126 C492 46 612 142 558 254 C512 348 330 270 262 382 C188 506 360 620 488 520" />
+                        <path d="M120 520 C240 390 330 560 450 420 C540 318 610 430 650 310" />
                     </svg>
 
                     <div class="sun"></div>
@@ -1192,7 +1326,7 @@
 
         <section class="section manifesto" id="manifesto">
             <div class="inner manifesto-grid">
-                <div class="sigil reveal">
+                <div class="sigil reveal" id="sigil">
                     <div class="sigil-line"></div>
                 </div>
 
@@ -1239,6 +1373,14 @@
             </div>
         </section>
 
+        <section class="transition-band">
+            <div class="inner">
+                <div class="transition-word reveal">
+                    Scroll into<br /><span>the layers.</span>
+                </div>
+            </div>
+        </section>
+
         <section class="scroll-story" id="story">
             <div class="sticky-frame">
                 <div class="story-inner">
@@ -1280,9 +1422,8 @@
                     The shell is becoming <em>alive</em>.
                 </h2>
                 <p class="chapter-text">
-                    Next pass after this: we add more advanced section transitions and begin preparing the real console
-                    layer —
-                    without crowding the homepage too early.
+                    Next pass after this: we begin preparing the real console layer — but we keep the homepage clean,
+                    cinematic, and not crowded.
                 </p>
 
                 <div class="final-links">
@@ -1295,17 +1436,19 @@
         </section>
 
         <footer class="footer">
-            Quinterra Next — Motion Pass 2. Stable homepage remains protected.
+            Quinterra Next — Motion Pass 3. Stable homepage remains protected.
         </footer>
     </main>
 
     <script>
+        const root = document.documentElement;
         const progress = document.getElementById("progress");
 
         function updateProgress() {
             const max = document.documentElement.scrollHeight - window.innerHeight;
             const percent = max > 0 ? (window.scrollY / max) * 100 : 0;
             progress.style.width = percent + "%";
+            root.style.setProperty("--scroll", (percent / 100).toFixed(3));
         }
 
         window.addEventListener("scroll", updateProgress, { passive: true });
@@ -1326,7 +1469,7 @@
         const cursorDot = document.getElementById("cursorDot");
 
         let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let trail = Array.from({ length: 38 }, () => ({ x: mouse.x, y: mouse.y }));
+        let trail = Array.from({ length: 42 }, () => ({ x: mouse.x, y: mouse.y }));
         let bursts = [];
 
         function resizeCursorCanvas() {
@@ -1354,12 +1497,12 @@
         function drawCursorTrail() {
             cursorCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-            trail[0].x += (mouse.x - trail[0].x) * 0.35;
-            trail[0].y += (mouse.y - trail[0].y) * 0.35;
+            trail[0].x += (mouse.x - trail[0].x) * 0.36;
+            trail[0].y += (mouse.y - trail[0].y) * 0.36;
 
             for (let i = 1; i < trail.length; i++) {
-                trail[i].x += (trail[i - 1].x - trail[i].x) * 0.29;
-                trail[i].y += (trail[i - 1].y - trail[i].y) * 0.29;
+                trail[i].x += (trail[i - 1].x - trail[i].x) * 0.30;
+                trail[i].y += (trail[i - 1].y - trail[i].y) * 0.30;
             }
 
             cursorCtx.beginPath();
@@ -1378,30 +1521,30 @@
                 trail[trail.length - 1].y
             );
 
-            gradient.addColorStop(0, "rgba(226, 71, 43, 0.98)");
-            gradient.addColorStop(0.48, "rgba(240, 138, 45, 0.78)");
+            gradient.addColorStop(0, "rgba(226, 71, 43, 1)");
+            gradient.addColorStop(0.45, "rgba(240, 138, 45, 0.82)");
             gradient.addColorStop(1, "rgba(226, 71, 43, 0)");
 
             cursorCtx.strokeStyle = gradient;
-            cursorCtx.lineWidth = 5.4;
+            cursorCtx.lineWidth = 5.6;
             cursorCtx.lineCap = "round";
             cursorCtx.lineJoin = "round";
-            cursorCtx.shadowBlur = 19;
-            cursorCtx.shadowColor = "rgba(226, 71, 43, 0.62)";
+            cursorCtx.shadowBlur = 20;
+            cursorCtx.shadowColor = "rgba(226, 71, 43, 0.66)";
             cursorCtx.stroke();
 
             cursorCtx.shadowBlur = 0;
 
-            for (let i = 0; i < trail.length; i += 8) {
+            for (let i = 0; i < trail.length; i += 7) {
                 cursorCtx.beginPath();
-                cursorCtx.arc(trail[i].x, trail[i].y, Math.max(1.2, 4 - i * 0.08), 0, Math.PI * 2);
-                cursorCtx.fillStyle = `rgba(240, 138, 45, ${Math.max(0, 0.34 - i * 0.008)})`;
+                cursorCtx.arc(trail[i].x, trail[i].y, Math.max(1.2, 4.2 - i * 0.08), 0, Math.PI * 2);
+                cursorCtx.fillStyle = `rgba(240, 138, 45, ${Math.max(0, 0.36 - i * 0.008)})`;
                 cursorCtx.fill();
             }
 
             bursts = bursts.filter(b => b.a > 0.02);
             bursts.forEach(b => {
-                b.r += 2.8;
+                b.r += 2.9;
                 b.a *= 0.94;
                 cursorCtx.beginPath();
                 cursorCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
@@ -1416,16 +1559,24 @@
         drawCursorTrail();
 
         const posterStage = document.getElementById("posterStage");
+        const sigil = document.getElementById("sigil");
 
-        function posterParallax() {
+        function parallaxObjects() {
             const y = window.scrollY;
             if (posterStage) {
-                posterStage.style.transform = `translateY(${y * 0.032}px) rotate(${y * 0.0018}deg)`;
+                posterStage.style.transform = `translateY(${y * 0.03}px) rotate(${y * 0.0016}deg)`;
+            }
+
+            if (sigil) {
+                const rect = sigil.getBoundingClientRect();
+                const center = rect.top + rect.height / 2;
+                const distance = (center - window.innerHeight / 2) / window.innerHeight;
+                sigil.style.transform = `rotate(${distance * -4}deg) scale(${1 + Math.abs(distance) * 0.025})`;
             }
         }
 
-        window.addEventListener("scroll", posterParallax, { passive: true });
-        posterParallax();
+        window.addEventListener("scroll", parallaxObjects, { passive: true });
+        parallaxObjects();
 
         const storyData = [
             {
@@ -1509,7 +1660,7 @@
                 }, 160);
             }
 
-            storyVisual.style.transform = `rotate(${(p - 0.5) * 3}deg) scale(${1 + p * 0.025})`;
+            storyVisual.style.transform = `rotate(${(p - 0.5) * 3.2}deg) scale(${1 + p * 0.028})`;
         }
 
         window.addEventListener("scroll", updateStory, { passive: true });
@@ -1557,18 +1708,18 @@
             menuCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
             mt += 0.012;
 
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 10; i++) {
                 menuCtx.beginPath();
 
-                const y = 110 + i * 86 + Math.sin(mt + i) * 18;
-                menuCtx.moveTo(-100, y);
+                const y = 90 + i * 84 + Math.sin(mt + i) * 20;
+                menuCtx.moveTo(-120, y);
 
-                for (let x = -100; x < window.innerWidth + 160; x += 120) {
-                    const cy = y + Math.sin(mt * 2 + x * 0.01 + i) * 42;
+                for (let x = -120; x < window.innerWidth + 180; x += 120) {
+                    const cy = y + Math.sin(mt * 2 + x * 0.01 + i) * 45;
                     menuCtx.quadraticCurveTo(x + 60, cy, x + 120, y);
                 }
 
-                menuCtx.strokeStyle = i % 2 === 0 ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.16)";
+                menuCtx.strokeStyle = i % 2 === 0 ? "rgba(255,255,255,0.30)" : "rgba(255,255,255,0.16)";
                 menuCtx.lineWidth = i % 2 === 0 ? 2 : 1;
                 menuCtx.stroke();
             }
