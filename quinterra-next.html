@@ -5,22 +5,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Quinterra Next — Research. Performance. Intelligence.</title>
+    <title>Quinterra Next — Motion Pass 2</title>
 
     <style>
         :root {
-            --ivory: #f7efe3;
-            --paper: #fff8ee;
-            --ink: #17120f;
-            --muted: #6f6259;
-            --line: rgba(23, 18, 15, 0.12);
-            --red: #e24b2d;
-            --orange: #f08a2c;
-            --deep-red: #9e2e1e;
-            --indigo: #263f63;
-            --jade: #287968;
-            --gold: #b98236;
-            --max: 1440px;
+            --ivory: #f8efe2;
+            --ivory-2: #fff9ef;
+            --sand: #ead7c0;
+            --ink: #15100d;
+            --muted: #75665b;
+            --soft: rgba(255, 250, 242, 0.72);
+            --line: rgba(21, 16, 13, 0.12);
+
+            --red: #e2472b;
+            --orange: #f08a2d;
+            --vermilion: #bd351f;
+            --indigo: #223d63;
+            --jade: #287263;
+            --gold: #b98538;
+
+            --max: 1460px;
         }
 
         * {
@@ -39,9 +43,10 @@
             color: var(--ink);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
             background:
-                radial-gradient(circle at 15% 8%, rgba(226, 75, 45, 0.12), transparent 24%),
-                radial-gradient(circle at 90% 18%, rgba(38, 63, 99, 0.12), transparent 24%),
-                linear-gradient(180deg, #fffaf2 0%, var(--ivory) 55%, #ead9c5 100%);
+                radial-gradient(circle at 12% 7%, rgba(226, 71, 43, 0.13), transparent 23%),
+                radial-gradient(circle at 85% 15%, rgba(34, 61, 99, 0.12), transparent 23%),
+                radial-gradient(circle at 72% 88%, rgba(40, 114, 99, 0.10), transparent 23%),
+                linear-gradient(180deg, var(--ivory-2), var(--ivory) 54%, var(--sand));
             cursor: none;
         }
 
@@ -54,8 +59,14 @@
             font: inherit;
         }
 
+        .page {
+            position: relative;
+            z-index: 5;
+        }
+
         .grain,
         .orb-field,
+        .line-field,
         #cursorTrail {
             position: fixed;
             inset: 0;
@@ -66,21 +77,29 @@
             z-index: 9999;
         }
 
+        .cursor-dot {
+            position: fixed;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--red);
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            pointer-events: none;
+            box-shadow: 0 0 24px rgba(226, 71, 43, 0.85);
+        }
+
         .grain {
-            z-index: 2;
+            z-index: 3;
             opacity: 0.08;
             background-image:
-                radial-gradient(rgba(0, 0, 0, 0.34) 0.6px, transparent 0.6px),
-                radial-gradient(rgba(255, 255, 255, 0.72) 0.5px, transparent 0.5px);
-            background-size: 26px 26px, 34px 34px;
+                radial-gradient(rgba(0, 0, 0, 0.35) 0.55px, transparent 0.55px),
+                radial-gradient(rgba(255, 255, 255, 0.8) 0.45px, transparent 0.45px);
+            background-size: 24px 24px, 31px 31px;
             animation: grainMove 18s linear infinite;
         }
 
         @keyframes grainMove {
-            from {
-                transform: translateY(0);
-            }
-
             to {
                 transform: translateY(-38px);
             }
@@ -93,70 +112,80 @@
 
         .orb {
             position: absolute;
-            width: 36vw;
-            height: 36vw;
+            width: 38vw;
+            height: 38vw;
             border-radius: 50%;
-            filter: blur(90px);
+            filter: blur(96px);
             opacity: 0.18;
-            animation: orbFloat 18s ease-in-out infinite alternate;
+            animation: orbFloat 22s ease-in-out infinite alternate;
         }
 
         .orb.one {
+            left: -16%;
             top: 4%;
-            left: -12%;
             background: var(--red);
         }
 
         .orb.two {
-            right: -12%;
-            top: 22%;
+            right: -14%;
+            top: 24%;
             background: var(--indigo);
-            animation-duration: 24s;
+            animation-duration: 27s;
         }
 
         .orb.three {
-            left: 35%;
-            bottom: -18%;
+            left: 38%;
+            bottom: -20%;
             background: var(--jade);
-            animation-duration: 28s;
+            animation-duration: 31s;
         }
 
         @keyframes orbFloat {
-            from {
-                transform: translate(0, 0) scale(1);
-            }
-
             to {
-                transform: translate(50px, -35px) scale(1.08);
+                transform: translate(60px, -40px) scale(1.08);
             }
         }
 
-        .cursor-dot {
-            position: fixed;
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: var(--red);
-            z-index: 10000;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 24px rgba(226, 75, 45, 0.8);
+        .line-field {
+            z-index: 2;
+            opacity: 0.45;
+        }
+
+        .line-field svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .draw-path {
+            fill: none;
+            stroke: rgba(226, 71, 43, 0.33);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-dasharray: 8 14;
+            animation: dashMove 18s linear infinite;
+        }
+
+        .draw-path.soft {
+            stroke: rgba(240, 138, 45, 0.20);
+            stroke-width: 1.5;
+            animation-duration: 24s;
+        }
+
+        @keyframes dashMove {
+            to {
+                stroke-dashoffset: -420;
+            }
         }
 
         .progress {
             position: fixed;
             top: 0;
             left: 0;
-            width: 0%;
             height: 4px;
-            background: linear-gradient(90deg, var(--red), var(--orange), var(--gold));
+            width: 0%;
             z-index: 9000;
-            box-shadow: 0 0 24px rgba(226, 75, 45, 0.45);
-        }
-
-        .page {
-            position: relative;
-            z-index: 3;
+            background: linear-gradient(90deg, var(--red), var(--orange), var(--gold));
+            box-shadow: 0 0 26px rgba(226, 71, 43, 0.45);
         }
 
         .nav {
@@ -165,23 +194,24 @@
             left: 50%;
             transform: translateX(-50%);
             width: min(calc(100% - 36px), var(--max));
-            z-index: 8000;
+            z-index: 8500;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 18px;
+            gap: 18px;
+            padding: 15px 18px;
+            border-radius: 30px;
             border: 1px solid var(--line);
-            border-radius: 28px;
-            background: rgba(255, 248, 238, 0.62);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(40, 25, 12, 0.08);
+            background: rgba(255, 249, 240, 0.64);
+            backdrop-filter: blur(22px);
+            box-shadow: 0 24px 70px rgba(45, 26, 10, 0.08);
         }
 
         .brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: 900;
+            font-weight: 950;
             letter-spacing: -0.04em;
         }
 
@@ -191,20 +221,21 @@
             border-radius: 18px;
             display: grid;
             place-items: center;
+            color: var(--ink);
             border: 1px solid var(--line);
             background:
-                radial-gradient(circle at 30% 20%, rgba(226, 75, 45, 0.22), transparent 45%),
-                rgba(255, 255, 255, 0.55);
+                radial-gradient(circle at 34% 22%, rgba(226, 71, 43, 0.25), transparent 44%),
+                rgba(255, 255, 255, 0.58);
         }
 
         .brand small {
             display: block;
             margin-top: 2px;
             color: var(--muted);
-            font-size: 0.72rem;
-            letter-spacing: 0.12em;
             text-transform: uppercase;
-            font-weight: 700;
+            letter-spacing: 0.13em;
+            font-size: 0.71rem;
+            font-weight: 800;
         }
 
         .nav-actions {
@@ -213,66 +244,79 @@
             gap: 12px;
         }
 
-        .nav-link {
+        .stable-link {
             color: var(--muted);
+            font-weight: 850;
             font-size: 0.92rem;
-            font-weight: 750;
+        }
+
+        .menu-btn,
+        .btn,
+        .menu-close {
+            cursor: none;
         }
 
         .menu-btn {
             border: 0;
             border-radius: 999px;
-            padding: 13px 18px;
             background: var(--ink);
             color: white;
-            cursor: none;
-            font-weight: 850;
+            padding: 13px 18px;
+            font-weight: 900;
             display: inline-flex;
             align-items: center;
             gap: 10px;
         }
 
-        .menu-btn span {
-            width: 22px;
-            height: 2px;
-            background: currentColor;
-            display: block;
+        .menu-lines {
+            width: 23px;
+            height: 14px;
             position: relative;
+            display: inline-block;
         }
 
-        .menu-btn span::before,
-        .menu-btn span::after {
+        .menu-lines::before,
+        .menu-lines::after {
             content: "";
             position: absolute;
             left: 0;
-            width: 22px;
+            width: 23px;
             height: 2px;
+            border-radius: 999px;
             background: currentColor;
+            transition: transform 0.25s ease;
         }
 
-        .menu-btn span::before {
-            top: -7px;
+        .menu-lines::before {
+            top: 2px;
         }
 
-        .menu-btn span::after {
-            top: 7px;
+        .menu-lines::after {
+            bottom: 2px;
         }
 
         .section {
             min-height: 100vh;
-            padding: 130px 24px 80px;
+            padding: 138px 24px 84px;
             display: grid;
             place-items: center;
+            position: relative;
         }
 
         .inner {
             width: min(100%, var(--max));
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
-        .hero {
-            min-height: 100vh;
-            padding-top: 150px;
+        .kicker {
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.17em;
+            font-size: 0.82rem;
+            font-weight: 950;
+            margin-bottom: 22px;
         }
 
         .hero-grid {
@@ -282,22 +326,13 @@
             align-items: center;
         }
 
-        .kicker {
-            color: var(--red);
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            font-weight: 900;
-            font-size: 0.84rem;
-            margin-bottom: 22px;
-        }
-
         .mega-title {
-            font-size: clamp(4.3rem, 12vw, 12.8rem);
-            line-height: 0.78;
-            letter-spacing: -0.095em;
+            font-size: clamp(4.2rem, 12vw, 13.4rem);
+            line-height: 0.76;
+            letter-spacing: -0.102em;
             text-transform: uppercase;
             font-weight: 950;
-            max-width: 980px;
+            max-width: 1100px;
         }
 
         .mega-title .line {
@@ -307,8 +342,8 @@
 
         .mega-title .word {
             display: inline-block;
-            transform: translateY(115%);
-            animation: wordRise 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(116%);
+            animation: wordRise 1.08s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .mega-title .line:nth-child(2) .word {
@@ -326,54 +361,55 @@
         }
 
         .hero-copy {
+            max-width: 720px;
             margin-top: 34px;
-            max-width: 690px;
             color: var(--muted);
-            line-height: 1.9;
+            line-height: 1.92;
             font-size: 1.06rem;
         }
 
         .hero-actions {
+            margin-top: 28px;
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            margin-top: 28px;
         }
 
         .btn {
             border: 1px solid var(--line);
             border-radius: 999px;
             padding: 14px 20px;
-            background: rgba(255, 255, 255, 0.52);
+            background: rgba(255, 255, 255, 0.54);
+            backdrop-filter: blur(18px);
             color: var(--ink);
-            cursor: none;
-            font-weight: 850;
-            backdrop-filter: blur(16px);
-            transition: transform 0.25s ease, background 0.25s ease;
+            font-weight: 900;
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
         }
 
         .btn:hover {
             transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.82);
+            box-shadow: 0 20px 60px rgba(45, 26, 10, 0.10);
         }
 
         .btn.primary {
-            background: linear-gradient(135deg, var(--red), var(--orange));
             color: white;
             border-color: transparent;
-            box-shadow: 0 20px 50px rgba(226, 75, 45, 0.24);
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            box-shadow: 0 24px 60px rgba(226, 71, 43, 0.25);
         }
 
         .poster-stage {
-            position: relative;
-            height: 680px;
-            border-radius: 46px;
+            height: 690px;
+            border-radius: 50px;
             border: 1px solid var(--line);
+            position: relative;
             overflow: hidden;
             background:
-                radial-gradient(circle at 30% 16%, rgba(255, 255, 255, 0.42), transparent 20%),
-                linear-gradient(140deg, #2b1712, #e24b2d 45%, #f6e6d0 100%);
-            box-shadow: 0 36px 90px rgba(62, 30, 12, 0.18);
+                radial-gradient(circle at 28% 16%, rgba(255, 246, 214, 0.52), transparent 18%),
+                linear-gradient(135deg, #2a1711, var(--red) 44%, #f6dfc5 100%);
+            box-shadow: 0 38px 90px rgba(50, 24, 9, 0.18);
+            transform-origin: center;
         }
 
         .poster-stage::before {
@@ -381,15 +417,40 @@
             position: absolute;
             inset: 0;
             background:
-                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 54px),
-                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 54px);
-            opacity: 0.45;
-            animation: gridFlow 18s linear infinite;
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 58px),
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 58px);
+            animation: gridFlow 22s linear infinite;
+            opacity: 0.48;
         }
 
         @keyframes gridFlow {
             to {
-                transform: translateY(-54px);
+                transform: translate(58px, -58px);
+            }
+        }
+
+        .poster-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            opacity: 0.85;
+        }
+
+        .poster-svg path {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.55);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 980;
+            stroke-dashoffset: 980;
+            animation: posterDraw 3s ease forwards 0.7s;
+        }
+
+        @keyframes posterDraw {
+            to {
+                stroke-dashoffset: 0;
             }
         }
 
@@ -401,13 +462,14 @@
             height: 190px;
             border-radius: 50%;
             background:
-                radial-gradient(circle, rgba(255, 239, 193, 0.94), rgba(240, 138, 44, 0.26) 55%, transparent 72%);
-            animation: slowPulse 5s ease-in-out infinite alternate;
+                radial-gradient(circle, rgba(255, 240, 196, 0.96), rgba(240, 138, 45, 0.28) 55%, transparent 73%);
+            animation: sunPulse 5.4s ease-in-out infinite alternate;
+            z-index: 1;
         }
 
-        @keyframes slowPulse {
+        @keyframes sunPulse {
             to {
-                transform: scale(1.08) translate(-10px, 8px);
+                transform: translate(-12px, 9px) scale(1.08);
             }
         }
 
@@ -416,65 +478,107 @@
             left: -8%;
             right: -8%;
             bottom: 0;
-            height: 47%;
-            background: rgba(20, 14, 10, 0.9);
-            clip-path: polygon(0 62%, 10% 48%, 20% 66%, 32% 33%, 45% 60%, 56% 37%, 69% 56%, 83% 26%, 100% 50%, 100% 100%, 0 100%);
+            height: 48%;
+            background: rgba(20, 14, 10, 0.92);
+            clip-path: polygon(0 64%, 9% 48%, 19% 68%, 31% 34%, 44% 61%, 56% 36%, 69% 57%, 83% 25%, 100% 51%, 100% 100%, 0 100%);
+            z-index: 4;
         }
 
-        .floating-card {
+        .floating-sticker {
             position: absolute;
+            z-index: 5;
             padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            border-radius: 26px;
-            background: rgba(255, 248, 238, 0.18);
-            backdrop-filter: blur(18px);
+            width: 220px;
             color: white;
-            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.14);
-            animation: floatCard 6s ease-in-out infinite alternate;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 248, 238, 0.16);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.16);
+            animation: stickerFloat 6s ease-in-out infinite alternate;
         }
 
-        .floating-card.one {
+        .floating-sticker.one {
             left: 8%;
-            top: 16%;
-            width: 210px;
+            top: 15%;
         }
 
-        .floating-card.two {
+        .floating-sticker.two {
             right: 8%;
-            bottom: 18%;
-            width: 230px;
-            animation-duration: 7.4s;
+            bottom: 17%;
+            animation-duration: 7.5s;
         }
 
-        .floating-card strong {
+        .floating-sticker.three {
+            left: 18%;
+            bottom: 35%;
+            width: 180px;
+            animation-duration: 8.2s;
+        }
+
+        .floating-sticker strong {
             display: block;
-            font-size: 1.1rem;
             margin-bottom: 8px;
+            font-size: 1.08rem;
         }
 
-        .floating-card p {
+        .floating-sticker p {
             color: rgba(255, 255, 255, 0.78);
-            line-height: 1.55;
+            line-height: 1.56;
             font-size: 0.92rem;
         }
 
-        @keyframes floatCard {
+        @keyframes stickerFloat {
             from {
                 transform: translateY(0) rotate(-1deg);
             }
 
             to {
-                transform: translateY(-24px) rotate(1.5deg);
+                transform: translateY(-26px) rotate(1.6deg);
+            }
+        }
+
+        .marquee-wrap {
+            position: relative;
+            overflow: hidden;
+            padding: 34px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.18);
+            z-index: 4;
+        }
+
+        .marquee {
+            display: flex;
+            width: max-content;
+            animation: marqueeMove 24s linear infinite;
+            gap: 34px;
+            white-space: nowrap;
+            font-size: clamp(2.4rem, 7vw, 7rem);
+            line-height: 0.85;
+            letter-spacing: -0.08em;
+            text-transform: uppercase;
+            font-weight: 950;
+            color: rgba(21, 16, 13, 0.10);
+        }
+
+        .marquee span:nth-child(even) {
+            color: rgba(226, 71, 43, 0.22);
+        }
+
+        @keyframes marqueeMove {
+            to {
+                transform: translateX(-50%);
             }
         }
 
         .chapter-title {
-            font-size: clamp(3.7rem, 10vw, 10.5rem);
+            font-size: clamp(3.7rem, 10vw, 10.6rem);
             line-height: 0.82;
-            letter-spacing: -0.09em;
+            letter-spacing: -0.096em;
             text-transform: uppercase;
             font-weight: 950;
-            max-width: 1180px;
+            max-width: 1220px;
         }
 
         .chapter-title em {
@@ -485,68 +589,117 @@
         .chapter-text {
             margin-top: 28px;
             color: var(--muted);
-            line-height: 1.9;
+            line-height: 1.92;
             font-size: 1.08rem;
-            max-width: 720px;
+            max-width: 760px;
         }
 
-        .split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 52px;
-            align-items: center;
-        }
-
-        .open-stage {
-            min-height: 620px;
-            position: relative;
-            border-top: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
-            display: grid;
-            align-items: center;
+        .manifesto {
+            min-height: 100vh;
             overflow: hidden;
         }
 
-        .huge-side-text {
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns: 0.84fr 1.16fr;
+            gap: 44px;
+            align-items: center;
+        }
+
+        .sigil {
+            height: 620px;
+            position: relative;
+            border-radius: 50px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(circle at 50% 40%, rgba(226, 71, 43, 0.18), transparent 20%),
+                rgba(255, 255, 255, 0.30);
+            overflow: hidden;
+            box-shadow: 0 34px 90px rgba(50, 24, 9, 0.10);
+        }
+
+        .sigil::before,
+        .sigil::after {
+            content: "";
             position: absolute;
-            right: -4vw;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: clamp(6rem, 16vw, 17rem);
-            line-height: 0.78;
-            font-weight: 950;
-            letter-spacing: -0.1em;
-            opacity: 0.06;
-            text-transform: uppercase;
-            pointer-events: none;
-            white-space: nowrap;
+            inset: 12%;
+            border-radius: 50%;
+            border: 2px solid rgba(226, 71, 43, 0.34);
+            animation: rotate 18s linear infinite;
+        }
+
+        .sigil::after {
+            inset: 24%;
+            border-color: rgba(34, 61, 99, 0.28);
+            animation-duration: 12s;
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .sigil-line {
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            width: 2px;
+            height: 80%;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg, transparent, rgba(226, 71, 43, 0.45), transparent);
+            animation: sigilPulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes sigilPulse {
+            to {
+                opacity: 0.35;
+                transform: translateX(-50%) scaleY(0.86);
+            }
         }
 
         .core-list {
             display: grid;
             gap: 18px;
             margin-top: 34px;
-            max-width: 820px;
+            max-width: 850px;
         }
 
         .core-row {
             display: grid;
-            grid-template-columns: 120px 1fr;
+            grid-template-columns: 118px 1fr;
             gap: 18px;
-            padding: 22px 0;
+            padding: 23px 0;
             border-bottom: 1px solid var(--line);
+            position: relative;
+        }
+
+        .core-row::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--red), var(--orange));
+            transition: width 0.45s ease;
+        }
+
+        .core-row:hover::before {
+            width: 100%;
         }
 
         .core-no {
             color: var(--red);
             font-weight: 950;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.13em;
         }
 
         .core-row h3 {
-            font-size: clamp(1.8rem, 3vw, 3.2rem);
-            line-height: 0.95;
-            letter-spacing: -0.06em;
+            font-size: clamp(1.8rem, 3vw, 3.3rem);
+            line-height: 0.94;
+            letter-spacing: -0.062em;
             text-transform: uppercase;
             margin-bottom: 10px;
         }
@@ -554,11 +707,11 @@
         .core-row p {
             color: var(--muted);
             line-height: 1.75;
-            max-width: 700px;
+            max-width: 720px;
         }
 
         .scroll-story {
-            min-height: 300vh;
+            min-height: 420vh;
             position: relative;
             padding: 0 24px;
         }
@@ -575,22 +728,22 @@
         .story-inner {
             width: min(100%, var(--max));
             display: grid;
-            grid-template-columns: 0.92fr 1.08fr;
+            grid-template-columns: 0.94fr 1.06fr;
             gap: 42px;
             align-items: center;
         }
 
         .story-visual {
             position: relative;
-            height: 620px;
-            border-radius: 48px;
+            height: 640px;
+            border-radius: 52px;
             border: 1px solid var(--line);
             overflow: hidden;
             background:
-                radial-gradient(circle at var(--sx, 60%) var(--sy, 28%), rgba(255, 255, 255, 0.48), transparent 17%),
-                var(--story-bg, linear-gradient(135deg, #371b13, #e24b2d 45%, #f7efe3));
-            box-shadow: 0 38px 90px rgba(48, 24, 10, 0.18);
-            transition: background 0.55s ease;
+                radial-gradient(circle at var(--sx, 62%) var(--sy, 26%), rgba(255, 255, 255, 0.50), transparent 17%),
+                var(--story-bg, linear-gradient(135deg, #371b13, #e2472b 45%, #f7efe3));
+            box-shadow: 0 38px 100px rgba(48, 24, 10, 0.18);
+            transition: background 0.6s ease, transform 0.5s ease;
         }
 
         .story-visual::before {
@@ -599,42 +752,56 @@
             inset: 0;
             background:
                 radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.22), transparent 18%),
-                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 58px);
-            animation: storyGrid 18s linear infinite;
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 62px);
+            animation: storyGrid 19s linear infinite;
         }
 
         @keyframes storyGrid {
             to {
-                transform: translateX(58px);
+                transform: translateX(62px);
             }
+        }
+
+        .story-art-line {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            opacity: 0.78;
+        }
+
+        .story-art-line path {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.56);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 10 12;
+            animation: dashMove 16s linear infinite;
         }
 
         .story-shape {
             position: absolute;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            z-index: 2;
+            border: 2px solid rgba(255, 255, 255, 0.48);
             border-radius: 50%;
-            animation: rotateShape 14s linear infinite;
+            animation: rotate 16s linear infinite;
         }
 
         .story-shape.one {
-            width: 260px;
-            height: 260px;
+            width: 270px;
+            height: 270px;
             top: 12%;
             left: 12%;
         }
 
         .story-shape.two {
-            width: 150px;
-            height: 150px;
-            bottom: 15%;
+            width: 156px;
+            height: 156px;
             right: 12%;
-            animation-duration: 10s;
-        }
-
-        @keyframes rotateShape {
-            to {
-                transform: rotate(360deg);
-            }
+            bottom: 15%;
+            animation-duration: 11s;
+            animation-direction: reverse;
         }
 
         .story-copy {
@@ -645,26 +812,27 @@
         .story-count {
             color: var(--red);
             font-weight: 950;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             margin-bottom: 18px;
         }
 
         .story-heading {
-            font-size: clamp(3.3rem, 7vw, 7.8rem);
+            font-size: clamp(3.2rem, 7vw, 7.8rem);
             line-height: 0.82;
-            letter-spacing: -0.09em;
+            letter-spacing: -0.095em;
             text-transform: uppercase;
             font-weight: 950;
-            transition: opacity 0.35s ease, transform 0.35s ease;
+            transition: opacity 0.28s ease, transform 0.28s ease;
         }
 
         .story-desc {
             margin-top: 24px;
             color: var(--muted);
-            line-height: 1.9;
-            max-width: 680px;
+            line-height: 1.92;
+            max-width: 710px;
             font-size: 1.05rem;
+            transition: opacity 0.28s ease, transform 0.28s ease;
         }
 
         .story-dots {
@@ -677,18 +845,19 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: rgba(23, 18, 15, 0.18);
+            background: rgba(21, 16, 13, 0.18);
             transition: width 0.3s ease, background 0.3s ease;
         }
 
         .story-dot.active {
-            width: 34px;
+            width: 36px;
             border-radius: 999px;
             background: linear-gradient(90deg, var(--red), var(--orange));
         }
 
         .gateway {
             text-align: center;
+            overflow: hidden;
         }
 
         .gateway .chapter-text {
@@ -704,7 +873,7 @@
         }
 
         .footer {
-            padding: 50px 24px 70px;
+            padding: 50px 24px 72px;
             text-align: center;
             color: var(--muted);
             position: relative;
@@ -715,83 +884,111 @@
             position: fixed;
             inset: 0;
             z-index: 9500;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 22%),
-                linear-gradient(135deg, #e24b2d 0%, #f08a2c 58%, #b73420 100%);
             display: none;
             overflow: hidden;
             color: white;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 22%),
+                radial-gradient(circle at 80% 75%, rgba(70, 10, 0, 0.18), transparent 26%),
+                linear-gradient(135deg, #e2472b 0%, #f08a2d 58%, #b9341f 100%);
         }
 
         .menu-overlay.open {
             display: block;
         }
 
-        .menu-line-canvas {
+        .menu-canvas {
             position: absolute;
             inset: 0;
-            opacity: 0.5;
-        }
-
-        .menu-content {
-            position: relative;
-            z-index: 2;
-            width: min(100%, var(--max));
-            margin: 0 auto;
-            min-height: 100vh;
-            padding: 34px 24px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
+            opacity: 0.52;
         }
 
         .menu-close {
             position: absolute;
             top: 28px;
             right: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.32);
+            z-index: 4;
+            border: 1px solid rgba(255, 255, 255, 0.34);
             border-radius: 999px;
             padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.14);
             color: white;
-            font-weight: 900;
-            cursor: none;
+            background: rgba(255, 255, 255, 0.14);
+            font-weight: 950;
+        }
+
+        .menu-content {
+            position: relative;
+            z-index: 3;
+            width: min(100%, var(--max));
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 34px 24px;
+            display: grid;
+            grid-template-columns: 0.98fr 1.02fr;
+            gap: 40px;
+            align-items: center;
         }
 
         .menu-title {
             font-size: clamp(4rem, 11vw, 12rem);
             line-height: 0.76;
-            letter-spacing: -0.095em;
+            letter-spacing: -0.098em;
             text-transform: uppercase;
             font-weight: 950;
+        }
+
+        .menu-note {
+            margin-top: 28px;
+            max-width: 520px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.78);
         }
 
         .menu-list {
             display: grid;
-            gap: 20px;
+            gap: 18px;
             justify-items: start;
         }
 
         .menu-list a {
+            position: relative;
             font-size: clamp(2rem, 5vw, 5.8rem);
             line-height: 0.9;
-            letter-spacing: -0.07em;
+            letter-spacing: -0.073em;
             text-transform: uppercase;
             font-weight: 950;
-            opacity: 0.78;
+            opacity: 0.76;
             transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        .menu-list a::before {
+            content: "";
+            position: absolute;
+            left: -52px;
+            top: 50%;
+            width: 32px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.72);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.25s ease;
         }
 
         .menu-list a:hover {
             opacity: 1;
-            transform: translateX(18px);
+            transform: translateX(20px);
+        }
+
+        .menu-list a:hover::before {
+            transform: scaleX(1);
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(54px);
+            transition:
+                opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .reveal.visible {
@@ -799,24 +996,7 @@
             transform: translateY(0);
         }
 
-        @media (max-width: 1050px) {
-
-            .hero-grid,
-            .split,
-            .story-inner,
-            .menu-content {
-                grid-template-columns: 1fr;
-            }
-
-            .poster-stage,
-            .story-visual {
-                height: 520px;
-            }
-
-            .nav-link {
-                display: none;
-            }
-
+        @media (max-width: 1080px) {
             body {
                 cursor: auto;
             }
@@ -826,14 +1006,31 @@
                 display: none;
             }
 
-            .btn,
             .menu-btn,
+            .btn,
             .menu-close {
                 cursor: pointer;
             }
+
+            .hero-grid,
+            .manifesto-grid,
+            .story-inner,
+            .menu-content {
+                grid-template-columns: 1fr;
+            }
+
+            .poster-stage,
+            .story-visual,
+            .sigil {
+                height: 540px;
+            }
+
+            .stable-link {
+                display: none;
+            }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 660px) {
             .section {
                 padding-inline: 16px;
             }
@@ -841,13 +1038,14 @@
             .mega-title,
             .chapter-title,
             .story-heading {
-                letter-spacing: -0.075em;
+                letter-spacing: -0.078em;
             }
 
             .poster-stage,
-            .story-visual {
-                height: 430px;
-                border-radius: 34px;
+            .story-visual,
+            .sigil {
+                height: 440px;
+                border-radius: 36px;
             }
 
             .core-row {
@@ -856,6 +1054,10 @@
 
             .brand small {
                 display: none;
+            }
+
+            .floating-sticker {
+                width: 190px;
             }
         }
     </style>
@@ -871,6 +1073,17 @@
         <div class="orb two"></div>
         <div class="orb three"></div>
     </div>
+
+    <div class="line-field">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="none">
+            <path class="draw-path"
+                d="M-80,210 C220,90 330,360 560,250 C810,130 930,520 1180,360 C1370,240 1500,300 1680,180" />
+            <path class="draw-path soft"
+                d="M-100,620 C260,760 380,430 620,560 C880,700 1010,320 1260,500 C1450,640 1540,560 1690,650" />
+            <path class="draw-path soft" d="M120,940 C320,660 520,770 760,620 C1040,450 1190,740 1500,520" />
+        </svg>
+    </div>
+
     <div class="grain"></div>
 
     <nav class="nav">
@@ -878,41 +1091,45 @@
             <div class="brand-mark">Q</div>
             <div>
                 Quinterra
-                <small>Research / Performance / Intelligence</small>
+                <small>Motion Pass 2</small>
             </div>
         </a>
 
         <div class="nav-actions">
-            <a class="nav-link" href="index.html">Stable Home</a>
-            <button class="menu-btn" id="openMenu">Menu <span></span></button>
+            <a class="stable-link" href="index.html">Stable Home</a>
+            <button class="menu-btn" id="openMenu">Index <span class="menu-lines"></span></button>
         </div>
     </nav>
 
     <div class="menu-overlay" id="menuOverlay">
-        <canvas class="menu-line-canvas" id="menuCanvas"></canvas>
+        <canvas class="menu-canvas" id="menuCanvas"></canvas>
         <button class="menu-close" id="closeMenu">Close</button>
 
         <div class="menu-content">
             <div>
                 <div class="kicker" style="color:white;">Quinterra Index</div>
                 <div class="menu-title">Enter<br />The<br />World</div>
+                <p class="menu-note">
+                    This is the animated index layer. Later it will connect to real tools,
+                    media, research systems, gaming systems, and Quin AI.
+                </p>
             </div>
 
             <div class="menu-list">
                 <a href="#arrival" class="menuJump">Arrival</a>
-                <a href="#dualcore" class="menuJump">Dual Core</a>
-                <a href="#story" class="menuJump">Story Scroll</a>
+                <a href="#manifesto" class="menuJump">Manifesto</a>
+                <a href="#story" class="menuJump">Story</a>
                 <a href="#gateway" class="menuJump">Gateway</a>
-                <a href="index.html">Stable Home</a>
+                <a href="index.html">Stable</a>
             </div>
         </div>
     </div>
 
     <main class="page">
-        <section class="section hero" id="arrival">
+        <section class="section" id="arrival">
             <div class="inner hero-grid">
                 <div>
-                    <div class="kicker reveal visible">Experimental cinematic build / safe page</div>
+                    <div class="kicker reveal visible">Experimental page / stable homepage protected</div>
 
                     <h1 class="mega-title">
                         <span class="line"><span class="word">Research.</span></span>
@@ -921,52 +1138,82 @@
                     </h1>
 
                     <p class="hero-copy reveal visible">
-                        Quinterra is being shaped as an animated editorial world — a calm but alive system
-                        where research discipline, competitive performance, and future Quin intelligence
-                        move through one cinematic interface.
+                        Quinterra is becoming an animated editorial world: a place where clinical research
+                        discipline, gaming performance, and future Quin intelligence move through one cinematic system.
                     </p>
 
                     <div class="hero-actions reveal visible">
-                        <a class="btn primary" href="#dualcore">Begin Scroll</a>
-                        <button class="btn" id="openMenuSecond">Open Menu</button>
+                        <a class="btn primary" href="#manifesto">Begin the World</a>
+                        <button class="btn" id="openMenuSecond">Open Index</button>
                         <a class="btn" href="index.html">Stable Home</a>
                     </div>
                 </div>
 
                 <div class="poster-stage reveal visible" id="posterStage">
+                    <svg class="poster-svg" viewBox="0 0 700 700" preserveAspectRatio="none">
+                        <path
+                            d="M72 154 C180 44 286 214 394 126 C492 46 612 142 558 254 C512 348 330 270 262 382 C188 506 360 620 488 520" />
+                    </svg>
+
                     <div class="sun"></div>
-                    <div class="floating-card one">
+
+                    <div class="floating-sticker one">
                         <strong>Research Core</strong>
                         <p>Evidence, discipline, notes, protocols, structure.</p>
                     </div>
-                    <div class="floating-card two">
+
+                    <div class="floating-sticker two">
                         <strong>Competitive Core</strong>
-                        <p>Focus, gaming, rhythm, repetition, awareness.</p>
+                        <p>Focus, rhythm, gaming, repetition, awareness.</p>
                     </div>
+
+                    <div class="floating-sticker three">
+                        <strong>Quin Layer</strong>
+                        <p>Quiet intelligence inside the system.</p>
+                    </div>
+
                     <div class="mountain"></div>
                 </div>
             </div>
         </section>
 
-        <section class="section" id="dualcore">
-            <div class="inner open-stage reveal">
-                <div class="huge-side-text">Dual Core</div>
+        <div class="marquee-wrap">
+            <div class="marquee">
+                <span>Quinterra</span>
+                <span>Research</span>
+                <span>Performance</span>
+                <span>Intelligence</span>
+                <span>Quinterra</span>
+                <span>Research</span>
+                <span>Performance</span>
+                <span>Intelligence</span>
+            </div>
+        </div>
 
-                <div>
-                    <div class="kicker">Two worlds / one architecture</div>
+        <section class="section manifesto" id="manifesto">
+            <div class="inner manifesto-grid">
+                <div class="sigil reveal">
+                    <div class="sigil-line"></div>
+                </div>
+
+                <div class="reveal">
+                    <div class="kicker">Manifesto / visual soul first</div>
                     <h2 class="chapter-title">
-                        Science and <em>competition</em> inside one living system.
+                        First we build the <em>world</em>. Then we build the tools.
                     </h2>
+                    <p class="chapter-text">
+                        Quinterra should not feel like a normal homepage. It should feel like entering a system:
+                        calm, premium, alive, artistic, and intelligent — with tools added only after the motion
+                        language feels right.
+                    </p>
 
                     <div class="core-list">
                         <div class="core-row">
                             <div class="core-no">01</div>
                             <div>
                                 <h3>Research Core</h3>
-                                <p>
-                                    Clinical research, experimental thinking, literature discipline, structured notes,
-                                    protocol workflows, and professional clarity.
-                                </p>
+                                <p>Clinical research, literature discipline, protocol thinking, study notes, and
+                                    professional clarity.</p>
                             </div>
                         </div>
 
@@ -974,10 +1221,8 @@
                             <div class="core-no">02</div>
                             <div>
                                 <h3>Competitive Core</h3>
-                                <p>
-                                    Gaming, esports, performance systems, focus tracking, settings logic,
-                                    VOD-style reflection, and competitive improvement.
-                                </p>
+                                <p>Gaming, esports rhythm, performance reflection, focus systems, and competitive
+                                    improvement.</p>
                             </div>
                         </div>
 
@@ -985,10 +1230,8 @@
                             <div class="core-no">03</div>
                             <div>
                                 <h3>Quin Intelligence</h3>
-                                <p>
-                                    The quiet future operator: drafting, guiding, organizing, analyzing,
-                                    and helping visitors move through the right layer.
-                                </p>
+                                <p>A quiet operator for drafting, guiding, organizing, analyzing, and helping users move
+                                    through the platform.</p>
                             </div>
                         </div>
                     </div>
@@ -1000,21 +1243,28 @@
             <div class="sticky-frame">
                 <div class="story-inner">
                     <div class="story-visual" id="storyVisual">
+                        <svg class="story-art-line" viewBox="0 0 700 700" preserveAspectRatio="none">
+                            <path
+                                d="M80 190 C200 58 308 246 420 156 C526 72 650 180 584 296 C528 398 348 312 270 430 C198 540 362 644 520 542" />
+                            <path d="M110 540 C220 440 320 590 430 470 C520 375 600 460 632 380" />
+                        </svg>
+
                         <div class="story-shape one"></div>
                         <div class="story-shape two"></div>
                         <div class="mountain"></div>
                     </div>
 
                     <div class="story-copy">
-                        <div class="story-count" id="storyCount">Scene 01 / Research</div>
-                        <h2 class="story-heading" id="storyHeading">The Research Desk</h2>
+                        <div class="story-count" id="storyCount">Scene 01 / Arrival</div>
+                        <h2 class="story-heading" id="storyHeading">The World Opens</h2>
                         <p class="story-desc" id="storyDesc">
-                            The first layer is calm, academic, and structured. Research does not need to look dry.
-                            It can feel cinematic, precise, and alive.
+                            The visitor should feel that Quinterra is not a flat page. It is an animated entry point
+                            into a larger system.
                         </p>
 
                         <div class="story-dots">
                             <div class="story-dot active"></div>
+                            <div class="story-dot"></div>
                             <div class="story-dot"></div>
                             <div class="story-dot"></div>
                         </div>
@@ -1023,15 +1273,16 @@
             </div>
         </section>
 
-        <section class="section" id="gateway">
-            <div class="inner gateway reveal">
-                <div class="kicker">Gateway / tools later</div>
+        <section class="section gateway" id="gateway">
+            <div class="inner reveal">
+                <div class="kicker">Gateway / still experimental</div>
                 <h2 class="chapter-title">
-                    First we build the <em>soul</em>. Then we build the machine.
+                    The shell is becoming <em>alive</em>.
                 </h2>
                 <p class="chapter-text">
-                    This pass focuses on the animated website feeling first. Later, we add the real console,
-                    smart reply, notes, focus timer, research tools, gaming systems, media handling, and Quin AI.
+                    Next pass after this: we add more advanced section transitions and begin preparing the real console
+                    layer —
+                    without crowding the homepage too early.
                 </p>
 
                 <div class="final-links">
@@ -1044,7 +1295,7 @@
         </section>
 
         <footer class="footer">
-            Quinterra Next — cinematic motion prototype. Stable homepage remains protected.
+            Quinterra Next — Motion Pass 2. Stable homepage remains protected.
         </footer>
     </main>
 
@@ -1061,11 +1312,12 @@
         updateProgress();
 
         const reveals = document.querySelectorAll(".reveal");
+
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add("visible");
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.14 });
 
         reveals.forEach(el => revealObserver.observe(el));
 
@@ -1074,7 +1326,8 @@
         const cursorDot = document.getElementById("cursorDot");
 
         let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let trail = Array.from({ length: 34 }, () => ({ x: mouse.x, y: mouse.y }));
+        let trail = Array.from({ length: 38 }, () => ({ x: mouse.x, y: mouse.y }));
+        let bursts = [];
 
         function resizeCursorCanvas() {
             cursorCanvas.width = window.innerWidth * devicePixelRatio;
@@ -1094,6 +1347,10 @@
             cursorDot.style.top = mouse.y + "px";
         });
 
+        window.addEventListener("mousedown", () => {
+            bursts.push({ x: mouse.x, y: mouse.y, r: 0, a: 1 });
+        });
+
         function drawCursorTrail() {
             cursorCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -1101,8 +1358,8 @@
             trail[0].y += (mouse.y - trail[0].y) * 0.35;
 
             for (let i = 1; i < trail.length; i++) {
-                trail[i].x += (trail[i - 1].x - trail[i].x) * 0.28;
-                trail[i].y += (trail[i - 1].y - trail[i].y) * 0.28;
+                trail[i].x += (trail[i - 1].x - trail[i].x) * 0.29;
+                trail[i].y += (trail[i - 1].y - trail[i].y) * 0.29;
             }
 
             cursorCtx.beginPath();
@@ -1121,19 +1378,38 @@
                 trail[trail.length - 1].y
             );
 
-            gradient.addColorStop(0, "rgba(226, 75, 45, 0.95)");
-            gradient.addColorStop(0.55, "rgba(240, 138, 44, 0.65)");
-            gradient.addColorStop(1, "rgba(226, 75, 45, 0)");
+            gradient.addColorStop(0, "rgba(226, 71, 43, 0.98)");
+            gradient.addColorStop(0.48, "rgba(240, 138, 45, 0.78)");
+            gradient.addColorStop(1, "rgba(226, 71, 43, 0)");
 
             cursorCtx.strokeStyle = gradient;
-            cursorCtx.lineWidth = 5;
+            cursorCtx.lineWidth = 5.4;
             cursorCtx.lineCap = "round";
             cursorCtx.lineJoin = "round";
-            cursorCtx.shadowBlur = 18;
-            cursorCtx.shadowColor = "rgba(226, 75, 45, 0.65)";
+            cursorCtx.shadowBlur = 19;
+            cursorCtx.shadowColor = "rgba(226, 71, 43, 0.62)";
             cursorCtx.stroke();
 
             cursorCtx.shadowBlur = 0;
+
+            for (let i = 0; i < trail.length; i += 8) {
+                cursorCtx.beginPath();
+                cursorCtx.arc(trail[i].x, trail[i].y, Math.max(1.2, 4 - i * 0.08), 0, Math.PI * 2);
+                cursorCtx.fillStyle = `rgba(240, 138, 45, ${Math.max(0, 0.34 - i * 0.008)})`;
+                cursorCtx.fill();
+            }
+
+            bursts = bursts.filter(b => b.a > 0.02);
+            bursts.forEach(b => {
+                b.r += 2.8;
+                b.a *= 0.94;
+                cursorCtx.beginPath();
+                cursorCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                cursorCtx.strokeStyle = `rgba(226, 71, 43, ${b.a})`;
+                cursorCtx.lineWidth = 2;
+                cursorCtx.stroke();
+            });
+
             requestAnimationFrame(drawCursorTrail);
         }
 
@@ -1141,69 +1417,99 @@
 
         const posterStage = document.getElementById("posterStage");
 
-        window.addEventListener("scroll", () => {
+        function posterParallax() {
             const y = window.scrollY;
             if (posterStage) {
-                posterStage.style.transform = `translateY(${y * 0.035}px) rotate(${y * 0.002}deg)`;
+                posterStage.style.transform = `translateY(${y * 0.032}px) rotate(${y * 0.0018}deg)`;
             }
-        }, { passive: true });
+        }
+
+        window.addEventListener("scroll", posterParallax, { passive: true });
+        posterParallax();
 
         const storyData = [
             {
-                count: "Scene 01 / Research",
-                heading: "The Research Desk",
-                desc: "The first layer is calm, academic, and structured. Research does not need to look dry. It can feel cinematic, precise, and alive.",
-                bg: "linear-gradient(135deg, #371b13, #e24b2d 45%, #f7efe3)",
+                count: "Scene 01 / Arrival",
+                heading: "The World Opens",
+                desc: "The visitor should feel that Quinterra is not a flat page. It is an animated entry point into a larger system.",
+                bg: "linear-gradient(135deg, #321811, #e2472b 45%, #f7efe3)",
                 x: "63%",
                 y: "26%"
             },
             {
-                count: "Scene 02 / Performance",
-                heading: "The Competitive Arena",
-                desc: "The second layer carries gaming rhythm, esports awareness, focus, repetition, and mechanical discipline without becoming visually chaotic.",
-                bg: "linear-gradient(135deg, #131722, #263f63 48%, #f1dfcb)",
-                x: "28%",
-                y: "35%"
+                count: "Scene 02 / Research",
+                heading: "The Research Desk",
+                desc: "Clinical research becomes calm, cinematic, and structured — evidence, protocols, notes, and clarity inside one elegant layer.",
+                bg: "linear-gradient(135deg, #3b2419, #bd351f 42%, #fff4e7)",
+                x: "30%",
+                y: "33%"
             },
             {
-                count: "Scene 03 / Intelligence",
+                count: "Scene 03 / Performance",
+                heading: "The Competitive Arena",
+                desc: "Gaming and esports carry rhythm, speed, reaction, focus, repetition, and performance logic without visual chaos.",
+                bg: "linear-gradient(135deg, #121824, #223d63 48%, #f1dfcb)",
+                x: "27%",
+                y: "36%"
+            },
+            {
+                count: "Scene 04 / Intelligence",
                 heading: "The Quin Layer",
-                desc: "The third layer is the future operator: quiet, useful, intelligent, and always ready to guide the visitor to the right tool.",
-                bg: "linear-gradient(135deg, #142d27, #287968 48%, #fff4e7)",
-                x: "58%",
+                desc: "Quin becomes the quiet operator: guiding, organizing, drafting, analyzing, and helping people reach the right tool.",
+                bg: "linear-gradient(135deg, #142d27, #287263 48%, #fff4e7)",
+                x: "59%",
                 y: "38%"
             }
         ];
 
+        const storySection = document.querySelector(".scroll-story");
         const storyVisual = document.getElementById("storyVisual");
         const storyCount = document.getElementById("storyCount");
         const storyHeading = document.getElementById("storyHeading");
         const storyDesc = document.getElementById("storyDesc");
         const storyDots = document.querySelectorAll(".story-dot");
-        const storySection = document.querySelector(".scroll-story");
+
+        let currentStoryIndex = -1;
 
         function updateStory() {
             const rect = storySection.getBoundingClientRect();
             const total = storySection.offsetHeight - window.innerHeight;
             const moved = Math.min(Math.max(-rect.top, 0), total);
-            const progress = total > 0 ? moved / total : 0;
+            const p = total > 0 ? moved / total : 0;
 
             let index = 0;
-            if (progress > 0.34) index = 1;
-            if (progress > 0.68) index = 2;
+            if (p > 0.24) index = 1;
+            if (p > 0.50) index = 2;
+            if (p > 0.76) index = 3;
 
-            const data = storyData[index];
+            if (index !== currentStoryIndex) {
+                currentStoryIndex = index;
+                const data = storyData[index];
 
-            storyCount.textContent = data.count;
-            storyHeading.textContent = data.heading;
-            storyDesc.textContent = data.desc;
-            storyVisual.style.setProperty("--story-bg", data.bg);
-            storyVisual.style.setProperty("--sx", data.x);
-            storyVisual.style.setProperty("--sy", data.y);
+                storyHeading.style.opacity = "0";
+                storyHeading.style.transform = "translateY(18px)";
+                storyDesc.style.opacity = "0";
+                storyDesc.style.transform = "translateY(18px)";
 
-            storyDots.forEach((dot, i) => {
-                dot.classList.toggle("active", i === index);
-            });
+                setTimeout(() => {
+                    storyCount.textContent = data.count;
+                    storyHeading.textContent = data.heading;
+                    storyDesc.textContent = data.desc;
+
+                    storyVisual.style.setProperty("--story-bg", data.bg);
+                    storyVisual.style.setProperty("--sx", data.x);
+                    storyVisual.style.setProperty("--sy", data.y);
+
+                    storyDots.forEach((dot, i) => dot.classList.toggle("active", i === index));
+
+                    storyHeading.style.opacity = "1";
+                    storyHeading.style.transform = "translateY(0)";
+                    storyDesc.style.opacity = "1";
+                    storyDesc.style.transform = "translateY(0)";
+                }, 160);
+            }
+
+            storyVisual.style.transform = `rotate(${(p - 0.5) * 3}deg) scale(${1 + p * 0.025})`;
         }
 
         window.addEventListener("scroll", updateStory, { passive: true });
@@ -1242,26 +1548,27 @@
             menuCtx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
         }
 
-        window.addEventListener("resize", resizeMenuCanvas);
         resizeMenuCanvas();
+        window.addEventListener("resize", resizeMenuCanvas);
 
-        let t = 0;
+        let mt = 0;
 
         function drawMenuLines() {
             menuCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-            t += 0.012;
+            mt += 0.012;
 
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 9; i++) {
                 menuCtx.beginPath();
-                const y = 120 + i * 88 + Math.sin(t + i) * 18;
-                menuCtx.moveTo(-80, y);
 
-                for (let x = -80; x < window.innerWidth + 100; x += 120) {
-                    const cy = y + Math.sin(t * 2 + x * 0.01 + i) * 40;
+                const y = 110 + i * 86 + Math.sin(mt + i) * 18;
+                menuCtx.moveTo(-100, y);
+
+                for (let x = -100; x < window.innerWidth + 160; x += 120) {
+                    const cy = y + Math.sin(mt * 2 + x * 0.01 + i) * 42;
                     menuCtx.quadraticCurveTo(x + 60, cy, x + 120, y);
                 }
 
-                menuCtx.strokeStyle = "rgba(255,255,255,0.24)";
+                menuCtx.strokeStyle = i % 2 === 0 ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.16)";
                 menuCtx.lineWidth = i % 2 === 0 ? 2 : 1;
                 menuCtx.stroke();
             }
