@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Quinterra Next — Motion Pass 3</title>
+    <title>Quinterra Next — Motion Pass 4</title>
 
     <style>
         :root {
@@ -22,6 +22,10 @@
             --indigo: #223d63;
             --jade: #287263;
             --gold: #b98538;
+
+            --console-bg: #120d0a;
+            --console-card: rgba(255, 248, 238, 0.1);
+            --console-line: rgba(255, 248, 238, 0.18);
 
             --max: 1460px;
             --scroll: 0;
@@ -270,7 +274,8 @@
 
         .menu-btn,
         .btn,
-        .menu-close {
+        .menu-close,
+        .console-close {
             cursor: none;
         }
 
@@ -923,6 +928,68 @@
             margin-inline: auto;
         }
 
+        .console-teaser {
+            margin-top: 34px;
+            border-radius: 42px;
+            border: 1px solid rgba(21, 16, 13, 0.14);
+            background:
+                radial-gradient(circle at 20% 20%, rgba(226, 71, 43, 0.16), transparent 24%),
+                radial-gradient(circle at 80% 70%, rgba(34, 61, 99, 0.14), transparent 25%),
+                rgba(255, 255, 255, 0.38);
+            backdrop-filter: blur(18px);
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 20px;
+            text-align: left;
+            box-shadow: 0 34px 90px rgba(45, 26, 10, 0.1);
+        }
+
+        .console-teaser h3 {
+            font-size: clamp(2rem, 5vw, 5rem);
+            line-height: 0.82;
+            letter-spacing: -0.08em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .console-teaser p {
+            color: var(--muted);
+            line-height: 1.85;
+            max-width: 680px;
+        }
+
+        .console-mini-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .console-mini {
+            min-height: 150px;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.46);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .console-mini span {
+            color: var(--red);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 900;
+        }
+
+        .console-mini strong {
+            font-size: 1.18rem;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
         .final-links {
             display: flex;
             justify-content: center;
@@ -1111,6 +1178,293 @@
             transform: scaleX(1);
         }
 
+        .console-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9600;
+            background:
+                radial-gradient(circle at 18% 18%, rgba(226, 71, 43, 0.22), transparent 24%),
+                radial-gradient(circle at 80% 72%, rgba(34, 61, 99, 0.22), transparent 28%),
+                linear-gradient(135deg, #120d0a, #21130f 52%, #081515);
+            color: white;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            clip-path: circle(0% at 50% 50%);
+            pointer-events: none;
+            transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: auto;
+        }
+
+        .console-overlay.open {
+            clip-path: circle(150% at 50% 50%);
+            pointer-events: auto;
+        }
+
+        .console-grid-bg {
+            position: fixed;
+            inset: 0;
+            opacity: 0.18;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 72px),
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 72px);
+            animation: consoleGrid 18s linear infinite;
+        }
+
+        @keyframes consoleGrid {
+            to {
+                transform: translate(72px, -72px);
+            }
+        }
+
+        .console-shell {
+            position: relative;
+            z-index: 2;
+            width: min(100%, var(--max));
+            min-height: calc(100vh - 48px);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 22px;
+        }
+
+        .console-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px;
+            border-radius: 30px;
+            border: 1px solid var(--console-line);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+        }
+
+        .console-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 950;
+            letter-spacing: -0.04em;
+        }
+
+        .console-brand-mark {
+            width: 48px;
+            height: 48px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            color: white;
+            box-shadow: 0 18px 50px rgba(226, 71, 43, 0.28);
+        }
+
+        .console-brand small {
+            display: block;
+            color: rgba(255, 255, 255, 0.58);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.72rem;
+            margin-top: 3px;
+        }
+
+        .console-close {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+            background: rgba(255, 255, 255, 0.09);
+            border-radius: 999px;
+            padding: 13px 18px;
+            font-weight: 900;
+        }
+
+        .console-main {
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .console-hero,
+        .console-panel,
+        .console-module {
+            border: 1px solid var(--console-line);
+            border-radius: 38px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+            box-shadow: 0 38px 120px rgba(0, 0, 0, 0.18);
+        }
+
+        .console-hero {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .console-hero::before {
+            content: "";
+            position: absolute;
+            inset: -20%;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(226, 71, 43, 0.20), transparent 22%),
+                radial-gradient(circle at 80% 60%, rgba(40, 114, 99, 0.14), transparent 24%);
+            animation: consoleAura 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes consoleAura {
+            to {
+                transform: translate(28px, -18px) scale(1.08);
+            }
+        }
+
+        .console-hero>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .console-kicker {
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.8rem;
+            font-weight: 950;
+            margin-bottom: 22px;
+        }
+
+        .console-title {
+            font-size: clamp(3.4rem, 8vw, 8.8rem);
+            line-height: 0.78;
+            letter-spacing: -0.1em;
+            text-transform: uppercase;
+            font-weight: 950;
+            max-width: 740px;
+        }
+
+        .console-copy {
+            margin-top: 28px;
+            color: rgba(255, 255, 255, 0.68);
+            line-height: 1.85;
+            max-width: 660px;
+        }
+
+        .console-status {
+            margin-top: 28px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .console-pill {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.76);
+            font-size: 0.88rem;
+            font-weight: 800;
+        }
+
+        .console-right {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 22px;
+        }
+
+        .console-panel {
+            padding: 24px;
+        }
+
+        .console-panel h3 {
+            font-size: clamp(1.7rem, 3vw, 3rem);
+            line-height: 0.9;
+            letter-spacing: -0.07em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .console-panel p {
+            color: rgba(255, 255, 255, 0.64);
+            line-height: 1.75;
+            max-width: 780px;
+        }
+
+        .console-modules {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .console-module {
+            padding: 22px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .console-module:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.28);
+        }
+
+        .console-module span {
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.75rem;
+            font-weight: 950;
+        }
+
+        .console-module h4 {
+            font-size: 1.35rem;
+            letter-spacing: -0.04em;
+            margin: 12px 0;
+        }
+
+        .console-module p {
+            color: rgba(255, 255, 255, 0.62);
+            line-height: 1.7;
+            font-size: 0.96rem;
+        }
+
+        .console-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 18px;
+            border-radius: 30px;
+            border: 1px solid var(--console-line);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .console-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .console-link {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            padding: 12px 16px;
+            font-weight: 900;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .console-link.primary {
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            border-color: transparent;
+        }
+
         .reveal {
             opacity: 0;
             transform: translateY(54px);
@@ -1136,14 +1490,17 @@
 
             .menu-btn,
             .btn,
-            .menu-close {
+            .menu-close,
+            .console-close {
                 cursor: pointer;
             }
 
             .hero-grid,
             .manifesto-grid,
             .story-inner,
-            .menu-content {
+            .menu-content,
+            .console-main,
+            .console-teaser {
                 grid-template-columns: 1fr;
             }
 
@@ -1166,7 +1523,8 @@
             .mega-title,
             .chapter-title,
             .story-heading,
-            .transition-word {
+            .transition-word,
+            .console-title {
                 letter-spacing: -0.078em;
             }
 
@@ -1177,7 +1535,9 @@
                 border-radius: 36px;
             }
 
-            .core-row {
+            .core-row,
+            .console-mini-grid,
+            .console-modules {
                 grid-template-columns: 1fr;
             }
 
@@ -1187,6 +1547,21 @@
 
             .floating-sticker {
                 width: 190px;
+            }
+
+            .console-overlay {
+                padding: 14px;
+            }
+
+            .console-top,
+            .console-bottom {
+                border-radius: 24px;
+            }
+
+            .console-hero,
+            .console-panel,
+            .console-module {
+                border-radius: 28px;
             }
         }
     </style>
@@ -1224,12 +1599,13 @@
             <div class="brand-mark">Q</div>
             <div>
                 Quinterra
-                <small>Motion Pass 3</small>
+                <small>Motion Pass 4</small>
             </div>
         </a>
 
         <div class="nav-actions">
             <a class="stable-link" href="index.html">Stable Home</a>
+            <button class="menu-btn" id="openConsoleTop">Console</button>
             <button class="menu-btn" id="openMenu">Index <span class="menu-lines"></span></button>
         </div>
     </nav>
@@ -1258,6 +1634,96 @@
         </div>
     </div>
 
+    <div class="console-overlay" id="consoleOverlay">
+        <div class="console-grid-bg"></div>
+
+        <div class="console-shell">
+            <div class="console-top">
+                <div class="console-brand">
+                    <div class="console-brand-mark">Q</div>
+                    <div>
+                        Quinterra Console
+                        <small>Research / Performance / Intelligence</small>
+                    </div>
+                </div>
+
+                <button class="console-close" id="closeConsole">Close Console</button>
+            </div>
+
+            <div class="console-main">
+                <div class="console-hero">
+                    <div>
+                        <div class="console-kicker">Prototype Console / Phase C Preview</div>
+                        <h2 class="console-title">The System Layer</h2>
+                        <p class="console-copy">
+                            This is the first cinematic console preview. It does not overload the homepage,
+                            but it gives Quinterra the feeling of a real platform waiting behind the story.
+                        </p>
+
+                        <div class="console-status">
+                            <div class="console-pill">Research Core Online</div>
+                            <div class="console-pill">Competitive Core Awake</div>
+                            <div class="console-pill">Quin Intelligence Pending</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="console-right">
+                    <div class="console-panel">
+                        <h3>Four future workstations</h3>
+                        <p>
+                            We are not building all tools today. We are designing the royal entry point first:
+                            clean modules, clear hierarchy, and a premium operating-system feeling.
+                        </p>
+                    </div>
+
+                    <div class="console-modules">
+                        <div class="console-module">
+                            <div>
+                                <span>Module 01</span>
+                                <h4>Research Desk</h4>
+                                <p>Protocols, literature notes, study planning, clinical research workflows.</p>
+                            </div>
+                        </div>
+
+                        <div class="console-module">
+                            <div>
+                                <span>Module 02</span>
+                                <h4>Performance Lab</h4>
+                                <p>Gaming settings, focus systems, VOD notes, competitive improvement.</p>
+                            </div>
+                        </div>
+
+                        <div class="console-module">
+                            <div>
+                                <span>Module 03</span>
+                                <h4>Quin Intelligence</h4>
+                                <p>Reply drafting, workflow guidance, organization, future AI behavior.</p>
+                            </div>
+                        </div>
+
+                        <div class="console-module">
+                            <div>
+                                <span>Module 04</span>
+                                <h4>Media Vault</h4>
+                                <p>Documents, videos, YouTube links, visual references, project assets.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="console-bottom">
+                <div>Console preview only — tools will be built later, after the world feels perfect.</div>
+                <div class="console-actions">
+                    <a class="console-link primary" href="dashboard.html">Open Current Dashboard</a>
+                    <a class="console-link" href="professional.html">Professional</a>
+                    <a class="console-link" href="games.html">Gaming</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="page">
         <section class="section" id="arrival">
             <div class="inner hero-grid">
@@ -1276,7 +1742,8 @@
                     </p>
 
                     <div class="hero-actions reveal visible">
-                        <a class="btn primary" href="#manifesto">Begin the World</a>
+                        <button class="btn primary" id="openConsoleHero">Enter Console</button>
+                        <a class="btn" href="#manifesto">Begin the World</a>
                         <button class="btn" id="openMenuSecond">Open Index</button>
                         <a class="btn" href="index.html">Stable Home</a>
                     </div>
@@ -1417,17 +1884,51 @@
 
         <section class="section gateway" id="gateway">
             <div class="inner reveal">
-                <div class="kicker">Gateway / still experimental</div>
+                <div class="kicker">Gateway / console preview</div>
                 <h2 class="chapter-title">
-                    The shell is becoming <em>alive</em>.
+                    The shell is becoming <em>a system</em>.
                 </h2>
                 <p class="chapter-text">
-                    Next pass after this: we begin preparing the real console layer — but we keep the homepage clean,
-                    cinematic, and not crowded.
+                    This pass introduces the first premium console entry. The homepage stays clean,
+                    while the platform feeling begins to appear behind the cinematic story.
                 </p>
 
+                <div class="console-teaser">
+                    <div>
+                        <h3>Enter the operating layer.</h3>
+                        <p>
+                            The console is where research, performance, media, and Quin intelligence will eventually
+                            live.
+                            For now, it is a cinematic preview — the door before the machine.
+                        </p>
+
+                        <div class="hero-actions">
+                            <button class="btn primary" id="openConsoleGateway">Open Console</button>
+                            <a class="btn" href="dashboard.html">Current Dashboard</a>
+                        </div>
+                    </div>
+
+                    <div class="console-mini-grid">
+                        <div class="console-mini">
+                            <span>01</span>
+                            <strong>Research Desk</strong>
+                        </div>
+                        <div class="console-mini">
+                            <span>02</span>
+                            <strong>Performance Lab</strong>
+                        </div>
+                        <div class="console-mini">
+                            <span>03</span>
+                            <strong>Quin AI</strong>
+                        </div>
+                        <div class="console-mini">
+                            <span>04</span>
+                            <strong>Media Vault</strong>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="final-links">
-                    <a class="btn primary" href="dashboard.html">Current Dashboard</a>
                     <a class="btn" href="professional.html">Professional</a>
                     <a class="btn" href="games.html">Gaming</a>
                     <a class="btn" href="index.html">Stable Home</a>
@@ -1436,7 +1937,7 @@
         </section>
 
         <footer class="footer">
-            Quinterra Next — Motion Pass 3. Stable homepage remains protected.
+            Quinterra Next — Motion Pass 4. Stable homepage remains protected.
         </footer>
     </main>
 
@@ -1563,6 +2064,7 @@
 
         function parallaxObjects() {
             const y = window.scrollY;
+
             if (posterStage) {
                 posterStage.style.transform = `translateY(${y * 0.03}px) rotate(${y * 0.0016}deg)`;
             }
@@ -1687,6 +2189,38 @@
         openMenuSecond.addEventListener("click", showMenu);
         closeMenu.addEventListener("click", hideMenu);
         menuJumps.forEach(link => link.addEventListener("click", hideMenu));
+
+        const consoleOverlay = document.getElementById("consoleOverlay");
+        const consoleButtons = [
+            document.getElementById("openConsoleTop"),
+            document.getElementById("openConsoleHero"),
+            document.getElementById("openConsoleGateway")
+        ];
+
+        const closeConsole = document.getElementById("closeConsole");
+
+        function showConsole() {
+            consoleOverlay.classList.add("open");
+            document.body.style.overflow = "hidden";
+        }
+
+        function hideConsole() {
+            consoleOverlay.classList.remove("open");
+            document.body.style.overflow = "";
+        }
+
+        consoleButtons.forEach(button => {
+            if (button) button.addEventListener("click", showConsole);
+        });
+
+        closeConsole.addEventListener("click", hideConsole);
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                hideMenu();
+                hideConsole();
+            }
+        });
 
         const menuCanvas = document.getElementById("menuCanvas");
         const menuCtx = menuCanvas.getContext("2d");
