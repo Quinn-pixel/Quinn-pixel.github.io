@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Quinterra Next — Motion Pass 4</title>
+    <title>Quinterra Next — Motion Pass 5</title>
 
     <style>
         :root {
@@ -59,7 +59,10 @@
             text-decoration: none;
         }
 
-        button {
+        button,
+        input,
+        textarea,
+        select {
             font: inherit;
         }
 
@@ -275,7 +278,9 @@
         .menu-btn,
         .btn,
         .menu-close,
-        .console-close {
+        .console-close,
+        .mini-btn,
+        .tool-action {
             cursor: none;
         }
 
@@ -1224,7 +1229,7 @@
             width: min(100%, var(--max));
             min-height: calc(100vh - 48px);
             display: grid;
-            grid-template-rows: auto 1fr auto;
+            grid-template-rows: auto auto 1fr auto;
             gap: 22px;
         }
 
@@ -1277,16 +1282,55 @@
             font-weight: 900;
         }
 
+        .console-strip {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr 0.9fr;
+            gap: 18px;
+        }
+
+        .strip-card {
+            border: 1px solid var(--console-line);
+            border-radius: 26px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+            padding: 18px;
+            min-height: 112px;
+        }
+
+        .strip-card span {
+            display: block;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.74rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .strip-card strong {
+            font-size: 1.28rem;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .strip-card p {
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.62);
+            line-height: 1.65;
+            font-size: 0.92rem;
+        }
+
         .console-main {
             display: grid;
-            grid-template-columns: 0.92fr 1.08fr;
+            grid-template-columns: 0.96fr 1.04fr;
             gap: 22px;
-            align-items: stretch;
+            align-items: start;
         }
 
         .console-hero,
         .console-panel,
-        .console-module {
+        .console-module,
+        .work-card {
             border: 1px solid var(--console-line);
             border-radius: 38px;
             background: rgba(255, 255, 255, 0.08);
@@ -1298,9 +1342,10 @@
             padding: 32px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 22px;
             overflow: hidden;
             position: relative;
+            min-height: 680px;
         }
 
         .console-hero::before {
@@ -1330,7 +1375,6 @@
             letter-spacing: 0.16em;
             font-size: 0.8rem;
             font-weight: 950;
-            margin-bottom: 22px;
         }
 
         .console-title {
@@ -1343,14 +1387,12 @@
         }
 
         .console-copy {
-            margin-top: 28px;
             color: rgba(255, 255, 255, 0.68);
             line-height: 1.85;
             max-width: 660px;
         }
 
         .console-status {
-            margin-top: 28px;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
@@ -1366,9 +1408,43 @@
             font-weight: 800;
         }
 
+        .work-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: auto;
+        }
+
+        .work-card {
+            padding: 20px;
+            min-height: 160px;
+        }
+
+        .work-card span {
+            display: block;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.74rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .work-card strong {
+            font-size: 1.2rem;
+            letter-spacing: -0.03em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .work-card p {
+            color: rgba(255, 255, 255, 0.64);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
         .console-right {
             display: grid;
-            grid-template-rows: auto 1fr;
             gap: 22px;
         }
 
@@ -1431,6 +1507,136 @@
             font-size: 0.96rem;
         }
 
+        .workstation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .tool-surface {
+            border: 1px solid var(--console-line);
+            border-radius: 32px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+            padding: 22px;
+            min-height: 300px;
+        }
+
+        .tool-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .tool-head h4 {
+            font-size: 1.3rem;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .tool-head span {
+            color: var(--orange);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 900;
+        }
+
+        .tool-body,
+        .tool-body p {
+            color: rgba(255, 255, 255, 0.64);
+            line-height: 1.75;
+            font-size: 0.95rem;
+        }
+
+        .timer-readout {
+            font-size: clamp(2.1rem, 5vw, 3.6rem);
+            line-height: 1;
+            letter-spacing: -0.06em;
+            font-weight: 950;
+            margin: 20px 0 10px;
+            color: white;
+        }
+
+        .mini-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .mini-btn,
+        .tool-action {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-weight: 850;
+            transition: transform 0.22s ease, background 0.22s ease;
+        }
+
+        .mini-btn:hover,
+        .tool-action:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .mini-btn.primary,
+        .tool-action.primary {
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            border-color: transparent;
+        }
+
+        .tool-input,
+        .tool-select,
+        .tool-textarea {
+            width: 100%;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 13px 14px;
+            outline: none;
+        }
+
+        .tool-input::placeholder,
+        .tool-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.42);
+        }
+
+        .tool-select option {
+            color: black;
+        }
+
+        .tool-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .tool-output {
+            margin-top: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 18px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            min-height: 100px;
+            white-space: pre-wrap;
+            color: rgba(255, 255, 255, 0.78);
+            line-height: 1.7;
+            font-size: 0.94rem;
+        }
+
+        .note-meta {
+            margin-top: 12px;
+            color: rgba(255, 255, 255, 0.44);
+            font-size: 0.84rem;
+        }
+
         .console-bottom {
             display: flex;
             align-items: center;
@@ -1478,6 +1684,14 @@
             transform: translateY(0);
         }
 
+        @media (max-width: 1180px) {
+
+            .console-strip,
+            .workstation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 1080px) {
             body {
                 cursor: auto;
@@ -1491,7 +1705,9 @@
             .menu-btn,
             .btn,
             .menu-close,
-            .console-close {
+            .console-close,
+            .mini-btn,
+            .tool-action {
                 cursor: pointer;
             }
 
@@ -1499,8 +1715,8 @@
             .manifesto-grid,
             .story-inner,
             .menu-content,
-            .console-main,
-            .console-teaser {
+            .console-teaser,
+            .console-main {
                 grid-template-columns: 1fr;
             }
 
@@ -1537,7 +1753,8 @@
 
             .core-row,
             .console-mini-grid,
-            .console-modules {
+            .console-modules,
+            .workstation-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1554,13 +1771,16 @@
             }
 
             .console-top,
-            .console-bottom {
+            .console-bottom,
+            .strip-card {
                 border-radius: 24px;
             }
 
             .console-hero,
             .console-panel,
-            .console-module {
+            .console-module,
+            .work-card,
+            .tool-surface {
                 border-radius: 28px;
             }
         }
@@ -1599,7 +1819,7 @@
             <div class="brand-mark">Q</div>
             <div>
                 Quinterra
-                <small>Motion Pass 4</small>
+                <small>Motion Pass 5</small>
             </div>
         </a>
 
@@ -1650,20 +1870,63 @@
                 <button class="console-close" id="closeConsole">Close Console</button>
             </div>
 
+            <div class="console-strip">
+                <div class="strip-card">
+                    <span>Live Build State</span>
+                    <strong>World first. System second.</strong>
+                    <p>The homepage remains cinematic while the console becomes lightly functional.</p>
+                </div>
+
+                <div class="strip-card">
+                    <span>Focus Session</span>
+                    <strong id="stripTimerLabel">25 min mode</strong>
+                    <p>Start the timer below and treat this as the first true workstation behavior.</p>
+                </div>
+
+                <div class="strip-card">
+                    <span>Quick Memory</span>
+                    <strong id="noteSavedStatus">No notes saved yet</strong>
+                    <p>Your notes are stored in this browser so the console already feels useful.</p>
+                </div>
+            </div>
+
             <div class="console-main">
                 <div class="console-hero">
                     <div>
                         <div class="console-kicker">Prototype Console / Phase C Preview</div>
                         <h2 class="console-title">The System Layer</h2>
                         <p class="console-copy">
-                            This is the first cinematic console preview. It does not overload the homepage,
-                            but it gives Quinterra the feeling of a real platform waiting behind the story.
+                            This is the first truly useful console pass. It still protects the clean homepage,
+                            but now the machine behind the world has working pieces instead of only visual promise.
                         </p>
 
                         <div class="console-status">
                             <div class="console-pill">Research Core Online</div>
-                            <div class="console-pill">Competitive Core Awake</div>
-                            <div class="console-pill">Quin Intelligence Pending</div>
+                            <div class="console-pill">Performance Lab Active</div>
+                            <div class="console-pill">Quin Drafting Preview</div>
+                        </div>
+                    </div>
+
+                    <div class="work-grid">
+                        <div class="work-card">
+                            <span>Workstation 01</span>
+                            <strong>Research Desk</strong>
+                            <p>Notes, literature tracking, protocol planning, and structured scientific workspaces will
+                                grow here.</p>
+                        </div>
+
+                        <div class="work-card">
+                            <span>Workstation 02</span>
+                            <strong>Performance Lab</strong>
+                            <p>Focus systems, review routines, gaming discipline, and training logic belong in this
+                                layer.</p>
+                        </div>
+
+                        <div class="work-card">
+                            <span>Workstation 03</span>
+                            <strong>Quin Intelligence</strong>
+                            <p>Drafting, guidance, organization, and future assistant behavior should feel calm and
+                                premium.</p>
                         </div>
                     </div>
                 </div>
@@ -1672,8 +1935,10 @@
                     <div class="console-panel">
                         <h3>Four future workstations</h3>
                         <p>
-                            We are not building all tools today. We are designing the royal entry point first:
-                            clean modules, clear hierarchy, and a premium operating-system feeling.
+                            We still are not building the full platform today. But now the console has real interactive
+                            behavior:
+                            a focus timer, notes pad, and smart reply prototype. This is the correct “world to system”
+                            transition.
                         </p>
                     </div>
 
@@ -1710,11 +1975,118 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="workstation-grid">
+                        <div class="tool-surface">
+                            <div class="tool-head">
+                                <div>
+                                    <span>Tool 01</span>
+                                    <h4>Focus Timer</h4>
+                                </div>
+                            </div>
+
+                            <div class="tool-body">
+                                Choose a focus mode and start a quiet session.
+                            </div>
+
+                            <select class="tool-select" id="timerMode">
+                                <option value="25">25 minutes — Deep Focus</option>
+                                <option value="15">15 minutes — Quick Sprint</option>
+                                <option value="50">50 minutes — Long Research Block</option>
+                            </select>
+
+                            <div class="timer-readout" id="timerReadout">25:00</div>
+
+                            <div class="mini-row">
+                                <button class="mini-btn primary" id="startTimer">Start</button>
+                                <button class="mini-btn" id="pauseTimer">Pause</button>
+                                <button class="mini-btn" id="resetTimer">Reset</button>
+                            </div>
+
+                            <div class="tool-output" id="timerStatus">Timer ready. Choose a mode and begin.</div>
+                        </div>
+
+                        <div class="tool-surface">
+                            <div class="tool-head">
+                                <div>
+                                    <span>Tool 02</span>
+                                    <h4>Quick Notes</h4>
+                                </div>
+                            </div>
+
+                            <div class="tool-body">
+                                Save a research thought, gameplay note, or console idea.
+                            </div>
+
+                            <textarea class="tool-textarea" id="quickNotes"
+                                placeholder="Write your note here..."></textarea>
+
+                            <div class="mini-row">
+                                <button class="tool-action primary" id="saveNotes">Save Note</button>
+                                <button class="tool-action" id="clearNotes">Clear</button>
+                            </div>
+
+                            <div class="note-meta" id="notesMeta">Nothing saved yet.</div>
+                        </div>
+
+                        <div class="tool-surface">
+                            <div class="tool-head">
+                                <div>
+                                    <span>Tool 03</span>
+                                    <h4>Smart Reply Draft</h4>
+                                </div>
+                            </div>
+
+                            <div class="tool-body">
+                                A simple Quin drafting preview for professional replies.
+                            </div>
+
+                            <select class="tool-select" id="replyTone">
+                                <option value="professional">Professional</option>
+                                <option value="warm">Warm</option>
+                                <option value="concise">Concise</option>
+                            </select>
+
+                            <input class="tool-input" id="replyName" placeholder="Recipient or sender name" />
+                            <textarea class="tool-textarea" id="replyPrompt"
+                                placeholder="Type the message topic or incoming message idea..."></textarea>
+
+                            <div class="mini-row">
+                                <button class="tool-action primary" id="generateReply">Generate Draft</button>
+                            </div>
+
+                            <div class="tool-output" id="replyOutput">Draft output will appear here.</div>
+                        </div>
+
+                        <div class="tool-surface">
+                            <div class="tool-head">
+                                <div>
+                                    <span>Tool 04</span>
+                                    <h4>Quick Launch</h4>
+                                </div>
+                            </div>
+
+                            <div class="tool-body">
+                                Jump into the current live layers while we continue building the real system.
+                            </div>
+
+                            <div class="mini-row" style="margin-top:18px;">
+                                <a class="tool-action primary" href="dashboard.html">Dashboard</a>
+                                <a class="tool-action" href="professional.html">Professional</a>
+                                <a class="tool-action" href="games.html">Gaming</a>
+                            </div>
+
+                            <div class="tool-output">
+                                This is still a preview console. The full workstation architecture comes in later
+                                passes.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="console-bottom">
-                <div>Console preview only — tools will be built later, after the world feels perfect.</div>
+                <div>Console pass 5 — lightly functional, still premium, still clean.</div>
                 <div class="console-actions">
                     <a class="console-link primary" href="dashboard.html">Open Current Dashboard</a>
                     <a class="console-link" href="professional.html">Professional</a>
@@ -1886,11 +2258,11 @@
             <div class="inner reveal">
                 <div class="kicker">Gateway / console preview</div>
                 <h2 class="chapter-title">
-                    The shell is becoming <em>a system</em>.
+                    The shell is becoming <em>a workstation</em>.
                 </h2>
                 <p class="chapter-text">
-                    This pass introduces the first premium console entry. The homepage stays clean,
-                    while the platform feeling begins to appear behind the cinematic story.
+                    This pass makes the console lightly useful while keeping the homepage clean,
+                    cinematic, and not crowded.
                 </p>
 
                 <div class="console-teaser">
@@ -1899,7 +2271,7 @@
                         <p>
                             The console is where research, performance, media, and Quin intelligence will eventually
                             live.
-                            For now, it is a cinematic preview — the door before the machine.
+                            This pass gives it real behavior: timer, notes, and reply drafting.
                         </p>
 
                         <div class="hero-actions">
@@ -1911,19 +2283,19 @@
                     <div class="console-mini-grid">
                         <div class="console-mini">
                             <span>01</span>
-                            <strong>Research Desk</strong>
+                            <strong>Focus Timer</strong>
                         </div>
                         <div class="console-mini">
                             <span>02</span>
-                            <strong>Performance Lab</strong>
+                            <strong>Quick Notes</strong>
                         </div>
                         <div class="console-mini">
                             <span>03</span>
-                            <strong>Quin AI</strong>
+                            <strong>Smart Reply</strong>
                         </div>
                         <div class="console-mini">
                             <span>04</span>
-                            <strong>Media Vault</strong>
+                            <strong>Quick Launch</strong>
                         </div>
                     </div>
                 </div>
@@ -1937,7 +2309,7 @@
         </section>
 
         <footer class="footer">
-            Quinterra Next — Motion Pass 4. Stable homepage remains protected.
+            Quinterra Next — Motion Pass 5. Stable homepage remains protected.
         </footer>
     </main>
 
@@ -1956,7 +2328,6 @@
         updateProgress();
 
         const reveals = document.querySelectorAll(".reveal");
-
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add("visible");
@@ -2196,7 +2567,6 @@
             document.getElementById("openConsoleHero"),
             document.getElementById("openConsoleGateway")
         ];
-
         const closeConsole = document.getElementById("closeConsole");
 
         function showConsole() {
@@ -2212,7 +2582,6 @@
         consoleButtons.forEach(button => {
             if (button) button.addEventListener("click", showConsole);
         });
-
         closeConsole.addEventListener("click", hideConsole);
 
         document.addEventListener("keydown", (event) => {
@@ -2244,7 +2613,6 @@
 
             for (let i = 0; i < 10; i++) {
                 menuCtx.beginPath();
-
                 const y = 90 + i * 84 + Math.sin(mt + i) * 20;
                 menuCtx.moveTo(-120, y);
 
@@ -2262,6 +2630,147 @@
         }
 
         drawMenuLines();
+
+        let timerInterval = null;
+        let remainingSeconds = 25 * 60;
+        let currentMode = 25;
+
+        const timerMode = document.getElementById("timerMode");
+        const timerReadout = document.getElementById("timerReadout");
+        const timerStatus = document.getElementById("timerStatus");
+        const stripTimerLabel = document.getElementById("stripTimerLabel");
+        const startTimer = document.getElementById("startTimer");
+        const pauseTimer = document.getElementById("pauseTimer");
+        const resetTimer = document.getElementById("resetTimer");
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
+            const secs = (seconds % 60).toString().padStart(2, "0");
+            return `${mins}:${secs}`;
+        }
+
+        function syncTimerUI() {
+            timerReadout.textContent = formatTime(remainingSeconds);
+            stripTimerLabel.textContent = `${currentMode} min mode`;
+        }
+
+        timerMode.addEventListener("change", () => {
+            currentMode = parseInt(timerMode.value, 10);
+            remainingSeconds = currentMode * 60;
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerStatus.textContent = `Timer reset to ${currentMode} minutes.`;
+            syncTimerUI();
+        });
+
+        startTimer.addEventListener("click", () => {
+            if (timerInterval) return;
+            timerStatus.textContent = "Focus session started. Stay with the work.";
+            timerInterval = setInterval(() => {
+                remainingSeconds -= 1;
+                syncTimerUI();
+
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    remainingSeconds = 0;
+                    syncTimerUI();
+                    timerStatus.textContent = "Session complete. Breathe, review, and begin again.";
+                }
+            }, 1000);
+        });
+
+        pauseTimer.addEventListener("click", () => {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerStatus.textContent = "Timer paused.";
+        });
+
+        resetTimer.addEventListener("click", () => {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            remainingSeconds = currentMode * 60;
+            syncTimerUI();
+            timerStatus.textContent = "Timer reset.";
+        });
+
+        syncTimerUI();
+
+        const notesField = document.getElementById("quickNotes");
+        const saveNotes = document.getElementById("saveNotes");
+        const clearNotes = document.getElementById("clearNotes");
+        const notesMeta = document.getElementById("notesMeta");
+        const noteSavedStatus = document.getElementById("noteSavedStatus");
+
+        function loadNotes() {
+            const saved = localStorage.getItem("quinterra_quick_notes");
+            const savedAt = localStorage.getItem("quinterra_quick_notes_time");
+
+            if (saved) {
+                notesField.value = saved;
+                const timeText = savedAt ? `Saved ${savedAt}` : "Saved previously";
+                notesMeta.textContent = timeText;
+                noteSavedStatus.textContent = "Notes saved";
+            }
+        }
+
+        saveNotes.addEventListener("click", () => {
+            const text = notesField.value.trim();
+            if (!text) {
+                notesMeta.textContent = "Write something before saving.";
+                return;
+            }
+
+            const timeText = new Date().toLocaleString();
+            localStorage.setItem("quinterra_quick_notes", text);
+            localStorage.setItem("quinterra_quick_notes_time", timeText);
+            notesMeta.textContent = `Saved ${timeText}`;
+            noteSavedStatus.textContent = "Notes saved";
+        });
+
+        clearNotes.addEventListener("click", () => {
+            notesField.value = "";
+            localStorage.removeItem("quinterra_quick_notes");
+            localStorage.removeItem("quinterra_quick_notes_time");
+            notesMeta.textContent = "Notes cleared.";
+            noteSavedStatus.textContent = "No notes saved yet";
+        });
+
+        loadNotes();
+
+        const replyTone = document.getElementById("replyTone");
+        const replyName = document.getElementById("replyName");
+        const replyPrompt = document.getElementById("replyPrompt");
+        const generateReply = document.getElementById("generateReply");
+        const replyOutput = document.getElementById("replyOutput");
+
+        generateReply.addEventListener("click", () => {
+            const tone = replyTone.value;
+            const name = replyName.value.trim() || "there";
+            const prompt = replyPrompt.value.trim();
+
+            if (!prompt) {
+                replyOutput.textContent = "Write the message idea first.";
+                return;
+            }
+
+            let opener = "";
+            let closer = "";
+
+            if (tone === "professional") {
+                opener = `Dear ${name},\n\nThank you for your message.`;
+                closer = "\n\nPlease let me know if you would like me to expand on this further.\n\nKind regards,";
+            } else if (tone === "warm") {
+                opener = `Hi ${name},\n\nThank you so much for reaching out.`;
+                closer = "\n\nI really appreciate your message and would be happy to continue the conversation.\n\nWarm regards,";
+            } else {
+                opener = `Hi ${name},\n\nThanks for the message.`;
+                closer = "\n\nLet me know the next step.\n\nBest,";
+            }
+
+            const body = `\n\nRegarding your note: ${prompt}\n\nI’m sharing this as an initial response draft so the conversation can continue clearly and smoothly.`;
+            replyOutput.textContent = `${opener}${body}${closer}`;
+        });
     </script>
 </body>
 
